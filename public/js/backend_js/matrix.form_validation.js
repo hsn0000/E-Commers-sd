@@ -82,7 +82,7 @@ $(document).ready(function(){
 		}
 	});
 
-		// Add category Validation
+		// edit category Validation
 	$("#edit_category").validate({
 		rules:{
 			required:{
@@ -109,6 +109,79 @@ $(document).ready(function(){
 		}
 	});
 	
+	// Add product Validation
+	$("#add_product").validate({
+		rules:{
+			required:{
+				required:true
+			},
+			category_id:{
+				required:true,
+			},
+			product_name:{
+				required:true,
+			},
+			product_code:{
+				required:true,
+			},
+			product_color:{
+				required:true,
+			},
+			price:{
+				required:true,
+				number:true
+			},
+			image:{
+				required:true,
+			},
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
+
+	// Edit product Validation
+	$("#edit_product").validate({
+		rules:{
+			required:{
+				required:true
+			},
+			category_id:{
+				required:true,
+			},
+			product_name:{
+				required:true,
+			},
+			product_code:{
+				required:true,
+			},
+			product_color:{
+				required:true,
+			},
+			price:{
+				required:true,
+				number:true
+			},
+			
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
+
+//
 	$("#number_validate").validate({
 		rules:{
 			min:{

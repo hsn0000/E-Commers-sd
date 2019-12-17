@@ -27,6 +27,7 @@
 <!--  -->
 @yield('script')
 </script>
+
 <script src="{{asset('js/backend_js/jquery.min.js')}}"></script> 
 <script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script>
 <script src="{{asset('js/backend_js/bootstrap.min.js')}}"></script> 
@@ -37,6 +38,7 @@
 <script src="{{asset('js/backend_js/matrix.form_validation.js')}}"></script>
 <script src="{{asset('js/backend_js/matrix.tables.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('js/backend_js/matrix.popover.js')}}"></script>
 
 </body>
 </html>
