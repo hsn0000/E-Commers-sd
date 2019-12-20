@@ -32,16 +32,16 @@
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>NO</th>
-                  <th>Product ID</th>
-                  <th>Category ID</th>
-                  <th>Category Name</th>
-                  <th>Product Name</th>
-                  <th>Product Code</th>
-                  <th>Product Color</th>
-                  <th>Price</th>
-                  <th>Image</th>
-                  <th>Actions</th>
+                  <th style="font-size:100%;">NO</th>
+                  <th style="font-size:100%;">Product ID</th>
+                  <th style="font-size:100%;">Category ID</th>
+                  <th style="font-size:100%;">Category Name</th>
+                  <th style="font-size:100%;">Product Name</th>
+                  <th style="font-size:100%;">Product Code</th>
+                  <th style="font-size:100%;">Product Color</th>
+                  <th style="font-size:100%;">Price</th>
+                  <th style="font-size:100%;">Image</th>
+                  <th style="font-size:100%;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,10 +63,12 @@
                      <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="" >
                    @endif
                   </td>
-                  <td class="center" style="text-align:center;">
-                    <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" style="margin:35px 0 0 0;">View</a>
-                    <a href="{{url('/admin/edit-product/'.$product->id)}} " class="btn btn-primary btn-mini" style="margin:35px 0 0 12px;">Edit</a> 
-                    <a href="{{url('/admin/delete-product-image/'.$product->id)}}" class="btn btn-danger btn-mini" id="delCat" style="margin:35px 0 0 12px;">Delete</a>
+                  {{-- url('/admin/delete-product/'.$product->id) --}}
+                  <td class="center" style="text-align:center;" width="24%;">
+                    <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" style="margin:35px 0 0 0;"><i class="icon-eye-open" style="padding:0 4px"></i> View</a>
+                    <a href="{{url('/admin/add-attribute/'.$product->id)}} " class="btn btn-primary btn-mini" style="margin:35px 0 0 10px;"> <i class="icon-plus" style="padding:0 4px"></i> Add_attr</a>
+                    <a href="{{url('/admin/edit-product/'.$product->id)}} " class="btn btn-warning btn-mini" style="margin:35px 0 0 10px;"><i class="icon-cogs" style="padding:0 4px"></i> Edit</a> 
+                    <a rel="{{$product->id}}" rel1="delete-product" rel2="{{$product->product_name}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" data-del-id="{{$product->id}}" style="margin:35px 0 0 10px;"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
                  </td>
                   <div id="myModal{{$product->id}}" class="modal hide">
                      <div class="modal-header">
@@ -98,10 +100,6 @@
 @endsection
 
 @section('script')
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
-
-</script>
+  
 
 @endsection

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{{asset('css/backend_css/matrix-media.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/font-awesome.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/jquery.gritter.css')}}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -26,7 +27,6 @@
 @include('layouts.adminLayout.admin_footer ')
 <!--  -->
 @yield('script')
-</script>
 
 <script src="{{asset('js/backend_js/jquery.min.js')}}"></script> 
 <script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script>
@@ -39,6 +39,12 @@
 <script src="{{asset('js/backend_js/matrix.tables.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('js/backend_js/matrix.popover.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+
+
+</script>
 
 </body>
 </html>

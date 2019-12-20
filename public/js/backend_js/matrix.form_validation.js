@@ -2,6 +2,31 @@
 // settings validation
 $(document).ready(function(){
 
+    // logout
+	$(".logoutUser").click(function() 
+	{
+		Swal.fire({
+		title: 'Are you sure?',
+		text: "You want to logout this page !",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, logout it!'
+		}).then((result) => {
+		if (result.value) {
+			Swal.fire(
+			'Logout Page!',
+			'Your has been logout this page.',
+			'success'
+			)
+			window.location.href="/logout"
+		}
+	  })
+
+	});
+
+	// password lama
 	$("#current_pwd").keyup(function() {
 		 var current_pwd = $("#current_pwd").val();
 		 $.ajax({
@@ -239,12 +264,170 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#delCat").click(function(){
+//   delete category
+	$(".delCat").click(function() 
+	{
+		var id = $(this).attr('rel');
+		var name = $(this).attr('rel2');
+		var deleteFunction = $(this).attr('rel1');
 
-		if(confirm('Are you sure you want to delete this category?')) {
-			return true;
-		}
-		return false;
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+			confirmButton: 'btn btn-success',
+			cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+		
+		swalWithBootstrapButtons.fire({
+			title: 'Are you sure?',
+			text: 'you want to delete this  "'+name+'"?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it',
+			cancelButtonText: 'No, cancel',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.value) {
+			swalWithBootstrapButtons.fire(
+				'Deleted!',
+				'Your "'+name+'" has been deleted.',
+				'success'
+			)
+
+			window.location.href="/admin/"+deleteFunction+"/"+id;
+			
+			} else if (
+			/* Read more about handling dismissals below */
+			result.dismiss === Swal.DismissReason.cancel
+			) {
+			swalWithBootstrapButtons.fire(
+				'Cancelled',
+				'Your '+name+' is safe :)',
+				'error'
+			)
+		  }
+	   })
+
 	});
+
+   // Add atribute 
+	var maxField = 10; //Input fields increment limitation
+	var addButton = $('.add_button'); //Add button selector
+	var wrapper = $('.field_wrapper'); //Input field wrapper
+	var fieldHTML = '<div><div class="control-group"><label class="control-label"></label><input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width:130px; margin:7px 0;" required/><input type="text" name="size[]" id="size" value="" placeholder="Size" style="width:130px; margin:7px 3px;" required/><input type="text" name="price[]" id="price" value="" placeholder="Price" style="width:130px; margin:7px 0;" required/><input type="text" name="stock[]" id="stock" value="" placeholder="Stock" style="width:130px; margin:7px 3px;" required/><a href="javascript:void(0);" class="remove_button"><i class="icon-minus" style="margin: 0 0 0 10px;"></i></a></div></div></div>'; //New input field html 
+	var x = 1; //Initial field counter is 1
+	
+	//Once add button is clicked
+	$(addButton).click(function()
+	{
+		//Check maximum number of input fields
+		if(x < maxField){ 
+			x++; //Increment field counter
+			$(wrapper).append(fieldHTML); //Add field html
+		}
+	});	
+	//Once remove button is clicked
+	$(wrapper).on('click', '.remove_button', function(e){
+		e.preventDefault();
+		$(this).parent('div').remove(); //Remove field html
+		x--; //Decrement field counter
+	});
+
+
+		// delete attribut
+		$(".del-attribute").click(function(e) 
+		{
+			var id = $(this).attr('rel');
+			var deleteFunction = $(this).attr('rel1');
+	
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+				  confirmButton: 'btn btn-success',
+				  cancelButton: 'btn btn-danger'
+				},
+				buttonsStyling: false
+			  })
+			  
+			  swalWithBootstrapButtons.fire({
+				title: 'Are you sure?',
+				text: "you want to delete this attribute?",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it',
+				cancelButtonText: 'No, cancel',
+				reverseButtons: true
+			  }).then((result) => {
+				if (result.value) {
+				  swalWithBootstrapButtons.fire(
+					'Deleted!',
+					'Your Attribute has been deleted.',
+					'success'
+				  )
+	
+				  window.location.href="/admin/"+deleteFunction+"/"+id;
+				  
+				} else if (
+				  /* Read more about handling dismissals below */
+				  result.dismiss === Swal.DismissReason.cancel
+				) {
+				  swalWithBootstrapButtons.fire(
+					'Cancelled',
+					'Your attribute is safe :)',
+					'error'
+				  )
+				}
+			 })
+	
+		});
+
+
+	// delete product
+	$(".deleteProd").click(function(e) 
+	{
+		var id = $(this).attr('rel');
+		var name = $(this).attr('rel2');
+		var deleteFunction = $(this).attr('rel1');
+		// alert(name);
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+			  confirmButton: 'btn btn-success',
+			  cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		  })
+		  
+		  swalWithBootstrapButtons.fire({
+			title: 'Are you sure?',
+			text: 'you want to delete this "'+name+'"?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Delete '+name+'',
+			cancelButtonText: 'No, cancel',
+			reverseButtons: true
+		  }).then((result) => {
+			if (result.value) {
+			  swalWithBootstrapButtons.fire(
+				'Deleted!',
+				'Your '+name+' has been d eleted.',
+				'success'
+			  )
+
+			  window.location.href="/admin/"+deleteFunction+"/"+id;
+			  
+			} else if (
+			  /* Read more about handling dismissals below */
+			  result.dismiss === Swal.DismissReason.cancel
+			) {
+			  swalWithBootstrapButtons.fire(
+				'Cancelled',
+				'Your "'+name+'" is safe :)',
+				'error'
+			  )
+			}
+		 })
+
+	});
+
 
 });

@@ -41,13 +41,15 @@
               </thead>
               <tbody>
                   @foreach($categories as $category)
+                  {{-- url('/admin/delete-category/'.$category->id) --}}
                 <tr class="gradeX">
                   <td>{{$category->id}}</td>
                   <td>{{$category->name}}</td>
                   <td>{{$category->parent_id}}</td>
                   <td>{{$category->url}}</td>
-                  <td class="center"> <a href="{{url('/admin/edit-category/'.$category->id)}}" class="btn btn-primary btn-mini">Edit</a> 
-                   <a href="{{url('/admin/delete-category/'.$category->id)}}" class="btn btn-danger btn-mini" id="delCat">Delete</a>
+                  <td style="text-align:center;" class="center" width="25%">
+                  <a href="{{url('/admin/edit-category/'.$category->id)}}" class="btn btn-warning btn-mini" style="margin:0 12px 0 0"><i class="icon-cogs" style="padding:0 4px"></i>Edit</a> 
+                   <a rel="{{$category->id}}" rel1="delete-category" rel2="{{$category->name}}" href="javascript:" class="delCat btn btn-danger btn-mini delCat" id="" style="margin:0 0 0 9px"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
                  </td>
                 </tr>
                  @endforeach
