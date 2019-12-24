@@ -1,3 +1,10 @@
+<?php 
+
+use App\Http\Controllers\Controller;
+ $mainCategories = Controller::mainCategories(); 
+
+?>
+
 <header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -39,19 +46,19 @@
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="#">Canada</a></li>
-									<li><a href="#">UK</a></li>
+									<li><a href="#">Indonesia</a></li>
+									<li><a href="#">Kambodia</a></li>
 								</ul>
 							</div>
 							
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									DOLLAR
+									Rupiah
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="#">Canadian Dollar</a></li>
-									<li><a href="#">Pound</a></li>
+									<li><a href="#">Rupiah</a></li>
+									<li><a href="#">Dollar US</a></li>
 								</ul>
 							</div>
 						</div>
@@ -85,14 +92,14 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html" class="active">Home</a></li>
+								<li><a href="{{url('/')}}" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
+									@foreach($mainCategories as $cat)
+									@if($cat->status == "1")
+										<li><a href="{{'/products/'.$cat->url}}">{{$cat->name}}</a></li>
+									@endif
+								    @endforeach
                                     </ul>
                                 </li> 
 								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>

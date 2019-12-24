@@ -72,7 +72,7 @@
                 <label class="control-label">Old Image</label>
                 <div class="controls">
                @if(!empty($productDetails->image))
-                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt=""> | <a href="{{url('/admin/delete-product-image/'.$productDetails->id)}}" class="btn btn-danger btn-mini" id="delCat">Delete</a>
+                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="image product" width="110px;"> | <a href="{{url('/admin/delete-product-image/'.$productDetails->id)}}" class="btn btn-danger btn-mini" id="delCat" >Delete</a>
                @endif
                 </div>
               </div>

@@ -60,7 +60,7 @@
                   <td>{{'Rp.'.$product->price}}</td>
                   <td style="text-align:center;">
                    @if(!empty($product->image))
-                     <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="" >
+                     <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="image product" width="110">
                    @endif
                   </td>
                   {{-- url('/admin/delete-product/'.$product->id) --}}

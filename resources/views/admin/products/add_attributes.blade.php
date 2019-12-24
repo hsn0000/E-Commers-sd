@@ -34,16 +34,20 @@
               <input type="hidden" value="{{$productDetails->id}}">
               </div>
               <div class="control-group">
-                <label class="control-label">Product Name</label>
+                <label class="control-label">Product Name :</label>
                 <label for="" class="control-label"><b>{{$productDetails->product_name}}</b></label>
               </div>
               <div class="control-group">
-                <label class="control-label">Product Code</label>
+                <label class="control-label">Product Code :</label>
                 <label for="" class="control-label"><b>{{$productDetails->product_code}}</b></label>
               </div>
               <div class="control-group">
-                <label class="control-label">Product Color</label>
+                <label class="control-label">Product Color :</label>
                 <label for="" class="control-label"><b>{{$productDetails->product_color}}</b></label>
+              </div>        
+              <div class="control-group">
+                <label class="control-label">Price :</label>
+                <label for="" class="control-label"><b>{{'Rp.'.$productDetails->price}}</b></label>
               </div>               
             <div class="control-group">
               <label class="control-label"></label>

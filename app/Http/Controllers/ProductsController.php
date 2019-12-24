@@ -50,8 +50,8 @@ class ProductsController extends Controller
                 $small_image_path = 'images/backend_images/products/small/'.$filename;
                 // resize image
                 Image::make($image_tmp)->save($large_image_path);
-                Image::make($image_tmp)->resize(300,300)->save($medium_image_path);
-                Image::make($image_tmp)->resize(100,100)->save($small_image_path);
+                Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                Image::make($image_tmp)->resize(300,300)->save($small_image_path);
                 // storage image name in product table
                 $product->image = $filename;
              }
@@ -99,8 +99,8 @@ class ProductsController extends Controller
                     $small_image_path = 'images/backend_images/products/small/'.$filename;
                     // resize image
                     Image::make($image_tmp)->save($large_image_path);
-                    Image::make($image_tmp)->resize(300,300)->save($medium_image_path);
-                    Image::make($image_tmp)->resize(100,100)->save($small_image_path);
+                    Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(300,300)->save($small_image_path);
                     // storage image name in product table
                 }
                 
@@ -153,7 +153,28 @@ class ProductsController extends Controller
 
     public function deleteProduct($id=null) 
     {
-
+       // get product image nama
+       $productImage = Product::where(['id' => $id])->first();
+       // get product image patch
+       $large_image_patch = 'images/backend_images/products/large/';
+       $medium_image_patch = 'images/backend_images/products/medium/';
+       $small_image_patch = 'images/backend_images/products/small/';
+       // Delete large image if not exist folder
+       if(\file_exists($large_image_patch.$productImage->image))
+       {
+           \unlink($large_image_patch.$productImage->image);
+       }
+        // Delete medium image if not exist folder
+        if(\file_exists($medium_image_patch.$productImage->image))
+        {
+            \unlink($medium_image_patch.$productImage->image);
+        }
+         // Delete small image if not exist folder
+       if(\file_exists($small_image_patch.$productImage->image))
+       {
+           \unlink($small_image_patch.$productImage->image);
+       }
+       // delete image from product table
        Product::where(['id' => $id])->delete();
        return \redirect()->back()->with('flash_message_success','Product Has Been Deleted Successfully');
 
@@ -162,7 +183,30 @@ class ProductsController extends Controller
 
     public function deleteProductImage($id=null)
     {
+        // get product image nama
+        $productImage = Product::where(['id' => $id])->first();
+        // get product image patch
+        $large_image_patch = 'images/backend_images/products/large/';
+        $medium_image_patch = 'images/backend_images/products/medium/';
+        $small_image_patch = 'images/backend_images/products/small/';
+        // Delete large image if not exist folder
+        if(\file_exists($large_image_patch.$productImage->image))
+        {
+            \unlink($large_image_patch.$productImage->image);
+        }
+         // Delete medium image if not exist folder
+         if(\file_exists($medium_image_patch.$productImage->image))
+         {
+             \unlink($medium_image_patch.$productImage->image);
+         }
+          // Delete small image if not exist folder
+        if(\file_exists($small_image_patch.$productImage->image))
+        {
+            \unlink($small_image_patch.$productImage->image);
+        }
+        // delete image from product table
         Product::where(['id' => $id])->update(['image'=>'']);
+
         return \redirect()->back()->with('flash_message_success','Product Image has been deleted successfully !');
     }
 
@@ -218,6 +262,48 @@ class ProductsController extends Controller
         ProductsAttribute::where(['id' => $id])->delete();
         return redirect()->back()->with('flash_message_success','Attribute has been deleted successfully !');
 
+    }
+
+
+    public function products($url=null)
+    {
+        // Show 404 page if category URL does not exist
+        $countCategory = Category::where(['url' => $url,'status'=> 1])->count();
+        // dd($countCategory);
+        if($countCategory == 0)
+        {
+            abort(404);
+        }
+        $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+        $categoryDetails = Category::where(['url' => $url])->first();
+        
+        if($categoryDetails->parent_id == 0)
+        {
+            // if url is main category url
+            $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();
+            foreach($subCategories as $key => $subcat)
+            { 
+                $cat_ids[] = $subcat->id;
+            }
+            $productAll = Product::whereIn('category_id', $cat_ids)->get();
+            $productAll = \json_decode(\json_encode($productAll));
+            // dd($productAll);
+        }else{
+            // If url is sub category url
+            $productAll = Product::where(['category_id' => $categoryDetails->id])->get();
+        }
+        // dd($productsAll);
+        return view('products.listing')->with(\compact('categoryDetails','productAll','categories'));
+    }
+
+    public function product($id = null)
+    {
+        // get product detail
+        $productDetails = Product::where(['id' => $id])->first();
+        // get all categories and subcategories
+        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+
+        return \view('products.detail')->with(\compact('productDetails','categories'));
     }
 
 

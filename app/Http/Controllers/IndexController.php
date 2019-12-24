@@ -20,7 +20,7 @@ class IndexController extends Controller
         // get all category and sub category
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         // $categories = \json_decode(json_encode($categories));
-        // dd($categories);
+           
         $categories_menu = "";
         // foreach($categories as $cat)
         // {
