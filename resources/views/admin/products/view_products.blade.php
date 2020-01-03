@@ -8,18 +8,25 @@
      <a href="{{url('/admin/view-categories')}}" class="current">View Product</a> </div>
     <h1>Product</h1>
     @if(Session::has('flash_message_error'))
-      <div class="alert alert-danger alert-block">
-           <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_error')}}</strong>
-         </div>
+        <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_error')}}</strong>
+        </div>
         @endif  
+        @if(Session::has('flash_message_drop'))
+        <div class="alert alert-success alert-block" style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert" >x</button>	
+            <strong> {{Session::get('flash_message_drop')}}</strong>
+        </div>
+        @endif
         @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_success')}}</strong>
-         </div>
-      @endif
+        <div class="alert alert-dark alert-block" style="background-color:green; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_success')}}</strong>
+        </div>
+    @endif
   </div>
+  <div id="loading"></div>
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
@@ -65,10 +72,12 @@
                   </td>
                   {{-- url('/admin/delete-product/'.$product->id) --}}
                   <td class="center" style="text-align:center;" width="24%;">
-                    <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" style="margin:35px 0 0 0;"><i class="icon-eye-open" style="padding:0 4px"></i> View</a>
-                    <a href="{{url('/admin/add-attribute/'.$product->id)}} " class="btn btn-primary btn-mini" style="margin:35px 0 0 10px;"> <i class="icon-plus" style="padding:0 4px"></i> Add_attr</a>
-                    <a href="{{url('/admin/edit-product/'.$product->id)}} " class="btn btn-warning btn-mini" style="margin:35px 0 0 10px;"><i class="icon-cogs" style="padding:0 4px"></i> Edit</a> 
-                    <a rel="{{$product->id}}" rel1="delete-product" rel2="{{$product->product_name}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" data-del-id="{{$product->id}}" style="margin:35px 0 0 10px;"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
+                    <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" style="margin:35px 0 0 0;" title="View Product"> <i class="icon-eye-open" style="padding:0 4px"></i> View</a>
+                    <a href="{{url('/admin/add-attribute/'.$product->id)}} " class="btn btn-primary btn-mini" style="margin:35px 0 0 10px;" title="Add Attributes"> <i class="icon-plus" style="padding:0 4px"></i> Add_attr</a>
+                    <a href="{{url('/admin/add-images/'.$product->id)}} " class="btn btn-info btn-mini" style="margin:35px 0 0 10px;" title="Add Images"> <i class="icon-plus-sign" style="padding:0 4px"></i> Add_img</a>
+                    <a href="{{url('/admin/edit-product/'.$product->id)}} " class="btn btn-warning btn-mini" style="margin:35px 0 0 10px;" title="Edit Product"> <i class="icon-cogs" style="padding:0 4px"></i> Edit</a> 
+                    <a rel="{{$product->id}}" rel1="delete-product" rel2="{{$product->product_name}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" data-del-id="{{$product->id}}" style="margin:35px 0 0 10px;" title="Delete Product"> 
+                      <i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
                  </td>
                   <div id="myModal{{$product->id}}" class="modal hide">
                      <div class="modal-header">

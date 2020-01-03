@@ -8,18 +8,25 @@
      <a href="{{url('/admin/add-category')}}" class="current">Add Product</a> </div>
     <h1>Products</h1>
     @if(Session::has('flash_message_error'))
-      <div class="alert alert-danger alert-block">
-           <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_error')}}</strong>
-         </div>
+        <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_error')}}</strong>
+        </div>
         @endif  
+        @if(Session::has('flash_message_drop'))
+        <div class="alert alert-success alert-block" style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert" >x</button>	
+            <strong> {{Session::get('flash_message_drop')}}</strong>
+        </div>
+        @endif
         @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_success')}}</strong>
-         </div>
-      @endif
+        <div class="alert alert-dark alert-block" style="background-color:green; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_success')}}</strong>
+        </div>
+    @endif
   </div>
+  <div id="loading"></div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
@@ -63,6 +70,12 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Material & Care</label> 
+                <div class="controls">
+                 <textarea name="care" id="care"></textarea>
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label ">Price</label>
                 <div class="price-input-usd controls">
                   <input class="price-input-usd" type="text" name="price" id="price" placeholder="Rp.000.00">
@@ -72,6 +85,12 @@
                 <label class="control-label">Image</label>
                 <div class="controls">
                   <input type="file" name="image" id="image">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Enable</label>
+                <div class="controls">
+                  <input type="checkbox" name="status" id="status" value="1">
                 </div>
               </div>
               <div class="form-actions">

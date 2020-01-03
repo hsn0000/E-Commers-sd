@@ -8,18 +8,25 @@
      <a href="{{url('/admin/add-category')}}" class="current">Add Product Attributes</a> </div>
     <h1>Products Attributes</h1>
     @if(Session::has('flash_message_error'))
-      <div class="alert alert-danger alert-block">
-           <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_error')}}</strong>
-         </div>
+        <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_error')}}</strong>
+        </div>
         @endif  
+        @if(Session::has('flash_message_drop'))
+        <div class="alert alert-success alert-block" style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert" >x</button>	
+            <strong> {{Session::get('flash_message_drop')}}</strong>
+        </div>
+        @endif
         @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>	
-             <strong> {{Session::get('flash_message_success')}}</strong>
-         </div>
-      @endif
+        <div class="alert alert-dark alert-block" style="background-color:green; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>	
+            <strong> {{Session::get('flash_message_success')}}</strong>
+        </div>
+    @endif
   </div>
+  <div id="loading"></div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
@@ -78,6 +85,8 @@
             <h5>View Attributes</h5>
           </div>
           <div class="widget-content nopadding">
+            <form action="{{ url('/admin/edit-attribute/'.$productDetails->id) }}" method="post" name="edit_attribute">
+            {{csrf_field()}}
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
@@ -97,18 +106,20 @@
                   @foreach($productDetails['attributes'] as $attribute)
                 <tr class="gradeX">
                   <td style="text-align:center;">{{++$no}}</td>
-                  <td>{{$attribute->id}}</td>
+                  <td style="text-align:center;"><input type="hidden" name="idAttr[]" value="{{$attribute->id}}" >{{$attribute->id}}</td>
                   <td>{{$attribute->sku}}</td>
                   <td>{{$attribute->size}}</td>
-                  <td>{{$attribute->price}}</td>
-                  <td>{{$attribute->stock}}</td>
+                  <td><input type="text" name="price[]" value="{{$attribute->price}}"></td>
+                  <td><input type="text" name="stock[]" value="{{$attribute->stock}}"></td>
                   <td class="center" style="text-align:center;" width="">
-                    <a rel="{{$attribute->id}}" rel1="delete-attribute" href="javascript:" class="del-attribute btn btn-danger btn-mini" style=""><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
+                    <i class="icon-cogs" style="padding:0 4px"></i> <input type="submit" value="Update" class="btn btn-warning btn-mini">
+                    <a rel="{{$attribute->id}}" rel1="delete-attribute" href="javascript:" class="del-attribute btn btn-danger btn-mini" style="margin:0 7px"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
                  </td>
                 </tr>
                  @endforeach
               </tbody>
             </table>
+            </form>
           </div>
         </div>
       </div>

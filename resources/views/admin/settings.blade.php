@@ -6,19 +6,25 @@
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="{{url('/admin/settings')}}" class="current">Settings</a> </div>
     <h1>Admin Settings</h1>
-    @if(Session::has('flash_message_error'))
-      <div class="alert alert-danger alert-block">
-          <button type="button" class="close" data-dismiss="alert">×</button>	
-              <strong> {{Session::get('flash_message_error')}}</strong>
+  @if(Session::has('flash_message_error'))
+      <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
+          <button type="button" class="close" data-dismiss="alert">x</button>	
+          <strong> {{Session::get('flash_message_error')}}</strong>
       </div>
-    @endif  
-    @if(Session::has('flash_message_success'))
-       <div class="alert alert-success alert-block">
-          <button type="button" class="close" data-dismiss="alert">×</button>	
-              <strong> {{Session::get('flash_message_success')}}</strong>
+      @endif  
+      @if(Session::has('flash_message_drop'))
+      <div class="alert alert-success alert-block" style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
+          <button type="button" class="close" data-dismiss="alert" >x</button>	
+          <strong> {{Session::get('flash_message_drop')}}</strong>
       </div>
-    @endif
-  </div>
+      @endif
+      @if(Session::has('flash_message_success'))
+      <div class="alert alert-dark alert-block" style="background-color:green; color:white; width:21%; margin-left:20px;">
+          <button type="button" class="close" data-dismiss="alert">x</button>	
+          <strong> {{Session::get('flash_message_success')}}</strong>
+      </div>
+  @endif
+  <div id="loading"></div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="row-fluid">

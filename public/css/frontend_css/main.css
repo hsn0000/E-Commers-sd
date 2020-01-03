@@ -581,7 +581,8 @@ ul.sub-menu {
 }
 
 .item {
-  padding-left: 100px;
+  width: auto;
+  padding:0px 30px 0px 30px;
 }
 
 
@@ -1171,11 +1172,11 @@ h2.title {
   position: relative;
 }
 
-.view-product img {
+/* .view-product img {
   border: 1px solid #F7F7F0;
   height: 380px;
   width: 100%;
-}
+} */
 
 .view-product h3 {
   background: #FE980F;
@@ -2518,6 +2519,30 @@ h2.title {
 
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
+}
+
+/* animat loading */
+#loading{
+  width :80px;
+  height: 80px;
+  border: solid 11px rgb(136, 121, 94);
+  border-top-color: orangered;
+  border-radius: 100%;
+  z-index:100;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin:auto;
+
+  animation: putar 1s linear infinite;
+}
+
+@keyframes putar{
+  form{transform: rotate(0deg)}
+  to{transform: rotate(360deg)}
 }
 
 

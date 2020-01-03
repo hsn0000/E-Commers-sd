@@ -1,29 +1,35 @@
+<?php $url = url()->current(); ?>
+
+
 <!--sidebar-menu-->
 <div id="sidebar"><a href="{{url('/admin/dashboard')}}" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
-    <li class="active"><a href="{{url('/admin/dashboard')}}"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li class="submenu"> <a href=""><i class="icon icon-th-list"></i> <span>Categories</span> <span class="label label-important">2</span></a>
-      <ul>
-        <li><a href="{{url('/admin/add-category')}}">Add Category</a></li>
-        <li><a href="{{url('/admin/view-categories')}}">View Category</a></li>
+<li <?php if(preg_match("/dashboard/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/dashboard')}}"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Categories</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/category/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-category'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-category')}}">Add Category</a></li>
+        <li <?php if(preg_match("/view-categories/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-categories')}}">View Category</a></li>
       </ul>
     </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-list"></i> <span>Products</span> <span class="label label-important">2</span></a>
-      <ul>
-        <li><a href="{{url('/admin/add-product')}}">Add Product</a></li>
-        <li><a href="{{url('/admin/view-product')}}">View Product</a></li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-book"></i> <span>Products</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/product/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-product')}}">Add Product</a></li>
+        <li <?php if(preg_match("/view-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-product')}}">View Product</a></li>
       </ul>
     </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>Addons</span> <span class="label label-important">5</span></a>
-      <ul>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="invoice.html">Invoice</a></li>
-        <li><a href="chat.html">Chat option</a></li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-pushpin"></i> <span>Coupons</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/coupon/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-coupon')}}">Add Coupon</a></li>
+        <li <?php if(preg_match("/view-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-coupon')}}">View Coupon</a></li>
+      </ul>
+    </li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-picture"></i> <span>Banners</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/banner/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-banner')}}">Add Banner</a></li>
+        <li <?php if(preg_match("/view-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-banner')}}">View Banner</a></li>
       </ul>
     </li>
     <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
-    <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>Full width</span></a></li>
     
     <li class="content"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">

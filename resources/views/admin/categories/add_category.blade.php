@@ -2,6 +2,8 @@
 
 @section('content')
 
+<div id="loading"></div>
+
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Categories</a>

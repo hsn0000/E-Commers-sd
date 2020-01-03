@@ -335,12 +335,12 @@ $(document).ready(function(){
 	});
 
 
-		// delete attribut
+		// delete attribut 
 		$(".del-attribute").click(function(e) 
 		{
 			var id = $(this).attr('rel');
 			var deleteFunction = $(this).attr('rel1');
-	
+
 			const swalWithBootstrapButtons = Swal.mixin({
 				customClass: {
 				  confirmButton: 'btn btn-success',
@@ -409,7 +409,7 @@ $(document).ready(function(){
 			if (result.value) {
 			  swalWithBootstrapButtons.fire(
 				'Deleted!',
-				'Your '+name+' has been d eleted.',
+				'Your '+name+' has been deleted.',
 				'success'
 			  )
 
@@ -428,6 +428,54 @@ $(document).ready(function(){
 		 })
 
 	});
+
+
+		// delete Alternate Images
+		$(".del-alt-img ").click(function(e) 
+		{
+			var id = $(this).attr('rel');
+			var deleteFunction = $(this).attr('rel1');
+
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+				  confirmButton: 'btn btn-success',
+				  cancelButton: 'btn btn-danger'
+				},
+				buttonsStyling: false
+			  })
+			  
+			  swalWithBootstrapButtons.fire({
+				title: 'Are you sure?',
+				text: "you want to delete this Images?",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it',
+				cancelButtonText: 'No, cancel',
+				reverseButtons: true
+			  }).then((result) => {
+				if (result.value) {
+				  swalWithBootstrapButtons.fire(
+					'Deleted!',
+					'Your Images has been deleted.',
+					'success'
+				  )
+	
+				  window.location.href="/admin/"+deleteFunction+"/"+id;
+				  
+				} else if (
+				  /* Read more about handling dismissals below */
+				  result.dismiss === Swal.DismissReason.cancel
+				) {
+				  swalWithBootstrapButtons.fire(
+					'Cancelled',
+					'Your Images is safe :)',
+					'error'
+				  )
+				}
+			 })
+	
+		});
+
 
 
 });
