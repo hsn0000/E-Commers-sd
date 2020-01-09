@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use FrontLogin;
+use Crypt;
 use Session;
+use App\Country;
+use App\Cart;
+use DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -36,6 +41,13 @@ class UsersController extends Controller
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'] ]))
             {
                 Session::put('frontSession',$data['email']);
+                
+                if(!empty(Session::get('session_id')))
+                {
+                     $session_id = Session::get('session_id');
+                     DB::table('cart')->where('session_id',$session_id)->update(['user_email' => $data['email']]); 
+                }
+
                 return redirect('/cart');
             }
             
@@ -52,6 +64,13 @@ class UsersController extends Controller
            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'] ]))
            {
                Session::put('frontSession',$data['email']);
+
+               if(!empty(Session::get('session_id')))
+               {
+                    $session_id = Session::get('session_id');
+                    DB::table('cart')->where('session_id',$session_id)->update(['user_email' => $data['email']]); 
+               }
+               
                return redirect('/cart');
            }else{
                return redirect()->back()->with('flash_message_error','Invalid Username & Password');
@@ -70,11 +89,71 @@ class UsersController extends Controller
    
     public function account(Request $request)
     {
-        return view('users.account');
+        $user_id = Auth::user()->id;
+        $userDetails = User::find($user_id);
+        $countries = Country::get();
+
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            $user = User::find($user_id);
+            if(empty($data['name']))
+            {
+                return redirect()->back()->with('flash_message_error','Please Enter Your Name To Update Your Account Details !');
+            }
+            $user->name = $data['name'] ?? "";
+            $user->address = $data['address'] ?? "";
+            $user->city = $data['city'] ?? "";
+            $user->state = $data['state'] ?? "";
+            $user->country = $data['country'] ?? "";
+            $user->pincode = $data['pincode'] ?? "";
+            $user->mobile = $data['mobile'] ?? "";
+            $user->save();
+            return redirect()->back()->with('flash_message_success','Your account detail has been successfully updated !');
+        }
+   
+        return view('users.account')->with(\compact('countries','userDetails'));
     }
 
 
-    public function checkEmail(Request $request)
+    public function updatePassword(Request $request)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            $old_pwd = User::where('id', Auth::user()->id)->first();
+            $current_pwd = $data['current_pwd'];
+            if(Hash::check($current_pwd, $old_pwd->password))
+            {
+               // update password
+                $new_pwd = \bcrypt($data['new_pwd']);
+                User::where('id',Auth::user()->id)->update(['password' => $new_pwd]);
+                
+                return redirect()->back()->with('signup_success','Password update is successfully !');
+            }else{
+                return redirect()->back()->with('signup_error','Current password is correct !');
+            }
+
+        }
+    }
+
+
+    public function chkUserPassword(Request $request) // cek password user update
+    {
+        $data = $request->all();
+        $current_password = $data['current_pwd'];
+        $user_id = Auth::user()->id;
+        $check_password = User::where('id', $user_id)->first()->password;
+        
+        if (Hash::check($current_password, $check_password)){
+          return "true";
+        }else{
+            return "false";
+        }
+    }
+
+
+    public function checkEmail(Request $request) // register user
     {
         $data = $request->all();
       // check if user already exist jquery remote

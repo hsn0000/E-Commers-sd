@@ -13,7 +13,7 @@
 							<li data-target="#slider-carousel" data-slide-to="0" @if($key == 0) class="active" @endif></li>
 					    @endforeach
 						</ol>
-						
+						 
 						<div class="carousel-inner">
 						@foreach($banners as $key => $banner)
 							<div class="item @if($key == 0) active @endif">

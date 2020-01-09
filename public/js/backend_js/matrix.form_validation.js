@@ -233,6 +233,7 @@ $(document).ready(function(){
 		}
 	});
 	
+	// password validate admin
 	$("#password_validate").validate({
 		rules:{
 			current_pwd:{
@@ -244,13 +245,12 @@ $(document).ready(function(){
 				required:true,
 				minlength:6,
 				maxlength:20,
-				equalTo:"#new_pwd"
 			},
 			confirm_pwd:{
 				required:true,
 				minlength:6,
 				maxlength:20,
-				equalTo:"#confirm_pwd"
+				equalTo:"#new_pwd"
 			}
 		},
 		errorClass: "help-inline",

@@ -67,7 +67,7 @@ use App\Http\Controllers\Controller;
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><a href="{{url('/orders')}}"><i class="fa fa-crosshairs" aria-hidden="true"></i> Orders</a></li>
 								<li><a href="{{url('/cart')}}" class="enter_link"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								@if(empty(Auth::check()))
 								<li><a href="{{url('/login-register')}}"><i class="fa fa-lock"></i> Login</a></li>
@@ -112,7 +112,6 @@ use App\Http\Controllers\Controller;
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
-								<li><a href="404.html">404</a></li>
 								<li><a href="contact-us.html">Contact</a></li>
 							</ul>
 						</div>

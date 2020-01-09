@@ -54,8 +54,26 @@ Route::match(['get','post'],'/check-email','UsersController@checkEmail');
 
 // all route before login
 Route::group(['middleware' => ['frontlogin']], function() {
-    // user account page
-    Route::match(['get','post'],'/account','UsersController@account');
+      // user account page
+      Route::match(['get','post'],'/account','UsersController@account');
+      // check current user password
+      Route::post('/check-user-pwd','UsersController@chkUserPassword');
+      // update user password
+      Route::post('/update-user-pwd','UsersController@updatePassword');
+      // user account page
+      Route::match(['get','post'],'/checkout','ProductsController@checkout');
+      // order review page
+      Route::match(['get','post'],'/order-review','ProductsController@orderReview');
+      // Place Order
+      Route::match(['get','post'],'/place-order','ProductsController@PlaceOrder');
+      // thank page
+      Route::get('/thanks','ProductsController@thanks');
+      // paypal page
+      Route::get('/paypal','ProductsController@paypal');
+      // user order page
+      Route::get('/orders','ProductsController@userOrders');
+      // user ordered product page
+      Route::get('/orders/{id}','ProductsController@userOrderDetails');
 
 });
 
