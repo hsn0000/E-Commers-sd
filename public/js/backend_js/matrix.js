@@ -167,7 +167,7 @@ $(document).ready(function(){
 	window.addEventListener('load', function () {
 		$("#loading").delay(500).fadeOut("slow");
 		// loading.style.display="none";
-	});
+	}); 
 
 	
 });

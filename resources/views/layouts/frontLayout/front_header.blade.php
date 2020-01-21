@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
  $mainCategories = Controller::mainCategories(); 
-
+    
 ?>
 
 <header id="header"><!--header-->

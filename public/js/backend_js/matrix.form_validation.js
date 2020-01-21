@@ -381,7 +381,7 @@ $(document).ready(function(){
 	
 		});
 
-
+ 
 	// delete product
 	$(".deleteProd").click(function(e) 
 	{

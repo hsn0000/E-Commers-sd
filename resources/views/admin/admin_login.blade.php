@@ -8,10 +8,28 @@
 		<link rel="stylesheet" href="{{ asset('css/backend_css/bootstrap-responsive.min.css')}}" />
         <link rel="stylesheet" href="{{ asset('css/backend_css/matrix-login.css')}}" />
         <link rel="stylesheet" href="{{ asset('fonts/backend_fonts/css/font-awesome/font-awesome.css')}}" />
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+        <style>
+            #loading{
+                position: fixed;
+                float: left;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin-right: 50%;
+                z-index: 1000;
+                overflow: visible;
+                background: black url(/images/frontend_images/load4.gif) no-repeat center center;
+            
+                  }
+        </style>
 
     </head>
     <body>
+        <div id="loading"></div>
         <div id="loginbox"> 
         @if(Session::has('flash_message_error'))
         <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:40%; margin-left:20px;">
@@ -65,6 +83,16 @@
         <script src="{{asset('js/backend_js/jquery.min.js')}}"></script>  
         <script src="{{asset('js/backend_js/matrix.login.js')}}"></script> 
         <script src="{{asset('js/backend_js/bootstrap.min.js')}}"></script> 
+        <script>
+        $(document).ready(function() {
+            	// animate loading
+            window.addEventListener('load', function () {
+                $("#loading").delay(500).fadeOut("slow");
+                // loading.style.display="none";
+            }); 
+        })
+        
+        </script>
     </body>
 
 </html>
