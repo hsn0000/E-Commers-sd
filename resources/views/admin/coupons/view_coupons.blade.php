@@ -57,7 +57,7 @@
                   <td style="text-align:center;">{{++$no}}</td>
                   <td style="text-align:center;">{{$coupon->id}}</td>
                   <td style="text-align:center;">{{$coupon->coupon_code}}</td>
-                  <td style="text-align:center;"> @if($coupon->amount_type == "Persentage") {{$coupon->amount}}.% @else Rp.{{$coupon->amount}} @endif</td>
+                  <td style="text-align:center;"> @if($coupon->amount_type == "Persentage") {{$coupon->amount}} % @else Rp {{is_number($coupon->amount)}} @endif</td>
                   <td style="text-align:center;">{{$coupon->amount_type}}</td>
                   <td style="text-align:center;">{{$coupon->expiry_date}}</td>
                   <td style="text-align:center;">{{$coupon->created_at}}</td>

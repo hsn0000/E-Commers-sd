@@ -748,6 +748,10 @@ class ProductsController extends Controller
         if($request->isMethod('post'))
         {
             $data = $request->all();
+
+            if(empty($data['payment_method'])) {
+                return back()->with('flash_message_error','Please select method payment');
+            }
             $user_id = Auth::user()->id;
             $user_email = Auth::user()->email;
             // get shippong address off user
