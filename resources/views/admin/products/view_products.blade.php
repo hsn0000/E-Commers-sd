@@ -64,7 +64,7 @@
                   <td>{{$product->product_name}}</td>
                   <td>{{$product->product_code}}</td>
                   <td>{{$product->product_color}}</td>
-                  <td>{{'Rp.'.$product->price}}</td>
+                  <td>{{'Rp'.' '.is_number($product->price)}}</td>
                   <td style="text-align:center;">
                    @if(!empty($product->image))
                      <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="image product" width="110">
@@ -91,7 +91,7 @@
                            <p>Product Color: {{$product->product_color}}</p>
                            <p>Facric:</p>
                            <p>Material:</p>
-                           <p>Price: {{'Rp.'.$product->price}}</p>
+                           <p>Price: {{'Rp'.' '.is_number($product->price)}}</p>
                            <p>Description: {{$product->description}}</p>
                         </div>
                     </div>
