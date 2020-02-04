@@ -53,7 +53,7 @@
                             <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
-                            <p>{{'Rp.'.$cart->price}}</p>
+                            <p>{{'Rp'.' '.is_number($cart->price)}}</p>
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
@@ -65,7 +65,7 @@
                             </div>
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">{{'Rp.'.$cart->price * $cart->quantity}}</p>
+                            <p class="cart_total_price">{{'Rp'.' '.is_number($cart->price * $cart->quantity)}}</p>
                         </td>
                         <td class="cart_delete">
                             <a class="cart_quantity_delete" href="{{url('/cart/delete-product-cart/'.$cart->id)}}"><i class="fa fa-times"></i></a>
@@ -103,11 +103,11 @@
                 <div class="total_area">
                     <ul>
                     @if(!empty(Session::get('CouponAmount')))
-                        <li>Sub Total <span> {{'Rp.'. $total_amount}} </span></li>
-                        <li>Coupon Discoun <span> {{'Rp.'. Session::get('CouponAmount')}} </span></li>
-                        <li>Grand Total <span> {{'Rp.'. ($total_amount - Session::get('CouponAmount'))}} </span></li>
+                        <li>Sub Total <span> {{'Rp'.' '.is_number($total_amount)}} </span></li>
+                        <li>Coupon Discoun <span> {{'Rp'.' '.is_number(Session::get('CouponAmount'))}} </span></li>
+                        <li>Grand Total <span> {{'Rp'.' '.is_number(($total_amount - Session::get('CouponAmount')))}} </span></li>
                     @else
-                        <li>Total <span> {{'Rp.'. $total_amount }} </span></li>
+                        <li>Total <span> {{'Rp'.' '.is_number($total_amount) }} </span></li>
                     @endif
                     </ul>
                         <a class="btn btn-default update" href="">Update</a>

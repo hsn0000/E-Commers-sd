@@ -32,8 +32,10 @@ $(document).ready(function(){
 
 $(document).ready(function () { 
  
+	let num = 
 // Change Price & stock with Size
 	$("#selSize").change(function () {
+		
 		var idSize = $(this).val();
 		if(idSize == "")
 		{
