@@ -53,4 +53,3 @@
     </div>
 </section>
 @endsection
-<!-- <?php Session::forget('grant_total'); Session::forget('order_id'); ?> -->
