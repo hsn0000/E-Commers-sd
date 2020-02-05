@@ -74,6 +74,10 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::get('/orders','ProductsController@userOrders');
       // user ordered product page
       Route::get('/orders/{id}','ProductsController@userOrderDetails');
+      // Paypal Thank Page
+      Route::get('paypal/thanks','ProductsController@thanksPaypal');
+      // Paypal Thank Page
+      Route::get('paypal/cancel','ProductsController@cancelPaypal');
 
 });
 
@@ -115,5 +119,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner');
     Route::get('/admin/view-banner','BannersController@viewBanners');
     
+    // Admin order view routes
+    Route::get('admin/view-orders','ProductsController@viewOrders');
+    // Admin order detail routes
+    Route::get('admin/view-order/{id}','ProductsController@viewOrderDetails');
 
 });

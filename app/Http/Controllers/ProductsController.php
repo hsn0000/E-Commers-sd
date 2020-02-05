@@ -815,6 +815,18 @@ class ProductsController extends Controller
         return view('orders.thanks');
     }
 
+    
+    public function thanksPaypal() 
+    {
+        return view('orders.thanks_paypal');
+    }
+
+
+    public function cancelPaypal() 
+    {
+        return view('orders.cancel_paypal');
+    }
+
 
     public function paypal(Request $request)
     {
@@ -842,6 +854,21 @@ class ProductsController extends Controller
         return \view('orders.users_order_details')->with(\compact('orderDetails'));
     }
 
+     
+    public function viewOrders() 
+    {
+        $orders = Order::with('orders')->orderBy('id','desc')->get();
+        return view('admin.orders.view_orders')->with(\compact('orders'));
+    }
+
+
+    public function viewOrderDetails($order_id)
+    {
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+        
+        return view('admin.orders.order_details')->with(\compact('orderDetails'));
+    }
 
 
 }
