@@ -165,7 +165,7 @@ $(document).ready(function(){
 	// animate loading
 	// var loading = document.getElementById('loading');  
 	window.addEventListener('load', function () {
-		$("#loading").delay(500).fadeOut("slow");
+		$("#loading").delay(1000).fadeOut("slow");
 		// loading.style.display="none";
 	}); 
 

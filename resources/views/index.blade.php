@@ -18,7 +18,7 @@
 						@foreach($banners as $key => $banner)
 							<div class="item @if($key == 0) active @endif">
 								<div class="col-sm-12">
-									<a href="{{$banner->link}}" title="banner 1"><img src="{{ asset('images/backend_images/banners/'.$banner->image) }}" class="girl img-responsive" alt="Banner" /></a>
+									<a href="{{$banner->link}}" title="{{$banner->title}}"><img src="{{ asset('images/backend_images/banners/'.$banner->image) }}" class="girl img-responsive" alt="Banner" /></a>
 								</div>
 							</div>
 						@endforeach
