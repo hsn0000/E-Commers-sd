@@ -14,6 +14,27 @@ order details
         <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a
                 href="#" class="current">Orders</a> </div>
         <h1>Order #{{$orderDetails->id}}</h1>
+        @if(Session::has('flash_message_error'))
+        <div class="alert alert-dark alert-block"
+            style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong> {{Session::get('flash_message_error')}}</strong>
+        </div>
+        @endif
+        @if(Session::has('flash_message_drop'))
+        <div class="alert alert-success alert-block"
+            style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong> {{Session::get('flash_message_drop')}}</strong>
+        </div>
+        @endif
+        @if(Session::has('flash_message_success'))
+        <div class="alert alert-dark alert-block"
+            style="background-color:green; color:white; width:21%; margin-left:20px;">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong> {{Session::get('flash_message_success')}}</strong>
+        </div>
+        @endif
     </div>
     <div class="container-fluid">
         <div class="row-fluid">
@@ -31,7 +52,29 @@ order details
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Order Status</td>
-                                    <td class="taskStatus">{{$orderDetails->order_status}}</td>
+                                    <td class="taskStatus">
+                                        @if($orderDetails->order_status == "New") <span
+                                            class="badge badge-pill badge-primary"
+                                            style="background-color:blue;">New</span>
+                                        @elseif($orderDetails->order_status == "Pending") <span
+                                            class="badge badge-pill badge-warning">Pending</span>
+                                        @elseif($orderDetails->order_status == "Cancelled") <span
+                                            class="badge badge-pill badge-danger" style="background-color:Red;">
+                                            Cancelled</span>
+                                        @elseif($orderDetails->order_status == "In_Process") <span
+                                            class="badge badge-pill badge-info"> In Process</span>
+                                        @elseif($orderDetails->order_status == "Shipped") <span
+                                            class="badge badge-pill badge" style="background-color:#87CEFA;">
+                                            Shipped</span>
+                                        @elseif($orderDetails->order_status == "Delivered") <span
+                                            class="badge badge-pill badge-success"> Delivered</span>
+                                        @elseif($orderDetails->order_status == "Paid") <span
+                                            class="badge badge-pill badge-success" style="background-color:#008080;">
+                                            Paid</span>
+                                        @else<span
+                                            class="badge badge-pill badge-dark">{{$orderDetails->order_status}}</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Order Total</td>
@@ -109,6 +152,35 @@ order details
                         </div>
                         <div class="accordion-body in collapse" id="collapseGOne" style="">
                             <div class="widget-content">
+                                <form action="{{url('admin/update-order-status')}}" method="post"> {{csrf_field()}}
+                                    <input type="hidden" name="order_id" value="{{$orderDetails->id}}">
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                <select name="order_status" id="order_status" class="control-label"
+                                                    required="">
+                                                    <option value="New" @if($orderDetails->order_status == "New")
+                                                        selected @endif>New</option>
+                                                    <option value="Pending" @if($orderDetails->order_status ==
+                                                        "Pending") selected @endif>Pending</option>
+                                                    <option value="Cancelled" @if($orderDetails->order_status ==
+                                                        "Cancelled") selected @endif>Cancelled</option>
+                                                    <option value="In_Process" @if($orderDetails->order_status ==
+                                                        "In_Process") selected @endif>In Process</option>
+                                                    <option value="Shipped" @if($orderDetails->order_status ==
+                                                        "Shipped") selected @endif>Shipped</option>
+                                                    <option value="Delivered" @if($orderDetails->order_status ==
+                                                        "Delivered") selected @endif>Delivered</option>
+                                                    <option value="Paid" @if($orderDetails->order_status == "Paid")
+                                                        selected @endif>Paid</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="submit" value="Update Status">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -178,6 +250,5 @@ order details
     </div>
 </div>
 <!--main-container-part-->
-
 
 @endsection
