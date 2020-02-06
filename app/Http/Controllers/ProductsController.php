@@ -815,6 +815,18 @@ class ProductsController extends Controller
         return view('orders.thanks');
     }
 
+    
+    public function thanksPaypal() 
+    {
+        return view('orders.thanks_paypal');
+    }
+
+
+    public function cancelPaypal() 
+    {
+        return view('orders.cancel_paypal');
+    }
+
 
     public function paypal(Request $request)
     {
@@ -842,6 +854,39 @@ class ProductsController extends Controller
         return \view('orders.users_order_details')->with(\compact('orderDetails'));
     }
 
+     
+    public function viewOrders() 
+    {
+        $orders = Order::with('orders')->orderBy('id','desc')->get();
+        return view('admin.orders.view_orders')->with(\compact('orders'));
+    }
+
+
+    public function viewOrderDetails($order_id)
+    {
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+        $user_id = $orderDetails->user_id;
+        $userDetails = User::where('id', $user_id)->first();
+        $userDetails = json_decode(\json_encode($userDetails));
+
+        return view('admin.orders.order_details')->with(\compact('orderDetails','userDetails'));
+    }
+
+
+    public function updateOrderStatus(Request $request) 
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+
+            Order::where('id',$data['order_id'])->update([
+                'order_status' => $data['order_status']
+            ]);
+
+            return redirect()->back()->with('flash_message_success','Order Status Has been Update Successfully');
+        }
+    }
 
 
 }
