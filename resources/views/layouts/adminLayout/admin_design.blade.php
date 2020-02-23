@@ -18,6 +18,7 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@yield('link')
 </head>
 <body>
 
@@ -29,7 +30,7 @@
 
 @include('layouts.adminLayout.admin_footer ')
 <!--  -->
-@yield('script')
+
 
 <script src="{{asset('js/backend_js/jquery.min.js')}}"></script> 
 <!-- <script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script> -->
@@ -44,6 +45,8 @@
 <script src="{{asset('js/backend_js/matrix.popover.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@yield('script')
 
 <script>
   $( function() {

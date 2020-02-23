@@ -81,10 +81,11 @@ Route::group(['middleware' => ['frontlogin']], function() {
 
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['adminlogin']], function() {
      Route::get('/admin/dashboard','AdminController@dashboard');
+     Route::get('/admin/profile-role','AdminController@profileRole');
      Route::get('/admin/settings','AdminController@settings');
-     Route::get('/admin/check-pwd','AdminController@chkPassword');
+     Route::get('/admin/check-pwd','AdminController@chkPassword'); // matrix from falidate
      Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
 
     //  Categories Route (Admin)
