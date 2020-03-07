@@ -18,7 +18,7 @@ class Adminlogin
     {
         if(empty(Session::has('adminSession'))) 
         {
-            return redirect('/Admin');
+            return redirect('/admin');
         }
         return $next($request);
     }

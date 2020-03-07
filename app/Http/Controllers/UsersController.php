@@ -12,6 +12,7 @@ use App\Country;
 use App\Cart;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -37,6 +38,22 @@ class UsersController extends Controller
             $user->email = $data['email'];
             $user->password = \bcrypt($data['password']);
             $user->save();
+
+            // send registration email
+            // $email  = $data['email'];
+            // $messageData = ['email' => $data['email'],'name' => $data['name']];
+            // Mail::send('emails.register',$messageData, function($message) use($email) {
+            //    $message->to($email)->subject('Registration with E-com Husin');
+            // });
+
+            // send confirmation email
+            $email = $data['email'];
+            $messageData = ['email' => $data['email'],'name' => $data['name'], 'code' => base64_encode($data['email'])];
+            Mail::send('emails.confirmation',$messageData, function($message) use($email) {
+                $message->to($email)->subject('Confirm your E-com Husin Account');
+            });
+
+            return redirect()->back()->with('flash_message_success','Please confirm your email to activate your account!');
 
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'] ]))
             {

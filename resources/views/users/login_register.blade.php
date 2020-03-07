@@ -20,11 +20,12 @@
         </div>
         @endif  
         @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block" style="background-color:green; color:white; width:18%; margin-left:27%;">
+        <div class="alert alert-dark alert-block" style="background-color: cornflowerblue;color: white;width: 19%;margin-left: 51%;">
             <button type="button" class="close" data-dismiss="alert">x</button>	
             <strong> {{Session::get('flash_message_success')}}</strong>
         </div>
 	@endif
+	
 	<div id="loading"></div>
     <section id="form" style="margin:20px 0px 5% 0;"><!--form-->
 		<div class="container">
