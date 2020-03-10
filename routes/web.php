@@ -45,10 +45,14 @@ Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
 Route::get('/login-register','UsersController@userLoginRegister');
 // user register form submit
 Route::post('/user-register','UsersController@register');
-// users logout
-Route::get('/user-logout','UsersController@logout');
+//confirm account
+Route::get('/confirm/{code}','UsersController@confirmAccount');
 // users login form submit
 Route::post('/user-login','UsersController@login');
+// users logout
+Route::get('/user-logout','UsersController@logout');
+// search product
+Route::match(['get','post'],'/search-products','ProductsController@searcchProducts');
 // check if user already exist check-email
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
 
@@ -124,7 +128,11 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::get('admin/view-orders','ProductsController@viewOrders');
     // Admin order detail routes
     Route::get('admin/view-order/{id}','ProductsController@viewOrderDetails');
-    // Admin order detail routes
+    //     Admin order invoice
+    Route::get('/admin/view-order-invoice/{id}','ProductsController@viewOrderInvoice');
+    // Admin order status
     Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
+    //  Admin user route
+    Route::get('admin/view-users','UsersController@viewUsers');
 
 });

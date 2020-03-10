@@ -3,13 +3,13 @@
 @section('content')
 
 	@if(Session::has('flash_message_error'))
-	 <div class="alert alert-dark alert-block" style="width:350px; margin-left:55%; background-color:Tomato; color:white">
+	 <div class="alert alert-dark alert-block" style="width:18%; margin-left:55%; background-color:Tomato; color:white">
 			<button type="button" class="close" data-dismiss="alert">×</button>	
 			<strong> {{Session::get('flash_message_error')}}</strong>
 		</div>
 	@endif  
 	@if(Session::has('flash_message_success'))
-		<div class="alert alert-dark alert-block" style="width:350px; margin-left:55%; background-color:green; color:white">
+		<div class="alert alert-dark alert-block" style="width:18%; margin-left:55%; background-color:green; color:white">
 			<button type="button" class="close" data-dismiss="alert">×</button>	
 			<strong> {{Session::get('flash_message_success')}}</strong>
 		</div>
@@ -71,7 +71,7 @@
 									<span>
 										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price)}}</span>
 										<label>Quantity:</label>
-										<input type="text" name="quantity" value="1" />
+										<input class="is-valid" type="number" name="quantity" value="" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
 										<button type="submit" class="btn btn-fefault cart" id="cartButton">
 											<i class="fa fa-shopping-cart"></i>

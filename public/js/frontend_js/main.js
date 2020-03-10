@@ -31,11 +31,10 @@ $(document).ready(function(){
 
 
 $(document).ready(function () { 
- 
-	let num = 
+	// var isNumberScript = "<php echo is_number ?>"
+	// console.log(isNumberScript)
 // Change Price & stock with Size
 	$("#selSize").change(function () {
-		
 		var idSize = $(this).val();
 		if(idSize == "")
 		{
@@ -47,10 +46,12 @@ $(document).ready(function () {
 			data:{idSize:idSize},
 			success:function (resp) {
 				var arr = resp.split('#');
+				var arr1 = parseFloat(arr[0]).toFixed()
+				// alert(arr1)
 				var stylout = "color:red; font-weight:bold;"
 				var stylin = "color:green; font-weight:bold;"
-				$("#getPrice").html("Rp."+arr[0]);
-				$("#price").val(arr[0]);
+				$("#getPrice").html("Rp."+arr1);
+				$("#price").val(arr1);
 				if(arr[1]==0)
 				{
 					$("#cartButton").hide();
@@ -110,7 +111,7 @@ $(document).ready(function () {
  // var loading = document.getElementById('loading');
 	window.addEventListener('load', function () {
 	
-		$("#loading").delay(500).fadeOut("slow");
+		$("#loading").delay(1100).fadeOut("slow");
 		// loading.style.display="none";
 	});
 

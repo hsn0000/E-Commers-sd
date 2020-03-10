@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login Admin</title>
+    <title>Husin E-comerce Admin</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ asset('css/backend_css/bootstrap.min.css') }}" />
@@ -49,7 +49,7 @@
         @endif
         <form id="loginform" class="form-vertical" method="post" action="{{url('admin')}}"> {{csrf_field()}}
             <div class="control-group normal_text">
-                <h3><img src="{{asset('images/backend_images/logo.png')}}" alt="Logo" /></h3>
+                <h3 style="color: aqua;">Husin E-comerce Admin</h3>
             </div>
             <div class="control-group">
                 <div class="controls">

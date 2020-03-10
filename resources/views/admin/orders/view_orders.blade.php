@@ -5,7 +5,9 @@ view order
 @endsection
 
 @section('content')
-
+@php
+use Carbon\Carbon;
+@endphp
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i
@@ -34,7 +36,6 @@ view order
         </div>
         @endif
     </div>
-    <div id="loading"></div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
@@ -68,7 +69,7 @@ view order
                                     <tr class="gradeX">
                                         <td style="text-align:center;">{{++$no}}</td>
                                         <td>{{$order->id}}</td>
-                                        <td>{{$order->created_at}}</td>
+                                        <td>{{Carbon::parse($order->created_at)->format('l, j F Y | H:i A')}}</td>
                                         <td>{{$order->name}}</td>
                                         <td>{{$order->user_email}}</td>
                                         <td>
@@ -81,8 +82,8 @@ view order
                                         <td>{{$order->order_status}}</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td class="center" style="text-align:center;" width="">
-                                            <a target="_blank" href="{{url('admin/view-order/'.$order->id)}}" class="btn btn-success btn-mini"> <i class="icon-eye-open"
-                                                    style=""></i> View Order Details</a>
+                                            <a target="_blank" href="{{url('admin/view-order/'.$order->id)}}" class="btn btn-primary btn-mini"> <i class="icon-eye-open" style=""></i> View Order Details</a> <br>
+                                            <a target="_blank" href="{{url('admin/view-order-invoice/'.$order->id)}}" class="btn btn-info btn-mini" style="margin-top: 5%;"> <i class="icon-book" style=""></i> View Order Invoice</a>
                                         </td>
                                     </tr>
                                     @endforeach
