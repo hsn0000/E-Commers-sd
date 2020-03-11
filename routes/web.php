@@ -124,6 +124,11 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner');
     Route::get('/admin/view-banner','BannersController@viewBanners');
     
+    //Admin shipping route
+    Route::match(['get', 'post'], '/admin/add-billboard','BillboardsController@addBillboard');
+    Route::get('/admin/view-billboard','BillboardsController@viewBillboard');
+    Route::match(['get','post'],'/admin/edit-billboard/{id}','BillboardsController@editBillboard');
+    Route::get('/admin/delete-billboard/{id}','BillboardsController@deleteBillboard');
     // Admin order view routes
     Route::get('admin/view-orders','ProductsController@viewOrders');
     // Admin order detail routes

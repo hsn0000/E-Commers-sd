@@ -38,7 +38,7 @@
                             @endforeach
                         </td>
                         <td style="text-align:center;">{{$order->payment_method}}</td>
-                        <td style="text-align:center;">Rp {{is_number($order->grant_total)}}</td>
+                        <td style="text-align:center;">Rp {{is_number($order->grant_total,2)}}</td>
                         <td style="text-align:center;">{{$order->created_at}}</td>
                     </tr>
                     @endforeach

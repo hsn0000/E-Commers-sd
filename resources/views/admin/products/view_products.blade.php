@@ -1,7 +1,9 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('content')
-
+@php
+use Carbon\Carbon;
+@endphp
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Product</a>
@@ -47,6 +49,8 @@
                   <th style="font-size:100%;">Product Code</th>
                   <th style="font-size:100%;">Product Color</th>
                   <th style="font-size:100%;">Price</th>
+                  <th style="font-size:100%;">Feature Item</th>
+                  <th style="font-size:100%;">Create Date</th>
                   <th style="font-size:100%;">Image</th>
                   <th style="font-size:100%;">Actions</th>
                 </tr>
@@ -64,7 +68,9 @@
                   <td>{{$product->product_name}}</td>
                   <td>{{$product->product_code}}</td>
                   <td>{{$product->product_color}}</td>
-                  <td>{{'Rp'.' '.is_number($product->price)}}</td>
+                  <td>{{'Rp'.' '.is_number($product->price,2)}}</td>
+                  <td  style="text-align:center;" > @if ($product->feature_item == 1) <span class="badge badge-success">Yes</span> @else <span class="badge" style="background-color: firebrick;">No</span>@endif</td>
+                  <td>{{Carbon::parse($product->created_at)->format('l, j F Y | H:i')}}</td>
                   <td style="text-align:center;">
                    @if(!empty($product->image))
                      <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="image product" width="110">

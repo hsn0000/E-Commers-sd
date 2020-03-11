@@ -14,7 +14,7 @@ class CouponsController extends Controller
             $data = $request->all();
             $coupon = New Coupon;
             $coupon->coupon_code = $data['coupon_code'];
-            $coupon->amount = $data['amount'];
+            $coupon->amount = str_replace(["Rp",","],"",$data['amount']);
             $coupon->amount_type = $data['amount_type'];
             $coupon->expiry_date = $data['expiry_date'];
             $coupon->status = $data['status'] ?? 0;
@@ -50,7 +50,7 @@ class CouponsController extends Controller
 
     public function viewCoupons()
     {
-        $coupons = Coupon::get();
+        $coupons = Coupon::orderBy('created_at','DESC')->get();
         // $coupons = json_decode(\json_encode($coupons));
         return view('admin.coupons.view_coupons')->with(\compact('coupons'));
     }

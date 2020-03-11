@@ -35,9 +35,11 @@
                 <b class="pull-left">Rp 0</b> <b class="pull-right">Rp 500.000</b>
         </div>
     </div><!--/price-range-->
-
+    @foreach($billboard as $bill)
     <div class="shipping text-center"><!--shipping-->
-        <img src="{{ asset('images/frontend_images/home/shipping.jpg') }}" alt="" />
-    </div><!--/shipping-->
+        <img src="{{ asset('images/backend_images/banners/'.$bill->image) }}" alt="" />
+    </div>
+    @endforeach
+    <!--/shipping-->
 
  </div>

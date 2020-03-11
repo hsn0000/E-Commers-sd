@@ -36,7 +36,7 @@
                         <td style="text-align:center;">{{$pro->product_name}}</td>
                         <td style="text-align:center;">{{$pro->product_size}}</td>
                         <td style="text-align:center;">{{$pro->product_color}}</td>
-                        <td style="text-align:center;">Rp {{is_number($pro->product_price)}}</td>
+                        <td style="text-align:center;">Rp {{is_number($pro->product_price),2}}</td>
                         <td style="text-align:center;">{{$pro->product_qty}}</td>
                     </tr>
                     @endforeach

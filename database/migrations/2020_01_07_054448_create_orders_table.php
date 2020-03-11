@@ -26,10 +26,10 @@ class CreateOrdersTable extends Migration
             $table->string('mobile');
             $table->float('shipping_changes');
             $table->string('coupon_code');
-            $table->float('coupon_amount');
+            $table->decimal('coupon_amount');
             $table->string('order_status');
             $table->string('payment_method');
-            $table->float('grant_total');
+            $table->decimal('grant_total')->default(0);
             $table->timestamps();
         });
     }

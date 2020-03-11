@@ -77,14 +77,20 @@
               </div>
               <div class="control-group">
                 <label class="control-label ">Price</label>
-                <div class="price-input-usd controls">
-                  <input class="price-input-usd" type="text" name="price" id="price" placeholder="Rp.000.00">
+                <div class="controls">
+                  <input class="price-input-Rp" type="text" name="price" id="price" placeholder="Rp 0">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Image</label>
                 <div class="controls">
                   <input type="file" name="image" id="image">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Feature Item</label>
+                <div class="controls">
+                  <input type="checkbox" name="feature_item" id="feature_item" value="1">
                 </div>
               </div>
               <div class="control-group">

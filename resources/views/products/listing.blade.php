@@ -59,13 +59,13 @@
 								<div class="single-products">
 										<div class="productinfo text-center">
 											<img src="/images/backend_images/products/medium/{{$product->image}}" alt="" />
-											<h2>{{'Rp'.' '.is_number($product->price)}}</h2>
+											<h2>{{'Rp'.' '.is_number($product->price,2)}}</h2>
 											<p>{{$product->product_name}}</p>
 											<a href="{{ url('product/'.$product->id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 										<div class="product-overlay">
 											<div class="overlay-content">
-												<h2>{{'Rp'.' '.is_number($product->price)}}</h2>
+												<h2>{{'Rp'.' '.is_number($product->price,2)}}</h2>
 												<p>{{$product->product_name}}</p>
 												<a href="{{ url('product/'.$product->id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 											</div>
@@ -81,8 +81,7 @@
 					   </div>	
 					   @endforeach
 					</div>
-				
-					
+								
 				</div>
 			</div>
 		</div>
