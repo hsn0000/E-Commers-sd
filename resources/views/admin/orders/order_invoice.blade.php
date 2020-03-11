@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Invoice</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
+	<script src="{{ asset('js/frontend_js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/frontend_js/jquery.js') }}"></script>
     <!------ Include the above in your HEAD tag ---------->
     <style>
 
     body {
         margin-top: 27px;
-        background-color: firebrick;
+        background-color: currentColor;
     }
     .container {
         background-color: white;
@@ -124,10 +124,10 @@ use Carbon\Carbon;
                                         <td class="text-center">{{$pro->product_name}}</td>
                                         <td class="text-center">{{$pro->product_size}}</td>
                                         <td class="text-center">{{$pro->product_color}}</td>
-                                        <td class="text-center">{{'Rp'.' '.is_number($pro->product_price)}}</td>
+                                        <td class="text-center">{{'Rp'.' '.is_number($pro->product_price,2)}}</td>
                                         <td class="text-center">{{$pro->product_qty}}</td>
                                         <td class="text-right">
-                                            {{'Rp'.' '.is_number($pro->product_price * $pro->product_qty)}}</td>
+                                            {{'Rp'.' '.is_number($pro->product_price * $pro->product_qty,2)}}</td>
                                     </tr>
                                     @endforeach
                                     @php $subtotal = $subtotal + ($pro->product_price * $pro->product_qty) @endphp
@@ -138,7 +138,7 @@ use Carbon\Carbon;
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right"><strong>Subtotal</strong></td>
-                                        <td class="thick-line text-right">{{'Rp'.' '.is_number($subtotal)}}</td>
+                                        <td class="thick-line text-right">{{'Rp'.' '.is_number($subtotal,2)}}</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -147,7 +147,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Shipping Changes (+)</strong></td>
-                                        <td class="no-line text-right">Rp 0</td>
+                                        <td class="no-line text-right">Rp 00</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -157,7 +157,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Coupon Discount (-)</strong></td>
                                         <td class="no-line text-right">
-                                            {{'Rp'.' '.is_number($orderDetails->coupon_amount)}}</td>
+                                            {{'Rp'.' '.is_number($orderDetails->coupon_amount,2)}}</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -167,7 +167,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Grand Total</strong></td>
                                         <td class="no-line text-right">
-                                            {{'Rp'.' '.is_number($orderDetails->grant_total)}}</td>
+                                            {{'Rp'.' '.is_number($orderDetails->grant_total,2)}}</td>
                                     </tr>
                                 </tbody>
                             </table>

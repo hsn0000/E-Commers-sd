@@ -48,7 +48,7 @@
                         <td>{{ $product['product_size']  }}</td>
                         <td>{{ $product['product_color']  }}</td>
                         <td>{{ $product['product_qty']  }}</td>
-                        <td>{{'Rp'.' '.is_number($product['product_price'])}}</td>
+                        <td>{{'Rp'.' '.is_number($product['product_price'],2)}}</td>
                     </tr>
                     @endforeach
                     <tr>
@@ -57,7 +57,7 @@
                         <td></td>
                         <td></td>
                         <td collspan="5" style="float:right;"> Shipping Charges :</td>
-                        <td> {{'Rp'.' '.is_number($productDetails['shipping_charges'])}}</td>
+                        <td> {{'Rp'.' '.is_number($productDetails['shipping_charges'],2)}}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -65,7 +65,7 @@
                         <td></td>
                         <td></td>
                         <td collspan="5" style="float:right;"> Coupon Discount :</td>
-                        <td>{{'Rp'.' '.is_number($productDetails['coupon_amount'])}}</td>
+                        <td>{{'Rp'.' '.is_number($productDetails['coupon_amount'],2)}}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -73,7 +73,7 @@
                         <td></td>
                         <td></td>
                         <td collspan="5" style="float:right;"> Grand Total :</td>
-                        <td>{{'Rp'.' '.is_number($productDetails['grant_total'])}}</td>
+                        <td>{{'Rp'.' '.is_number($productDetails['grant_total'],2)}}</td>
                     </tr>
                 </table>
             </td>

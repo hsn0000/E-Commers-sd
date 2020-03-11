@@ -5,8 +5,9 @@ order details
 @endsection
 
 @section('content')
-
-
+@php
+use Carbon\Carbon;
+@endphp
 <!--main-container-part-->
 <div id="loading"></div>
 <div id="content">
@@ -48,7 +49,7 @@ order details
                             <tbody>
                                 <tr>
                                     <td class="taskDesc">Order Date</td>
-                                    <td class="taskStatus">{{$orderDetails->created_at}}</td>
+                                    <td class="taskStatus">{{Carbon::parse($orderDetails->created_at)->format('l, j F Y | H:i')}}</td>
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Order Status</td>
@@ -78,7 +79,7 @@ order details
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Order Total</td>
-                                    <td class="taskStatus">Rp {{is_number($orderDetails->grant_total)}}</td>
+                                    <td class="taskStatus">Rp {{is_number($orderDetails->grant_total,2)}}</td>
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Shipping Charges</td>
@@ -90,7 +91,7 @@ order details
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Coupon Amount</td>
-                                    <td class="taskStatus">Rp {{is_number($orderDetails->coupon_amount)}}</td>
+                                    <td class="taskStatus">Rp {{is_number($orderDetails->coupon_amount,2)}}</td>
                                 </tr>
                                 <tr>
                                     <td class="taskDesc"> Payment Method</td>
@@ -230,7 +231,7 @@ order details
                         <td style="text-align:center;">{{$pro->product_name}}</td>
                         <td style="text-align:center;">{{$pro->product_size}}</td>
                         <td style="text-align:center;">{{$pro->product_color}}</td>
-                        <td style="text-align:center;">Rp {{is_number($pro->product_price)}}</td>
+                        <td style="text-align:center;">Rp {{is_number($pro->product_price,2)}}</td>
                         <td style="text-align:center;">{{$pro->product_qty}}</td>
                     </tr>
                     @endforeach

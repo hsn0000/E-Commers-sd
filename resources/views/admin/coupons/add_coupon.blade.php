@@ -48,7 +48,7 @@
               <div class="control-group">
                 <label class="control-label">Amount</label>
                 <div class="controls">
-                  <input type="number" name="amount" id="amount" min="1" required>
+                  <input class="price-input-Rp" type="text" name="amount" id="amount" min="1" required>
                 </div>
               </div>
               <div class="control-group">

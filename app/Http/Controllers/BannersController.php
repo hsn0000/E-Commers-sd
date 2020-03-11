@@ -77,7 +77,7 @@ class BannersController extends Controller
 
     public function viewBanners()
     {
-        $banners = Banner::get();
+        $banners = Banner::orderBy('created_at','DESC')->get();
 
         return \view('admin.banners.view_banner')->with(\compact('banners'));
     }

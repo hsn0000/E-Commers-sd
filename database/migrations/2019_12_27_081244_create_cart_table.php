@@ -20,7 +20,7 @@ class CreateCartTable extends Migration
             $table->string('product_code');
             $table->string('product_color');
             $table->string('size');
-            $table->string('price');
+            $table->decimal('price',8,2)->default(0);
             $table->integer('quantity');
             $table->string('user_email');
             $table->string('session_id');

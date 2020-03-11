@@ -78,7 +78,7 @@ use Carbon\Carbon;
                                             </li>
                                             @endforeach
                                         </td>
-                                        <td>Rp {{is_number($order->grant_total)}}</td>
+                                        <td>Rp {{is_number($order->grant_total,2)}}</td>
                                         <td>{{$order->order_status}}</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td class="center" style="text-align:center;" width="">
