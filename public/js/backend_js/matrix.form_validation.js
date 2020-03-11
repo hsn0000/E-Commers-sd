@@ -16,7 +16,7 @@ $(document).ready(function(){
 		}).then((result) => {
 		if (result.value) {
 			Swal.fire(
-			'Logout Page!',
+			'Logout Page!', 
 			'Your has been logout this page.',
 			'success'
 			)
@@ -40,8 +40,8 @@ $(document).ready(function(){
 				}else if (resp=="true"){
                     $("#chkPwd").html("<font color='green'>Current Password is Correct </font>");
 				}
-			 },error:function() {
-				 alert("Error");
+			 },error:function(error) {
+				 alert(error);
 			 }
 		 });
 	});

@@ -12,6 +12,7 @@ use App\Country;
 use App\Cart;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -38,6 +39,22 @@ class UsersController extends Controller
             $user->password = \bcrypt($data['password']);
             $user->save();
 
+            // send registration email
+            // $email  = $data['email'];
+            // $messageData = ['email' => $data['email'],'name' => $data['name']];
+            // Mail::send('emails.register',$messageData, function($message) use($email) {
+            //    $message->to($email)->subject('Registration with E-com Husin');
+            // });
+
+            // send confirmation email
+            $email = $data['email'];
+            $messageData = ['email' => $data['email'],'name' => $data['name'], 'code' => base64_encode($data['email'])];
+            Mail::send('emails.confirmation',$messageData, function($message) use($email) {
+                $message->to($email)->subject('Confirm your E-com Husin Account');
+            });
+
+            return redirect()->back()->with('flash_message_success','Please confirm your email to activate your account!');
+
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'] ]))
             {
                 Session::put('frontSession',$data['email']);
@@ -61,8 +78,12 @@ class UsersController extends Controller
         if($request->isMethod('post'))
         {
             $data = $request->all();
-           if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'] ]))
+           if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
            {
+               $userStatus = user::where('email', $data['email'])->first();
+               if($userStatus->status == 0) {
+                   return \redirect()->back()->with('flash_message_error','Your account is not actived ! Please confirm your email to active !');
+               }
                Session::put('frontSession',$data['email']);
 
                if(!empty(Session::get('session_id')))
@@ -166,6 +187,34 @@ class UsersController extends Controller
             echo "true";
         }
 
+    }
+
+
+    public function confirmAccount($email) {
+        $email = \base64_decode($email);
+        $userCount =  User::where('email',$email)->count();
+        if($userCount > 0) {
+            $userDetails = User::where('email',$email)->first();
+            if($userDetails->status == 1) {
+                return \redirect('login-register')->with('flash_message_success','Your account Email account is already activated. You can login now.');
+            } else {
+                User::where('email',$email)->update(['status' => 1]);
+                // send welcome email
+                $messageData = ['email' => $email,'name' => $userDetails->name];
+                Mail::send('emails.welcome',$messageData, function($message) use($email) {
+                    $message->to($email)->subject('Welcome to E-com Husin');
+                });
+                return \redirect('login-register')->with('flash_message_success','Your account Email account is activated. You can login now.');
+            }
+        } else {
+            \abort(404);
+        }
+    }
+
+
+    public function viewUsers() {
+        $users = DB::table('users')->orderBy('created_at','desc')->get();
+        return view('admin.users.view_users')->with(\compact('users'));
     }
 
 

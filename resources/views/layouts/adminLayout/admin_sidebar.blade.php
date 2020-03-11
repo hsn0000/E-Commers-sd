@@ -17,13 +17,13 @@
         <li <?php if(preg_match("/view-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-product')}}">View Product</a></li>
       </ul>
     </li>
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-pushpin"></i> <span>Coupons</span> <span class="label label-important">2</span></a>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-qrcode"></i> <span>Coupons</span> <span class="label label-important">2</span></a>
       <ul <?php if(preg_match("/coupon/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-coupon')}}">Add Coupon</a></li>
         <li <?php if(preg_match("/view-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-coupon')}}">View Coupon</a></li>
       </ul>
     </li>
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-pushpin"></i> <span>Orders</span> <span class="label label-important">1</span></a>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-shopping-cart"></i> <span>Orders</span> <span class="label label-important">1</span></a>
       <ul <?php if(preg_match("/orders/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/view-orders'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-orders')}}">View Orders</a></li>
       </ul>
@@ -32,6 +32,11 @@
       <ul <?php if(preg_match("/banner/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-banner')}}">Add Banner</a></li>
         <li <?php if(preg_match("/view-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-banner')}}">View Banner</a></li>
+      </ul>
+    </li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-user"></i> <span>Users</span> <span class="label label-important">1</span></a>
+      <ul <?php if(preg_match("/users/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/view-users'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users')}}">View Users</a></li>
       </ul>
     </li>
     <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
