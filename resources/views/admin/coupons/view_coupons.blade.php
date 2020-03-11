@@ -1,7 +1,9 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('content')
-
+@php
+use Carbon\Carbon
+@endphp
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Coupon</a>
@@ -57,10 +59,10 @@
                   <td style="text-align:center;">{{++$no}}</td>
                   <td style="text-align:center;">{{$coupon->id}}</td>
                   <td style="text-align:center;">{{$coupon->coupon_code}}</td>
-                  <td style="text-align:center;"> @if($coupon->amount_type == "Persentage") {{$coupon->amount}} % @else Rp {{is_number($coupon->amount)}} @endif</td>
+                  <td style="text-align:center;"> @if($coupon->amount_type == "Persentage") {{$coupon->amount}} % @else Rp {{is_number($coupon->amount,2)}} @endif</td>
                   <td style="text-align:center;">{{$coupon->amount_type}}</td>
                   <td style="text-align:center;">{{$coupon->expiry_date}}</td>
-                  <td style="text-align:center;">{{$coupon->created_at}}</td>
+                  <td style="text-align:center;">{{Carbon::parse($coupon->created_at)->format('l, j F Y | H:i')}}</td>
                   <td style="text-align:center;"> @if($coupon->status==1)<span class="badge badge-success">Active</span>@else <span class="badge badge-danger" style="background-color:Crimson;">InActive</span>@endif</td>
                   <td class="center" style="text-align:center;" width="18%;">
                     <a href="{{url('/admin/edit-coupon/'.$coupon->id)}} " class="btn btn-warning btn-mini" style="margin:30px 0 0 10px;" title="Edit Product"> <i class="icon-cogs" style="padding:0 4px"></i> Edit</a> 

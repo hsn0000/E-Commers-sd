@@ -116,13 +116,13 @@
                                 <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
-                            <p>{{'Rp'.' '.is_number($cart->price)}}</p>
+                            <p>{{'Rp'.' '.is_number($cart->price,2)}}</p>
                         </td>
                         <td class="cart_quantity">
                             {{$cart->quantity}}
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">{{'Rp'.' '.is_number(($cart->price * $cart->quantity))}}</p>
+                            <p class="cart_total_price">{{'Rp'.' '.is_number(($cart->price * $cart->quantity),2)}}</p>
                         </td>
                     </tr>
                     <?php $total_amount = $total_amount + $cart->price * $cart->quantity ?>
@@ -133,7 +133,7 @@
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>{{'Rp'.' '.is_number($total_amount)}}</td>
+                                    <td>{{'Rp'.' '.is_number($total_amount,2)}}</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Shipping Cost(+)</td>
@@ -142,11 +142,11 @@
                                 <tr class="shipping-cost">
                                     <td>Discount Amount(-)</td>
                                     <td>@if (!empty(Session::get('CouponAmount'))) Rp
-                                        {{is_number(Session::get('CouponAmount'))}} @else Rp 0 @endif</td>
+                                        {{is_number(Session::get('CouponAmount'),2)}} @else Rp 0 @endif</td>
                                 </tr>
                                 <tr>
                                     <td>Grand Total</td>
-                                    <td><span>{{'Rp'.' '.is_number($grant_total = $total_amount - Session::get('CouponAmount'))}}</span>
+                                    <td><span>{{'Rp'.' '.is_number($grant_total = $total_amount - Session::get('CouponAmount'),2)}}</span>
                                     </td>
                                 </tr>
                             </table>

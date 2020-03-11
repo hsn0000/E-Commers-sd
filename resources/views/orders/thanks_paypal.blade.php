@@ -20,7 +20,7 @@
             <h3>YOUR PAYPAL ORDER HAS BEEN PLACED</h3>
             <p>thanks for the payment. We will process your order very soon </p>
             <img style="width:170px; height:90px;" src="{{asset('/images/frontend_images/Than.jpg')}}" alt="">
-            <p>Your order number is <b style="color:green;">{{Session::get('order_id')}}</b> and total amount paid is <b style="color:green;">Rp {{is_number(Session::get('grant_total'))}}</b></p>
+            <p>Your order number is <b style="color:green;">{{Session::get('order_id')}}</b> and total amount paid is <b style="color:green;">Rp {{is_number(Session::get('grant_total'),2)}}</b></p>
         </div>
     </div>
 </section>

@@ -43,6 +43,8 @@
 <script src="{{asset('js/backend_js/matrix.tables.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('js/backend_js/matrix.popover.js')}}"></script>
+<script src="{{asset('js/backend_js/jquery.price_format.js')}}"></script> 
+<script src="{{asset('js/backend_js/custom.js')}}"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

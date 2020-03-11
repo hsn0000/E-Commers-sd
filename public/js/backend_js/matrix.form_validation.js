@@ -154,7 +154,6 @@ $(document).ready(function(){
 			},
 			price:{
 				required:true,
-				number:true
 			},
 			image:{
 				required:true,
@@ -191,7 +190,6 @@ $(document).ready(function(){
 			},
 			price:{
 				required:true,
-				number:true
 			},
 			
 		},

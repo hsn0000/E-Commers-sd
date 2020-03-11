@@ -24,13 +24,19 @@ use App\OrdersProduct;
 
 class ProductsController extends Controller
 {
+
+    public function __construct() {
+        // sas
+    }
+
     public function addProduct(Request $request) 
     {
 
         if($request->isMethod('post')) 
         {
             $data = $request->all();
-            // dd($data);
+            $price = str_replace(["Rp",","],"",$data['price']);
+
             if(empty($data['category_id']))
             {
                 return \redirect()->back()->with('flash_message_error','Under Category Is Missing!'); 
@@ -40,19 +46,12 @@ class ProductsController extends Controller
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
-         if(!empty($data['description'])) 
-         {
-             $product->description = $data['description'];
-         }else{
-             $product->description = '';
-         }
-         if(!empty($data['care'])) 
-         {
-             $product->care = $data['care'];
-         }else{
-             $product->care = '';
-         }
-         $product->price = $data['price'];
+
+         $product->description = $data['description'] ?? "";
+     
+         $product->care = $data['care'] ?? "";
+
+         $product->price = $price;
          //upload image
          if($request->hasFile('image'))
          {
@@ -74,16 +73,11 @@ class ProductsController extends Controller
              }
             
          }
-         if(empty($data['status']))
-         {
-             $status = 0;
-         }else{
-             $status = 1;
-         }
-         $product->status = $status;
-         $product->save();
-        //  return \redirect()->back()->with('flash_message_success','Product has been added successfully'); 
 
+         $product->status = $data['status']  ?? 0;
+         $product->feature_item = $data['feature_item'] ?? 0;
+         $product->save();
+         //  return \redirect()->back()->with('flash_message_success','Product has been added successfully'); 
         return \redirect('/admin/view-product')->with('flash_message_success','Product has been added successfully'); 
 
         }
@@ -109,6 +103,7 @@ class ProductsController extends Controller
         if($request->isMethod('post'))
         {
             $data = $request->all();
+            $price = str_replace(["Rp",","],"",$data['price']);
            //upload image
             if($request->hasFile('image'))
             {    
@@ -136,11 +131,12 @@ class ProductsController extends Controller
                 'product_name' => $data['product_name'],
                 'product_code' => $data['product_code'],
                 'product_color' => $data['product_color'],
-                'care' => $data['care'] ?? $data['c'] = "",
+                'care' => $data['care'] ?? $data['care'] = "",
                 'description' => $data['description'],
                 'image' => $filename ?? $data['current-image'],
+                'feature_item' => $data['feature_item'] ?? 0,
                 'status' => $data['status'] ?? 0,
-                'price' => $data['price']
+                'price' => $price,
             ]);
             
             return \redirect()->back()->with('flash_message_success','Product has been updated successfully !');
@@ -428,11 +424,12 @@ class ProductsController extends Controller
             $data = $request->all();
 
             $banners = Banner::where('status', 1)->get();
+            $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(2)->get();
             $categories = Category::with('categories')->where(['parent_id' => 0])->get();
             $search_product = $data['product'];
-            $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->get();
-
-            return view('products.listing')->with(\compact('search_product','productAll','categories','banners'));
+            $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->offset(0)->limit(12)->get();
+          
+            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard'));
         }
     }
 
@@ -532,7 +529,7 @@ class ProductsController extends Controller
         {
             return redirect()->back()->with('flash_message_error','Please select size !');
         }
-// else{
+        // else{
             $getSKU = ProductsAttribute::select('sku')->where(['product_id'=>$data['product_id'], 'size'=>$product_sizes ])->first();
 
             DB::table('cart')->insert([
@@ -594,8 +591,8 @@ class ProductsController extends Controller
             $down = "1";
             DB::table('cart')->where('id',$id)->decrement('quantity',$down);
             return redirect('/cart')->with('flash_message_drop','Product Quantity has been drop successfully !');
-        }else
-        {
+        } else {
+
             $getCartDetails = DB::table('cart')->where('id',$id)->first();
             $getAttributeStock = ProductsAttribute::where('sku',$getCartDetails->product_code)->first();
             $updated_quantity = $getCartDetails->quantity+$quantity;
@@ -608,10 +605,8 @@ class ProductsController extends Controller
             }else{
                 return redirect('/cart')->with('flash_message_error','Required Product Quantity is not available !');      
             }
-
-           
+       
         }
-
     
     }
 

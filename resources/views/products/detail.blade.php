@@ -69,7 +69,7 @@
 									</p>
 									<img src="images/product-details/rating.png" alt="" />
 									<span>
-										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price)}}</span>
+										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price,2)}}</span>
 										<label>Quantity:</label>
 										<input class="is-valid" type="number" name="quantity" value="" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
@@ -156,7 +156,7 @@
 											<div class="single-products">
 												<div class="productinfo text-center">
 													<img style="width:220px; margin-left:25px;" src="{{ asset('/images/backend_images/products/medium/'.$item->image)}}" alt="" />
-													<h2>{{'Rp'.' '.is_number($item->price)}}</h2>
+													<h2>{{'Rp'.' '.is_number($item->price,2)}}</h2>
 													<p>{{$item->product_name}}</p>
 													<a href="{{$item->id}}">
 													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
