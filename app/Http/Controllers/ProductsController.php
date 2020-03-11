@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 use Input;
 use Date;
@@ -240,13 +241,11 @@ class ProductsController extends Controller
     {
         $products = Product::orderBy('id','DESC')->get();
         $products = \json_decode(\json_encode($products));
-        // dd($products);
         foreach($products as $key => $val)
         {
             $category_name = Category::where(['id' => $val->category_id])->first();
             $products[$key]->category_name = $category_name->name;
         }
-    //   dd($products);  
         return view('admin.products.view_products')->with(\compact('products'));
     }
 
@@ -296,7 +295,6 @@ class ProductsController extends Controller
 
     public function editAtributes(Request $request, $id = null)
     {
-
       if($request->isMethod('post'))
       {
          $data = $request->all();
@@ -315,10 +313,8 @@ class ProductsController extends Controller
 
     public function deleteAttribute($id=null)
     {
-
         ProductsAttribute::where(['id' => $id])->delete();
         return redirect()->back()->with('flash_message_success','Attribute has been deleted successfully !');
-
     }
 
 
@@ -425,6 +421,22 @@ class ProductsController extends Controller
         return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners'));
     }
 
+
+    public function searcchProducts(Request $request)
+    {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+
+            $banners = Banner::where('status', 1)->get();
+            $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+            $search_product = $data['product'];
+            $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->get();
+
+            return view('products.listing')->with(\compact('search_product','productAll','categories','banners'));
+        }
+    }
+
+
     public function product($id = null)
     {
         //show 404 page if product disable
@@ -464,7 +476,7 @@ class ProductsController extends Controller
         print_r($proArr->price);
         print_r("#");
         print_r($proArr->stock);
-        
+
     }
 
 
@@ -473,7 +485,12 @@ class ProductsController extends Controller
         Session::forget('CouponAmount');
         Session::forget('CouponCode');
         $data = $request->all();
-        // dd($data);
+        //  check product stock is available or not
+        $product_size = explode("-",$data['size']);
+        $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $product_size["1"]])->first();
+        if($getProductStock->stock < $data['quantity']) {
+            return \redirect()->back()->with('flash_message_error','Required Quantity is not available !');
+        }
         $session_id = Session::get('session_id');
         if(!isset($session_id))
         { 
@@ -482,39 +499,55 @@ class ProductsController extends Controller
         }
 
         $sizeArr = \explode("-",$data['size']);
-        if(empty($sizeArr[1]))
+        $product_sizes = $sizeArr[1];
+
+        if(empty(Auth::check())) {
+            $countProducts = DB::table('cart')->where([
+                'product_id' => $data['product_id'],
+                'product_color' => $data['product_color'],
+                'size' => $product_sizes,
+                'session_id' => $session_id
+              ])->count();
+    
+            if($countProducts > 0)
+            {
+                return redirect()->back()->with('flash_message_error','Product already exists in Cart !');
+            }
+
+        } else {
+            $countProducts = DB::table('cart')->where([
+                'product_id' => $data['product_id'],
+                'product_color' => $data['product_color'],
+                'size' => $product_sizes,
+                'user_email' => Auth::User()->email,
+              ])->count();
+    
+            if($countProducts > 0)
+            {
+                return redirect()->back()->with('flash_message_error','Product already exists in Cart !');
+            }
+
+        } 
+        if(empty($product_sizes))
         {
             return redirect()->back()->with('flash_message_error','Please select size !');
         }
-
-        $countProducts = DB::table('cart')->where([
-            'product_id' => $data['product_id'],
-            'product_color' => $data['product_color'],
-            'size' => $sizeArr[1],
-            'session_id' => $session_id
-          ])->count();
-
-        if($countProducts > 0)
-        {
-            return redirect()->back()->with('flash_message_error','Product already exists in Cart !');
-        }else{
-
-            $getSKU = ProductsAttribute::select('sku')->where(['product_id'=>$data['product_id'], 'size'=>$sizeArr[1] ])->first();
+// else{
+            $getSKU = ProductsAttribute::select('sku')->where(['product_id'=>$data['product_id'], 'size'=>$product_sizes ])->first();
 
             DB::table('cart')->insert([
                 'product_id' => $data['product_id'],
                 'product_name' => $data['product_name'],
                 'product_code' => $getSKU->sku,
                 'product_color' => $data['product_color'],
-                'size' => $sizeArr[1],
+                'size' => $product_sizes,
                 'price' => $data['price'],
                 'quantity' => $data['quantity'],
                 'user_email' => Auth::user()->email ?? "",
                 'session_id' => $session_id,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-        }       
-        
+        // }       
         return redirect('/cart')->with('flash_message_success','Product has been added in Cart !');
     }
 
@@ -798,6 +831,22 @@ class ProductsController extends Controller
 
             if($data['payment_method'] == "COD")
             {
+                $productDetails = Order::with('orders')->where('id', $order_id)->first();
+                // $productDetails = json_decode(json_encode($productDetails));
+                $userDetails = User::where('id', $user_id)->first();
+                // for order email
+                $email = $user_email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => $shippingDetails->name,
+                    'order_id' => $order_id,
+                    'productDetails' => $productDetails,
+                    'userDetails' =>  $userDetails,
+                ];
+                Mail::send('emails.order',$messageData, function($message) use($email) {
+                    $message->to($email)->subject('Order Placed - E-com Husin');
+                });
+                // end order email
                 return redirect('/thanks');
             }else{
                 return redirect('/paypal');
@@ -841,7 +890,6 @@ class ProductsController extends Controller
     {
         $user_id = Auth::user()->id;
         $orders = Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
-    //  dd(date_parse($orders->created_at)->format('l, j F Y - H:i A'));
         return view('orders.users_orders')->with(\compact('orders'));
     }
 
@@ -874,6 +922,18 @@ class ProductsController extends Controller
     }
 
 
+    public function viewOrderInvoice($order_id)
+    {
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+        $user_id = $orderDetails->user_id;
+        $userDetails = User::where('id', $user_id)->first();
+        $userDetails = json_decode(\json_encode($userDetails));
+
+        return view('admin.orders.order_invoice')->with(\compact('orderDetails','userDetails'));
+    }
+
+
     public function updateOrderStatus(Request $request) 
     {
         if($request->isMethod('post'))
@@ -887,6 +947,7 @@ class ProductsController extends Controller
             return redirect()->back()->with('flash_message_success','Order Status Has been Update Successfully');
         }
     }
+
 
 
 }

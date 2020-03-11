@@ -61,7 +61,7 @@
                   <td style="text-align:center;">{{$coupon->amount_type}}</td>
                   <td style="text-align:center;">{{$coupon->expiry_date}}</td>
                   <td style="text-align:center;">{{$coupon->created_at}}</td>
-                  <td style="text-align:center;">@if($coupon->status == "1") <span style="color:green">Active</span> @else <span style="color:red">InActive</span> @endif</td>
+                  <td style="text-align:center;"> @if($coupon->status==1)<span class="badge badge-success">Active</span>@else <span class="badge badge-danger" style="background-color:Crimson;">InActive</span>@endif</td>
                   <td class="center" style="text-align:center;" width="18%;">
                     <a href="{{url('/admin/edit-coupon/'.$coupon->id)}} " class="btn btn-warning btn-mini" style="margin:30px 0 0 10px;" title="Edit Product"> <i class="icon-cogs" style="padding:0 4px"></i> Edit</a> 
                     <a rel="{{$coupon->id}}" rel1="delete-coupon" rel2="{{$coupon->coupon_code}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" style="margin:30px 0 0 10px;" title="Delete Product"> 

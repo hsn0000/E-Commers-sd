@@ -41,7 +41,7 @@
                     </div>
                     <div class="widget-content nopadding">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped dataTable no-footer">
+                            <table class="table table-bordered table-striped no-footer data-table">
                                 <thead>
                                     <tr>
                                         <th style="font-size:100%;">NO</th>
@@ -63,9 +63,7 @@
                                         <td style="text-align:center; width:9%">{{$banner->id}}</td>
                                         <td style="text-align:center;">{{$banner->title}}</td>
                                         <td style="text-align:center;">{{$banner->link}}</td>
-                                        <td style="text-align:center;">@if($banner->status == "1") <span
-                                                style="color:green">Active</span> @else <span
-                                                style="color:red">InActive</span> @endif</td>
+                                        <td style="text-align:center;"> @if($banner->status==1)<span class="badge badge-success">Active</span>@else <span class="badge badge-danger" style="background-color:Crimson;">InActive</span>@endif</td>
                                         <td style="text-align:center;" width="25%">
                                             @if(!empty($banner->image))
                                             <img src="{{ asset('images/backend_images/banners/'.$banner->image )}}"
