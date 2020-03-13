@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Closure;
+use Config;
+use App;
 use Auth;
 use FrontLogin;
 use Crypt;
@@ -14,8 +17,24 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
+
 class UsersController extends Controller
 {
+
+    public function __construct() {
+
+    }
+    
+
+    public function language($locale) {
+        // App::setLocale('id');
+        // dd(App::getLocale());
+            Session::put('applocale', $locale);
+        // dd(Config :: get ('languages'));
+        return redirect()->back();
+    }
+
+
     public function userLoginRegister()
     {
         return view('users.login_register');

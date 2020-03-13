@@ -59,14 +59,7 @@
   });
 </script>
 
-
-<script>
-$(document).ready(function() 
-{
-  
-       
-});
-</script>
+@include('layouts.adminLayout.additional.adt_master')
 
 </body>
 </html>

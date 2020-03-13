@@ -4,9 +4,9 @@
 
 <div id="content">
   <div id="content-header">
-  <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Categories</a>
-     <a href="{{url('/admin/view-categories')}}" class="current">View Category</a> </div>
-    <h1>Categories</h1>
+  <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">{{__('backend.categories')}}</a>
+     <a href="{{url('/admin/view-categories')}}" class="current">{{__('backend.view_category')}}</a> </div>
+    <h1>{{__('backend.categories')}}</h1>
     @if(Session::has('flash_message_error'))
         <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
             <button type="button" class="close" data-dismiss="alert">x</button>	
@@ -33,17 +33,17 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>View Categories</h5>
+            <h5>{{__('backend.view_category')}}</h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>Category ID</th>
-                  <th>Category Name</th>
-                  <th>Category Level</th>
-                  <th>Category URL</th>
-                  <th>Actions</th>
+                  <th>{{__('backend.category_id')}}</th>
+                  <th>{{__('backend.category_name')}}</th>
+                  <th>{{__('backend.category_level')}}</th>
+                  <th>{{__('backend.category_url')}}</th>
+                  <th>{{__('backend.actions')}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,8 +55,8 @@
                   <td>{{$category->parent_id}}</td>
                   <td>{{$category->url}}</td>
                   <td style="text-align:center;" class="center" width="25%">
-                  <a href="{{url('/admin/edit-category/'.$category->id)}}" class="btn btn-warning btn-mini" style="margin:0 12px 0 0"><i class="icon-cogs" style="padding:0 4px"></i>Edit</a> 
-                   <a rel="{{$category->id}}" rel1="delete-category" rel2="{{$category->name}}" href="javascript:" class="delCat btn btn-danger btn-mini delCat" id="" style="margin:0 0 0 9px"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
+                  <a href="{{url('/admin/edit-category/'.$category->id)}}" class="btn btn-warning btn-mini" style="margin:0 12px 0 0"><i class="icon-cogs" style="padding:0 4px"></i>{{__('backend.edit')}}</a> 
+                   <a rel="{{$category->id}}" rel1="delete-category" rel2="{{$category->name}}" href="javascript:" class="delCat btn btn-danger btn-mini delCat" id="" style="margin:0 0 0 9px"><i class="icon-remove" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
                  </td>
                 </tr>
                  @endforeach
