@@ -69,8 +69,15 @@ class BannersController extends Controller
 
     public function deleteBanner($id = null)
     {
-        Banner::where('id',$id)->delete();
+      $banner = DB::table('banners')->where('id',$id)->first();
+      $banner_patch = 'images/backend_images/banners/';
+      // Delete large image if not exist folder
+      if(\file_exists($banner_patch.$banner->image))
+      {
+          \unlink($banner_patch.$banner->image);
+      }
 
+        Banner::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_success','Banner Image Has Ben Deleted !');
     }
 

@@ -14,8 +14,7 @@ class AdminController extends Controller
     public function login(Request $request) {
         if($request->isMethod('post')) {
             $data = $request->input();
-            $adminCount = Admin::where(['username' => $data['username']], ['password' =>\md5 ($data['password'])], ['status'=>1])->count();
-            
+            $adminCount = Admin::where('username', $data['username'])->where('password',\md5 ($data['password']), ['status'=>1])->count();
             if($adminCount > 0) {
              
                 Session::put('adminSession', $data['username']);

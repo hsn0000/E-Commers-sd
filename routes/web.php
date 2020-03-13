@@ -15,9 +15,11 @@
 //     return view('welcome');
 // });
 
+//  lang
+Route::get('/language/{locale}','UsersController@language');
+
 // index page
 Route::get('/','IndexController@index');
-
 
 Route::match(['get','post'],'/admin','AdminController@login');
 Route::get('/logout','AdminController@logout');
@@ -86,6 +88,7 @@ Route::group(['middleware' => ['frontlogin']], function() {
 });
 
 Route::group(['middleware' => ['adminlogin']], function() {
+ 
      Route::get('/admin/dashboard','AdminController@dashboard');
      Route::get('/admin/profile-role','AdminController@profileRole');
      Route::get('/admin/settings','AdminController@settings');
@@ -93,7 +96,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
      Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
 
     //  Categories Route (Admin)
-    Route::match(['get','post'],'/admin/add-category','CategoryController@addCategory');
+    Route::match(['get','post'],'/admin/add-categories','CategoryController@addCategory');
     Route::match(['get','post'],'/admin/edit-category/{id}','CategoryController@editCategory');
     Route::match(['get','post'],'/admin/delete-category/{id}','CategoryController@deleteCategory');
     Route::get('/admin/view-categories','CategoryController@viewCategories');

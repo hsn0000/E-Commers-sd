@@ -146,6 +146,53 @@ return [
     |
     */
 
+    /* BACKEND*/
+
+    // logout admin
+    'are_you_sure' => 'Are you sure?',
+    'you_want_to_logout_this_page' => 'You want to logout this page !',
+    'yes_logout_it' => 'Yes, logout it !',
+    'logout_Page' => 'Logout Page !',
+    'your_has_been_logout_this_page' => 'Your has been logout this page.',
+    'success' => 'success !',
+
+    // delete category
+    'you_want_to_delete_this' => 'You want to delete this',
+    'yes_delete_it' => 'Yes, delete it',
+    'no_cancel' => 'No, cancel',
+    'deleted' => 'Deleted!',
+    'your' => 'Your',
+    'has_been_deleted' => 'has been deleted.',
+    'cancelled' => 'Cancelled',
+    'is_safe' => ' is safe :',
+
+    // delete attribute
+    'you_want_to_delete_this_attribute' => 'you want to delete this attribute?',
+    'your_attribute_has_been_deleted' => 'Your Attribute has been deleted.', 
+    'your_attribute_is_safe' => 'Your attribute is safe',
+   
+    // delete product
+    'you_want_to_delete_this' => 'you want to delete this',
+
+    // delete alternate images
+    'you_want_to_delete_this_images' => 'you want to delete this Images?',
+    'your_images_has_been_deleted' => 'Your Images has been deleted.',
+    'your_images_is_safe' => 'Your Images is safe',
+    
+    // admin setting passwr
+    'passIncorect' => 'Current Password is Incorrect',
+    'passIscorrect' => 'Current Password is Correct ',
+
+    // password validate admin
+    'please_enter_your_current_password' => 'Please enter your current password',
+    'your_password_must_be_atleast_6_characters_long' => 'Your password must be atleast 6 characters long',
+    'your_password_must_be_at_most_20_characters' => 'Your password must be at most 20 characters',
+    'please_enter_your_new_password' => 'Please enter your new password',
+    'please_confirm_your_new_password' => 'Please confirm your new password',
+    'your_password_is_not_the_same' => 'Your password is not the same',
+
+
+
     'attributes' => [],
 
 ];
