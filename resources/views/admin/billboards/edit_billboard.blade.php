@@ -35,32 +35,42 @@
             <h5>Edit Billboard</h5>
           </div>
           <div class="widget-content nopadding">
-            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{url('/admin/edit-billboard')}}" name="edit_billboard" id="edit_billboard">
+            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{url('/admin/edit-billboard/'.$billboard->id)}}" name="edit_billboard" id="edit_billboard">
             {{csrf_field()}}
             <div class="control-group">
                 <label class="control-label">Billboard Image</label>
                  <div class="controls">
                   <div class="uploader" id="uniform-undefined">
-                     <input type="file" name="image" id="image" size="19" style="opcity: 0;" required><span class="filename">NO File Selected</span><span class="action">Choose File</span>
+                     <input type="file" name="image" id="image" size="19" style="opcity: 0;"><span class="filename">NO File Selected</span><span class="action">Choose File</span>
                  </div>
                 </div>
+                <div class="control-group">
+                <label class="control-label">Old Image</label>
+                <div class="controls">
+                  <img src="{{ asset('images/backend_images/banners/'.$billboard->image) }}" alt="Old Img" style="width: 214px;border: solid;border-style: double;">
+                  @if(!empty($billboard->image))
+                    <input type="hidden" name="current_image" value="{{$billboard->image}}">
+                  @endif
+                  {{-- dd($billboard->image) --}}
+                </div>
+              </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Title</label>
                 <div class="controls">
-                  <input type="text" name="title" id="title" value="{{$billboard->title}}" required>
+                  <input type="text" name="title" id="title" value="{{$billboard->title}}">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Link</label>
                 <div class="controls" >
-                  <input type="text" name="link" id="link" value="{{$billboard->link}}" required>
+                  <input type="text" name="link" id="link" value="{{$billboard->link}}">
                 </div>
               </div> 
               <div class="control-group">
                 <label class="control-label">Enable</label>
                 <div class="controls">
-                  <input type="checkbox" name="status" id="status" value="1">
+                  <input type="checkbox" name="status" id="status" value="1" @if ($billboard->status == 1) checked @endif> 
                 </div>
               </div>
               <div class="form-actions">

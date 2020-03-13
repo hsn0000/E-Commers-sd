@@ -32,11 +32,11 @@
         <h2>Price Range</h2>
         <div class="well text-center">
                 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="500000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-                <b class="pull-left">Rp 0</b> <b class="pull-right">Rp 500.000</b>
+                <b class="pull-left">Rp 0</b> <b class="pull-right">Rp 5,000,000</b>
         </div>
     </div><!--/price-range-->
     @foreach($billboard as $bill)
-    <div class="shipping text-center"><!--shipping-->
+    <div class="shipping text-center" style="padding-top: unset;"><!--shipping-->
         <img src="{{ asset('images/backend_images/banners/'.$bill->image) }}" alt="" />
     </div>
     @endforeach

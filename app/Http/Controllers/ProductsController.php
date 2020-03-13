@@ -413,8 +413,9 @@ class ProductsController extends Controller
            
         }
         $banners = Banner::where('status', 1)->get(); 
+        $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
         // dd($banners);
-        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners'));
+        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard'));
     }
 
 
@@ -424,7 +425,7 @@ class ProductsController extends Controller
             $data = $request->all();
 
             $banners = Banner::where('status', 1)->get();
-            $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(2)->get();
+            $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
             $categories = Category::with('categories')->where(['parent_id' => 0])->get();
             $search_product = $data['product'];
             $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->offset(0)->limit(12)->get();
