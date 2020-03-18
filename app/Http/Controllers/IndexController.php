@@ -23,7 +23,7 @@ class IndexController extends Controller
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         // $categories = \json_decode(json_encode($categories));
         $banners = Banner::where('status', 1)->get();
-        $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(4)->get();
+        $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(4)->get();
 
         return view('index')->with(\compact('productAll','categories','banners','billboard'));
 

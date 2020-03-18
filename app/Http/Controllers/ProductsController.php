@@ -413,7 +413,7 @@ class ProductsController extends Controller
            
         }
         $banners = Banner::where('status', 1)->get(); 
-        $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
+        $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
         // dd($banners);
         return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard'));
     }
@@ -460,8 +460,9 @@ class ProductsController extends Controller
         $productAltImage = ProductsImage::where('product_id',$id)->get();
         // get Attribute stock
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
+        $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(2)->get();
 
-        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct'));
+        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct','billboard'));
     }
 
 
