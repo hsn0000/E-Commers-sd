@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $category->url = $data['url'];
         $category->status = $status;
         $category->save();
-        return redirect ('/admin/view-categories')->with('flash_message_success','Category Added Successfully!');
+        return redirect ('/admin/view-categories')->with('flash_message_success','category_added_successfully');
 
       }
         $levels = Category::where(['parent_id'=>0])->get();
@@ -46,7 +46,7 @@ class CategoryController extends Controller
             }
             // echo "<pre>"; print_r($data); die;
             Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url'], 'status'=>$status]);
-            return redirect('/admin/view-categories')->with('flash_message_success','Category Updated Successfully!');
+            return redirect('/admin/view-categories')->with('flash_message_success','category_updated_successfully');
         }
         $categoryDetails = Category::where(['id'=>$id])->first();
         $levels = Category::where(['parent_id'=>0])->get();
@@ -58,7 +58,7 @@ class CategoryController extends Controller
 
         if(!empty($id)) {
             Category::where(['id'=>$id])->delete();
-            return redirect()->back()->with('flash_message_success','Category Deleted Successfully!');
+            return redirect()->back()->with('flash_message_success','category_deleted_successfully');
         }
     }
 

@@ -164,7 +164,7 @@ return [
     'your' => 'Your',
     'has_been_deleted' => 'has been deleted.',
     'cancelled' => 'Cancelled',
-    'is_safe' => ' is safe :',
+    'is_safe' => ' is safe',
 
     // delete attribute
     'you_want_to_delete_this_attribute' => 'you want to delete this attribute?',

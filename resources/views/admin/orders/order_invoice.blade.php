@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Invoice</title>
+    <title>{{__('backend.order_invoice')}}</title>
     <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
 	<script src="{{ asset('js/frontend_js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/frontend_js/jquery.js') }}"></script>
@@ -47,14 +47,14 @@ use Carbon\Carbon;
         <div class="row">
             <div class="col-xs-12">
                 <div class="invoice-title">
-                    <h2>Order Invoice</h2>
-                    <h3 class="pull-right">Order # {{$orderDetails->orders[0]->order_id}}</h3>
+                    <h2>{{__('backend.order_invoice')}}</h2>
+                    <h3 class="pull-right">{{__('backend.orders')}} # {{$orderDetails->orders[0]->order_id}}</h3>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-xs-6">
                         <address>
-                            <strong>Billed To :</strong><br>
+                            <strong>{{__('backend.billed_to')}} :</strong><br>
                             {{$userDetails->name}} <br>
                             {{$userDetails->address}} <br>
                             {{$userDetails->city}} <br>
@@ -67,7 +67,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="col-xs-6 text-right">
                         <address>
-                            <strong>Shipped To :</strong><br>
+                            <strong>{{__('backend.shipped_to')}} :</strong><br>
                             {{$orderDetails->name}} <br>
                             {{$orderDetails->address}} <br>
                             {{$orderDetails->city}} <br>
@@ -82,13 +82,13 @@ use Carbon\Carbon;
                 <div class="row">
                     <div class="col-xs-6">
                         <address>
-                            <strong>Payment Method :</strong><br>
+                            <strong>{{__('backend.payment_method')}} :</strong><br>
                             {{$orderDetails->payment_method}} <br>
                         </address>
                     </div>
                     <div class="col-xs-6 text-right">
                         <address>
-                            <strong>Order Date :</strong><br>
+                            <strong>{{__('backend.order_date')}} :</strong><br>
                             {{Carbon::parse($orderDetails->created_at)->format('l, j F Y')}}<br><br>
                         </address>
                     </div>
@@ -100,20 +100,20 @@ use Carbon\Carbon;
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Order summary</strong></h3>
+                        <h3 class="panel-title"><strong>{{__('backend.order_summary')}}</strong></h3>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
-                                        <td><strong>Code</strong></td>
-                                        <td class="text-center"><strong>Name</strong></td>
-                                        <td class="text-center"><strong>Size</strong></td>
-                                        <td class="text-center"><strong>Color</strong></td>
-                                        <td class="text-center"><strong>Price</strong></td>
-                                        <td class="text-center"><strong>Qty</strong></td>
-                                        <td class="text-right"><strong>Totals</strong></td>
+                                        <td><strong>{{__('backend.code')}}</strong></td>
+                                        <td class="text-center"><strong>{{__('backend.name')}}</strong></td>
+                                        <td class="text-center"><strong>{{__('backend.size')}}</strong></td>
+                                        <td class="text-center"><strong>{{__('backend.color')}}</strong></td>
+                                        <td class="text-center"><strong>{{__('backend.price')}}</strong></td>
+                                        <td class="text-center"><strong>{{__('backend.qty')}}</strong></td>
+                                        <td class="text-right"><strong>{{__('backend.totals')}}</strong></td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -137,7 +137,7 @@ use Carbon\Carbon;
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
-                                        <td class="thick-line text-right"><strong>Subtotal</strong></td>
+                                        <td class="thick-line text-right"><strong>{{__('backend.subtotal')}}</strong></td>
                                         <td class="thick-line text-right">{{'Rp'.' '.is_number($subtotal,2)}}</td>
                                     </tr>
                                     <tr>
@@ -146,7 +146,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>Shipping Changes (+)</strong></td>
+                                        <td class="no-line text-right"><strong>{{__('backend.shipping_changes')}} (+)</strong></td>
                                         <td class="no-line text-right">Rp 00</td>
                                     </tr>
                                     <tr>
@@ -155,7 +155,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>Coupon Discount (-)</strong></td>
+                                        <td class="no-line text-right"><strong>{{__('backend.coupon_discount')}} (-)</strong></td>
                                         <td class="no-line text-right">
                                             {{'Rp'.' '.is_number($orderDetails->coupon_amount,2)}}</td>
                                     </tr>
@@ -165,7 +165,7 @@ use Carbon\Carbon;
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>Grand Total</strong></td>
+                                        <td class="no-line text-right"><strong>{{__('backend.grand_total')}}</strong></td>
                                         <td class="no-line text-right">
                                             {{'Rp'.' '.is_number($orderDetails->grant_total,2)}}</td>
                                     </tr>

@@ -28,9 +28,9 @@ class UsersController extends Controller
 
     public function language($locale) {
         // App::setLocale('id');
-        // dd(App::getLocale());
             Session::put('applocale', $locale);
         // dd(Config :: get ('languages'));
+        //  dd( Session::get('applocale'));
         return redirect()->back();
     }
 

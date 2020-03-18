@@ -21,8 +21,8 @@ class AdminController extends Controller
                 return redirect('/admin/dashboard');
 
             }else{
-
-                return redirect('/admin')->with('flash_message_error','Invalid Username Or Password');
+                
+                return redirect('/admin')->with('flash_message_error','invalid_username_or_password');
             }
         }
 
@@ -74,9 +74,9 @@ class AdminController extends Controller
             if($adminCount == 1) {
                 $password = md5($data['new_pwd']);
                 Admin::where('username', Session::get('adminSession'))->update(['password'=>$password]);
-                return redirect('/admin/settings')->with('flash_message_success','Password Update Successfully');
+                return redirect('/admin/settings')->with('flash_message_success','password_update_successfully');
             }else{
-                return redirect('/admin/settings')->with('flash_message_error','Incorrect Current password');
+                return redirect('/admin/settings')->with('flash_message_error','incorrect_current_password');
             }
         }
     }
@@ -84,7 +84,7 @@ class AdminController extends Controller
     public function logout() {
       
         Session::flush();
-        return redirect('/admin')->with('flash_message_success','Logged Out Successfully');
+        return redirect('/admin')->with('flash_message_success','logged_out_successfully');
     }
 
 }
