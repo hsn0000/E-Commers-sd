@@ -12,28 +12,28 @@ use Carbon\Carbon;
 <div id="loading"></div>
 <div id="content">
     <div id="content-header">
-        <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a
-                href="#" class="current">Orders</a> </div>
-        <h1>Order #{{$orderDetails->id}}</h1>
+        <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a
+                href="#" class="current">{{__('backend.orders')}}</a> </div>
+        <h1>{{__('backend.orders')}} #{{$orderDetails->id}}</h1>
         @if(Session::has('flash_message_error'))
         <div class="alert alert-dark alert-block"
             style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_error')}}</strong>
+            <strong> {{__('backend.'.Session::get('flash_message_error'))}}</strong>
         </div>
         @endif
         @if(Session::has('flash_message_drop'))
         <div class="alert alert-success alert-block"
             style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_drop')}}</strong>
+            <strong> {{__('backend.'.Session::get('flash_message_drop'))}}</strong>
         </div>
         @endif
         @if(Session::has('flash_message_success'))
         <div class="alert alert-dark alert-block"
             style="background-color:green; color:white; width:21%; margin-left:20px;">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_success')}}</strong>
+            <strong> {{__('backend.'.Session::get('flash_message_success'))}}</strong>
         </div>
         @endif
     </div>
@@ -42,59 +42,59 @@ use Carbon\Carbon;
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-title">
-                        <h5>Order Details</h5>
+                        <h5>{{__('backend.order_details')}}</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-striped table-bordered">
                             <tbody>
                                 <tr>
-                                    <td class="taskDesc">Order Date</td>
+                                    <td class="taskDesc">{{__('backend.order_date')}}</td>
                                     <td class="taskStatus">{{Carbon::parse($orderDetails->created_at)->format('l, j F Y | H:i')}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Order Status</td>
+                                    <td class="taskDesc">{{__('backend.order_status')}}</td>
                                     <td class="taskStatus">
                                         @if($orderDetails->order_status == "New") <span
                                             class="badge badge-pill badge-primary"
-                                            style="background-color:blue;">New</span>
+                                            style="background-color:blue;">{{__('backend.new')}}</span>
                                         @elseif($orderDetails->order_status == "Pending") <span
-                                            class="badge badge-pill badge-warning">Pending</span>
+                                            class="badge badge-pill badge-warning">{{__('backend.pending')}}</span>
                                         @elseif($orderDetails->order_status == "Cancelled") <span
                                             class="badge badge-pill badge-danger" style="background-color:Red;">
-                                            Cancelled</span>
+                                            {{__('backend.cancelled')}}</span>
                                         @elseif($orderDetails->order_status == "In_Process") <span
-                                            class="badge badge-pill badge-info"> In Process</span>
+                                            class="badge badge-pill badge-info"> {{__('backend.in_proces')}}</span>
                                         @elseif($orderDetails->order_status == "Shipped") <span
                                             class="badge badge-pill badge" style="background-color:#87CEFA;">
-                                            Shipped</span>
+                                            {{__('backend.shipped')}}</span>
                                         @elseif($orderDetails->order_status == "Delivered") <span
-                                            class="badge badge-pill badge-success"> Delivered</span>
+                                            class="badge badge-pill badge-success"> {{__('backend.delivered')}}</span>
                                         @elseif($orderDetails->order_status == "Paid") <span
                                             class="badge badge-pill badge-success" style="background-color:#008080;">
-                                            Paid</span>
+                                            {{__('backend.paid')}}</span>
                                         @else<span
                                             class="badge badge-pill badge-dark">{{$orderDetails->order_status}}</span>
                                         @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Order Total</td>
+                                    <td class="taskDesc">{{__('backend.order_total')}}</td>
                                     <td class="taskStatus">Rp {{is_number($orderDetails->grant_total,2)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Shipping Charges</td>
+                                    <td class="taskDesc">{{__('backend.shipping_charges')}}</td>
                                     <td class="taskStatus">{{$orderDetails->shipping_changes}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Coupon Code</td>
+                                    <td class="taskDesc">{{__('backend.coupon_code')}}</td>
                                     <td class="taskStatus">{{$orderDetails->coupon_code}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Coupon Amount</td>
+                                    <td class="taskDesc">{{__('backend.coupon_amount')}}</td>
                                     <td class="taskStatus">Rp {{is_number($orderDetails->coupon_amount,2)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc"> Payment Method</td>
+                                    <td class="taskDesc">{{__('backend.payment_method')}}</td>
                                     <td class="taskStatus">{{$orderDetails->payment_method}}</td>
                                 </tr>
                             </tbody>
@@ -105,7 +105,7 @@ use Carbon\Carbon;
                     <div class="accordion-group widget-box">
                         <div class="accordion-heading">
                             <div class="widget-title">
-                                <h5>Billing Address</h5>
+                                <h5>{{__('backend.billing_address')}}</h5>
                             </div>
                         </div>
                         <div class="accordion-body in collapse" id="collapseGOne" style="">
@@ -127,17 +127,17 @@ use Carbon\Carbon;
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-title">
-                        <h5>Customer Details</h5>
+                        <h5>{{__('backend.customer_details')}}</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-striped table-bordered">
                             <tbody>
                                 <tr>
-                                    <td class="taskDesc">Customer Name</td>
+                                    <td class="taskDesc">{{__('backend.customer_name')}}</td>
                                     <td class="taskStatus">{{$orderDetails->name}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="taskDesc">Customer Email</td>
+                                    <td class="taskDesc">{{__('backend.customer_email')}}</td>
                                     <td class="taskStatus">{{$orderDetails->user_email}}</td>
                                 </tr>
                             </tbody>
@@ -148,7 +148,7 @@ use Carbon\Carbon;
                     <div class="accordion-group widget-box">
                         <div class="accordion-heading">
                             <div class="widget-title">
-                                <h5>Update Order Status</h5>
+                                <h5>{{__('backend.update_order_status')}}</h5>
                             </div>
                         </div>
                         <div class="accordion-body in collapse" id="collapseGOne" style="">
@@ -161,23 +161,23 @@ use Carbon\Carbon;
                                                 <select name="order_status" id="order_status" class="control-label"
                                                     required="">
                                                     <option value="New" @if($orderDetails->order_status == "New")
-                                                        selected @endif>New</option>
+                                                        selected @endif>{{__('backend.new')}}</option>
                                                     <option value="Pending" @if($orderDetails->order_status ==
-                                                        "Pending") selected @endif>Pending</option>
+                                                        "Pending") selected @endif>{{__('backend.pending')}}</option>
                                                     <option value="Cancelled" @if($orderDetails->order_status ==
-                                                        "Cancelled") selected @endif>Cancelled</option>
+                                                        "Cancelled") selected @endif>{{__('backend.cancelled')}}</option>
                                                     <option value="In_Process" @if($orderDetails->order_status ==
-                                                        "In_Process") selected @endif>In Process</option>
+                                                        "In_Process") selected @endif>{{__('backend.in_proces')}}</option>
                                                     <option value="Shipped" @if($orderDetails->order_status ==
-                                                        "Shipped") selected @endif>Shipped</option>
+                                                        "Shipped") selected @endif>{{__('backend.shipped')}}</option>
                                                     <option value="Delivered" @if($orderDetails->order_status ==
-                                                        "Delivered") selected @endif>Delivered</option>
+                                                        "Delivered") selected @endif>{{__('backend.delivered')}}</option>
                                                     <option value="Paid" @if($orderDetails->order_status == "Paid")
-                                                        selected @endif>Paid</option>
+                                                        selected @endif>{{__('backend.paid')}}</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="submit" value="Update Status">
+                                                <input type="submit" value="{{__('backend.update_status')}}">
                                             </td>
                                         </tr>
                                     </table>
@@ -191,7 +191,7 @@ use Carbon\Carbon;
                     <div class="accordion-group widget-box">
                         <div class="accordion-heading">
                             <div class="widget-title">
-                                <h5>Shipping Address</h5>
+                                <h5>{{__('backend.shipping_address')}}</h5>
                             </div>
                         </div>
                         <div class="accordion-body in collapse" id="collapseGOne" style="">
@@ -216,12 +216,12 @@ use Carbon\Carbon;
             <table id="example" class="table table-striped table-bordered" style="width:100%;">
                 <thead>
                     <tr>
-                        <th style="text-align:center; width: 12%;">Product Code</th>
-                        <th style="text-align:center; width: 16%;">Product Name</th>
-                        <th style="text-align:center; width: 15%;">Product Size</th>
-                        <th style="text-align:center;">Product Color</th>
-                        <th style="text-align:center;">Product Price</th>
-                        <th style="text-align:center;">Product Qty</th>
+                        <th style="text-align:center; width: 12%;">{{__('backend.product_code')}}</th>
+                        <th style="text-align:center; width: 16%;">{{__('backend.product_name')}}</th>
+                        <th style="text-align:center; width: 15%;">{{__('backend.product_size')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_color')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_price')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_qty')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -238,12 +238,12 @@ use Carbon\Carbon;
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th style="text-align:center; width: 9%;">Product Code</th>
-                        <th style="text-align:center; width: 14%;">Product Name</th>
-                        <th style="text-align:center; width: 15%;">Product Size</th>
-                        <th style="text-align:center;">Product Color</th>
-                        <th style="text-align:center;">Product Price</th>
-                        <th style="text-align:center;">Product Qty</th>
+                        <th style="text-align:center; width: 9%;">{{__('backend.product_code')}}</th>
+                        <th style="text-align:center; width: 14%;">{{__('backend.product_name')}}</th>
+                        <th style="text-align:center; width: 15%;">{{__('backend.product_size')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_color')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_price')}}</th>
+                        <th style="text-align:center;">{{__('backend.product_qty')}}</th>
                     </tr>
                 </tfoot>
             </table>

@@ -20,7 +20,7 @@ class CouponsController extends Controller
             $coupon->status = $data['status'] ?? 0;
             $coupon->save();
 
-            return redirect('/admin/view-coupon/')->with('flash_message_success','Coupon has been added Successfully !');
+            return redirect('/admin/view-coupon/')->with('flash_message_success','coupon_has_been_added_successfully');
         }
         return view('admin.coupons.add_coupon');
     }
@@ -39,7 +39,7 @@ class CouponsController extends Controller
             $coupon->status = $data['status'] ?? 0;
             $coupon->save();
 
-            return redirect('/admin/view-coupon/')->with('flash_message_success','Coupon has been updated Successfully !');
+            return redirect('/admin/view-coupon/')->with('flash_message_success','coupon_has_been_updated_successfully');
         }
         $couponDetails = Coupon::find($id);
         // $couponDetails = json_decode(\json_encode($couponDetails));
@@ -59,7 +59,7 @@ class CouponsController extends Controller
     {
         Coupon::where(['id' => $id])->delete();
 
-        return redirect()->back()->with('flash_message_success','Coupon has been deleted successfully !');
+        return redirect()->back()->with('flash_message_success','coupon_has_been_deleted_successfully');
     }
 
 
