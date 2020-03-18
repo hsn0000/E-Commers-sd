@@ -39,7 +39,7 @@ class ProductsController extends Controller
 
             if(empty($data['category_id']))
             {
-                return \redirect()->back()->with('flash_message_error','Under Category Is Missing!'); 
+                return \redirect()->back()->with('flash_message_error','under_category_is_missing'); 
             }
             $product = new Product;
             $product->category_id = $data['category_id'];
@@ -78,7 +78,7 @@ class ProductsController extends Controller
          $product->feature_item = $data['feature_item'] ?? 0;
          $product->save();
          //  return \redirect()->back()->with('flash_message_success','Product has been added successfully'); 
-        return \redirect('/admin/view-product')->with('flash_message_success','Product has been added successfully'); 
+        return \redirect('/admin/view-product')->with('flash_message_success','product_has_been_added_successfully'); 
 
         }
       // Categories dropdown star 
@@ -139,7 +139,7 @@ class ProductsController extends Controller
                 'price' => $price,
             ]);
             
-            return \redirect()->back()->with('flash_message_success','Product has been updated successfully !');
+            return \redirect()->back()->with('flash_message_success','product_has_been_updated_successfully');
         }
         // Get Product
         $productDetails = Product::where(['id' => $id])->first();
@@ -198,7 +198,7 @@ class ProductsController extends Controller
        }
        // delete image from product table
        Product::where(['id' => $id])->delete();
-       return \redirect()->back()->with('flash_message_success','Product Has Been Deleted Successfully');
+       return \redirect()->back()->with('flash_message_success','product_has_been_deleted_successfully');
 
     }
 
@@ -229,7 +229,7 @@ class ProductsController extends Controller
         // delete image from product table
         Product::where(['id' => $id])->update(['image'=>'']);
 
-        return \redirect()->back()->with('flash_message_success','Product Image has been deleted successfully !');
+        return \redirect()->back()->with('flash_message_success','product_image_has_been_deleted_successfully');
     }
 
 
@@ -262,7 +262,7 @@ class ProductsController extends Controller
                 $attrCountSKU = ProductsAttribute::where('sku',$val)->count();
                 if($attrCountSKU > 0 )
                 {
-                    return redirect('/admin/add-attribute/'.$id)->with('flash_message_error','SKU Already Exists, Please Add Another SKU. !');
+                    return redirect('/admin/add-attribute/'.$id)->with('flash_message_error','sku_already_exists');
                 }
                 // Size Check
                 $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
@@ -281,7 +281,7 @@ class ProductsController extends Controller
                }
            }
 
-           return redirect('/admin/add-attribute/'.$id)->with('flash_message_success','Product Attributes Has Been Added Successfully !');
+           return redirect('/admin/add-attribute/'.$id)->with('flash_message_success','product_attributes_has_been_added');
         }
         // dd($productDetails);
         return view('admin.products.add_attributes')->with(\compact('productDetails'));
@@ -301,7 +301,7 @@ class ProductsController extends Controller
                  'stock' => $data['stock'][$key]
              ]);
          }
-         return redirect()->back()->with('flash_message_success','Product Attribute Has Been Update Successfully');
+         return redirect()->back()->with('flash_message_success','product_attribute_has_been_update');
       }
 
     }
@@ -310,7 +310,7 @@ class ProductsController extends Controller
     public function deleteAttribute($id=null)
     {
         ProductsAttribute::where(['id' => $id])->delete();
-        return redirect()->back()->with('flash_message_success','Attribute has been deleted successfully !');
+        return redirect()->back()->with('flash_message_success','attribute_has_been_deleted');
     }
 
 
@@ -345,7 +345,7 @@ class ProductsController extends Controller
                   $pimage->save();
               }
           }
-          return redirect('/admin/add-images/'.$id)->with('flash_message_success','Product Image Has Ben Added Successfully');
+          return redirect('/admin/add-images/'.$id)->with('flash_message_success','product_image_has_ben_added');
         }
         $productsImages = ProductsImage::where(['product_id' => $id])->get();
         // dd($productDetails);
@@ -380,7 +380,7 @@ class ProductsController extends Controller
         // delete image from product table
         ProductsImage::where(['id' => $id])->delete();
 
-        return \redirect()->back()->with('flash_message_success','Product Image has been deleted successfully !');
+        return \redirect()->back()->with('flash_message_success','product_image_has_been_deleted');
     }
     
 

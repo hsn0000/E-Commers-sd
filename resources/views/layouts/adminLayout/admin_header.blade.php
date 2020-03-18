@@ -21,7 +21,7 @@
       <ul class="dropdown-menu">
         <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i>  {{__('backend.new_message')}}</a></li>
         <li class="divider"></li>
-        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> {{__('backend.inbox')}}</a></li>
+        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> {{__('backend.inbox')}}</a></li> 
         <li class="divider"></li>
         <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> {{__('backend.outbox')}}</a></li>
         <li class="divider"></li>
@@ -36,9 +36,7 @@
     </li>
     <li class="dropdown" id="menu-language"><a href="#" data-toggle="dropdown" data-target="#menu-language" class="dropdown-toggle"><i class="icon icon-flag"></i> <span class="text"> {{__('backend.language')}}</span> <span class="label label-important">3</span> <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li>
-          <a href="{{url('/language/id')}}" class="sAdd" ><i class="icon-flag"></i>Indonesia  </a>
-        </li>
+        <li> <a href="{{url('/language/id')}}" class="sAdd" ><i class="icon-flag"></i>Indonesia  </a></li>
         <li class="divider"></li>
         <li><a class="sAdd" title="" href="{{url('/language/en')}}"><i class="icon-flag"></i>English</a></li>
         <li class="divider"></li>

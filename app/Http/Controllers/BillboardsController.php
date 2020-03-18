@@ -34,7 +34,7 @@ class BillboardsController extends Controller
               'created_at' => date('Y-m-d H:i:s')
           ]);
 
-          return redirect('/admin/add-billboard')->with('flash_message_success','Billboard Image Has Ben Added Successfully');
+          return redirect('/admin/add-billboard')->with('flash_message_success','billboard_image_has_ben_added_successfully');
         }
         return view('admin.billboards.add_billboard');
     }
@@ -75,7 +75,7 @@ class BillboardsController extends Controller
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
-            return redirect()->back()->with('flash_message_success','Billboard Image Has Ben Updated Successfully !');
+            return redirect()->back()->with('flash_message_success','billboard_image_has_ben_updated_successfully');
 
         }
 
@@ -95,7 +95,7 @@ class BillboardsController extends Controller
         }
         
         DB::table('billboards')->where('id',$id)->delete();
-        return redirect()->back()->with('flash_message_success','Billboard ImageImage Has Ben Deleted !');
+        return redirect()->back()->with('flash_message_success','billboard_image_has_ben_deleted');
     }
 
 

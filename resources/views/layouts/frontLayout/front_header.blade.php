@@ -33,7 +33,7 @@ use App\Http\Controllers\Controller;
             </div>
         </div>
     </div>
-    <!--/header_top-->
+    <!--/header_top--> 
 
     <div class="header-middle">
         <!--header-middle-->
@@ -41,31 +41,24 @@ use App\Http\Controllers\Controller;
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="{{url('./')}}"><img src="{{asset('images/frontend_images/home/logo2.jpeg') }}"
-                                alt="" /></a>
+                        <a href="{{url('./')}}"><img src="{{asset('images/frontend_images/home/logo2.jpeg') }}"alt="" /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                Indonesia
-                                <span class="caret"></span>
-                            </button>
+                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">@if (Session::get('applocale') == "id") Indonesia @elseif (Session::get('applocale') == "en")  US  @elseif (Session::get('applocale') == "khmer") Kambodia @endif <span class="caret"></span> </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Indonesia</a></li>
-                                <li><a href="#">Kambodia</a></li>
-                                <li><a href="#">US</a></li>
+                                <li><a href="{{url('/language/id')}}">Indonesia</a></li>
+                                <li><a href="{{url('/language/en')}}">US</a></li>
+                                <li><a href="{{url('/language/khmer')}}">Kambodia</a></li>
                             </ul>
                         </div>
 
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                Rupiah
-                                <span class="caret"></span>
-                            </button>
+                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"> @if (Session::get('applocale') == "id") Rupiah @elseif (Session::get('applocale') == "en") Dollar US  @elseif (Session::get('applocale') == "khmer") Real Khme @endif  <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Rupiah</a></li>
-                                <li><a href="#">Real Khmer</a></li>
                                 <li><a href="#">Dollar US</a></li>
+                                <li><a href="#">Real Khmer</a></li>
                             </ul>
                         </div>
                     </div>
@@ -73,16 +66,16 @@ use App\Http\Controllers\Controller;
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="#"><i class="fa fa-star"></i>{{__('frontend.wishlist')}}</a></li>
                             <li><a href="{{url('/orders')}}"><i class="fa fa-crosshairs" aria-hidden="true"></i>
-                                    Orders</a></li>
+                            {{__('frontend.orders')}}</a></li>
                             <li><a href="{{url('/cart')}}" class="enter_link"><i class="fa fa-shopping-cart"></i>
                                     Cart</a></li>
                             @if(empty(Auth::check()))
-                            <li><a href="{{url('/login-register')}}"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="{{url('/login-register')}}"><i class="fa fa-lock"></i>{{__('frontend.login')}}</a></li>
                             @else
-                            <li><a href="{{url('/account')}}"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="{{url('/user-logout')}}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                            <li><a href="{{url('/account')}}"><i class="fa fa-user"></i> {{__('frontend.account')}}</a></li>
+                            <li><a href="{{url('/user-logout')}}"><i class="fa fa-sign-out"></i> {{__('frontend.logout')}}</a></li>
                             @endif
                         </ul>
                     </div>
@@ -108,8 +101,8 @@ use App\Http\Controllers\Controller;
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="{{url('/')}}" class="active">Home</a></li>
-                            <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                            <li><a href="{{url('/')}}" class="active">{{__('frontend.home')}}</a></li>
+                            <li class="dropdown"><a href="#">{{__('frontend.shop')}}<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     @foreach($mainCategories as $cat)
                                     @if($cat->status == "1")
@@ -131,8 +124,8 @@ use App\Http\Controllers\Controller;
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
                         <form action="{{url('/search-products')}}" method="post"> {{csrf_field()}}
-                            <input type="text" placeholder="Search Product" name="product" required />
-                            <button type="submit" class="btn btn-info">Search</button>
+                            <input type="text" placeholder="{{__('frontend.search_product')}}" name="product" required />
+                            <button type="submit" class="btn btn-info">{{__('frontend.search')}}</button>
                         </form>
                     </div>
                 </div>
