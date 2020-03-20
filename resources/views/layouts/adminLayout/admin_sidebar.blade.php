@@ -45,6 +45,13 @@
         <li <?php if(preg_match("/view-users'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users')}}">{{__('backend.view_users')}}</a></li>
       </ul>
     </li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-book"></i> <span>{{__('backend.cms_pages')}}</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/cms-page/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-cms-page'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-cms-page')}}">{{__('backend.add_cms_page')}}</a></li>
+        <li <?php if(preg_match("/view-cms-page'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-cms-page')}}">{{__('backend.view_cms_page')}}</a></li>
+      </ul>
+    </li>
+
     <li><a href="javascript:"><i class="icon icon-th"></i> <span>Tables</span></a></li>
     
     <li class="content"> <span>{{__('backend.monthly_bandwidth_transfer')}}</span>

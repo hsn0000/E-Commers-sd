@@ -30,20 +30,14 @@
     <section id="form" style="margin:20px 0px 5% 0;"><!--form-->
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
-					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form action="{{url('/user-login')}}" id="loginForm" name="loginForm" method="post"> {{csrf_field()}}
-							<input type="email" name="email" placeholder="Email Address" required />
-							<input class="" type="password" name="password" placeholder="Password" required />
-							<!-- <span>
-								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
-							</span> -->
-							 <button type="submit" class="btn btn-default">Login</button> <br>
-							 <a style="position: relative;top: -6px;" href="{{url('forgot-password')}}">Forgot Password ?</a>
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="login-form"><!--forget pw form-->
+						<h2>Forgot Password</h2>
+						<form action="{{url('/forgot-password')}}" id="forgotPasswordForm" name="forgotPasswordForm" method="post"> {{csrf_field()}}
+							 <input type="email" name="email" placeholder="Email Address" required/>
+							 <button type="submit" class="btn btn-default">Submit</button>
 						</form>
-					</div><!--/login form-->
+					</div><!--/forget pw form-->
 				</div>
 				<div class="col-sm-1">
 					<h2 class="or">OR</h2>

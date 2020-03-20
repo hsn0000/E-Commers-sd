@@ -45,16 +45,15 @@ use App\Http\Controllers\Controller;
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">@if (Session::get('applocale') == "id") Indonesia @elseif (Session::get('applocale') == "en")  US  @elseif (Session::get('applocale') == "khmer") Kambodia @endif <span class="caret"></span> </button>
+                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">@if (Session::get('applocale') == "id") Indonesia @elseif (Session::get('applocale') == "en")  US  @elseif (Session::get('applocale') == "khmer") Kambodia @else US @endif <span class="caret"></span> </button>
                             <ul class="dropdown-menu">
                                 <li><a href="{{url('/language/id')}}">Indonesia</a></li>
                                 <li><a href="{{url('/language/en')}}">US</a></li>
                                 <li><a href="{{url('/language/khmer')}}">Kambodia</a></li>
                             </ul>
                         </div>
-
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"> @if (Session::get('applocale') == "id") Rupiah @elseif (Session::get('applocale') == "en") Dollar US  @elseif (Session::get('applocale') == "khmer") Real Khme @endif  <span class="caret"></span></button>
+                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"> @if (Session::get('applocale') == "id") Rupiah @elseif (Session::get('applocale') == "en") Dollar US  @elseif (Session::get('applocale') == "khmer") Real Khme @else Dollar US @endif  <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Rupiah</a></li>
                                 <li><a href="#">Dollar US</a></li>
