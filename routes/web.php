@@ -45,6 +45,8 @@ Route::get('/cart/update-quantity/{id}/{quantity}','ProductsController@updateCar
 Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
 // register/login page /check-email
 Route::get('/login-register','UsersController@userLoginRegister');
+// user forgot-password
+Route::match(['get','post'],'forgot-password','UsersController@forgotPassword');
 // user register form submit
 Route::post('/user-register','UsersController@register');
 //confirm account
@@ -142,5 +144,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
     //  Admin user route
     Route::get('admin/view-users','UsersController@viewUsers');
+   //  admin cms route
+   Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage');    
 
 });

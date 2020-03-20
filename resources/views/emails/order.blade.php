@@ -13,19 +13,19 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Hello {{$name}},</td>
+            <td>{{__('frontend.hello')}} {{$name}},</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Thank you for shopping with us. You order details are as below :- </td>
+            <td>{{__('frontend.thank_you_for_shopping')}} :- </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Order No: {{$order_id}}</td>
+            <td>{{__('frontend.order_no')}} : {{$order_id}}</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -34,12 +34,12 @@
             <td>
                 <table width="95%" cellpadding="5" cellspacing="5" style="background-color:#f7f4f4">
                     <tr style="background-color: #cccccc">
-                        <td>Product Name</td>
-                        <td>Product Code</td>
-                        <td>Size</td>
-                        <td>Color</td>
-                        <td>Quantity</td>
-                        <td>Unit Price</td>
+                        <td>{{__('frontend.product_name')}}</td>
+                        <td>{{__('frontend.product_code')}}</td>
+                        <td>{{__('frontend.size')}}</td>
+                        <td>{{__('frontend.color')}}</td>
+                        <td>{{__('frontend.quantity')}}</td>
+                        <td>{{__('frontend.unit_price')}}</td>
                     </tr>
                     @foreach($productDetails['orders'] as $product)
                     <tr>
@@ -56,7 +56,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td collspan="5" style="float:right;"> Shipping Charges :</td>
+                        <td collspan="5" style="float:right;"> {{__('frontend.shipping_charges')}} :</td>
                         <td> {{'Rp'.' '.is_number($productDetails['shipping_charges'],2)}}</td>
                     </tr>
                     <tr>
@@ -64,7 +64,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td collspan="5" style="float:right;"> Coupon Discount :</td>
+                        <td collspan="5" style="float:right;"> {{__('frontend.coupon_discount')}} :</td>
                         <td>{{'Rp'.' '.is_number($productDetails['coupon_amount'],2)}}</td>
                     </tr>
                     <tr>
@@ -72,7 +72,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td collspan="5" style="float:right;"> Grand Total :</td>
+                        <td collspan="5" style="float:right;"> {{__('frontend.grand_total')}} :</td>
                         <td>{{'Rp'.' '.is_number($productDetails['grant_total'],2)}}</td>
                     </tr>
                 </table>
@@ -85,7 +85,7 @@
                         <td width="50%">
                             <table>
                                 <tr>
-                                    <td><strong> Bill To :- </strong></td>
+                                    <td><strong> {{__('frontend.bill_to')}} :- </strong></td>
                                 </tr>
                                 <tr>
                                     <td> {{$userDetails['name']}}</td>
@@ -113,7 +113,7 @@
                         <td width="50%">
                             <table>
                                 <tr>
-                                    <td> <strong> Ship To :- </strong></td>
+                                    <td> <strong> {{__('frontend.ship_to')}} :- </strong></td>
                                 </tr>
                                 <tr>
                                     <td> {{$productDetails['name']}}</td>
@@ -146,14 +146,14 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>for any enquiries, you can contact us at <a href="mailto:info@ecom-website.com">info@ecom-husin.com</a>
+            <td>{{__('frontend.for_any_enquiries')}}<a href="mailto:info@ecom-website.com">info@ecom-husin.com</a>
             </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Regards, <br> Team E-com Husin</td>
+            <td>{{__('frontend.regards')}}, <br> Team E-com Husin</td>
         </tr>
         <tr>
             <td>&nbsp;</td>

@@ -404,18 +404,19 @@ class ProductsController extends Controller
             { 
                 $cat_ids[] = $subcat->id;
             }
-            $productAll = Product::whereIn('category_id', $cat_ids)->where('status',1)->get();
-            $productAll = \json_decode(\json_encode($productAll));
-
+            $productAll = Product::whereIn('category_id', $cat_ids)->where('status',1)->paginate(9);
+            // $productAll = \json_decode(\json_encode($productAll));
+            $allProductCount = Product::whereIn('category_id', $cat_ids)->where('status',1)->count();
         }else{
             // If url is sub category url
-            $productAll = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->get();
+            $productAll = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->paginate(9);
+            $allProductCount = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->count();
            
         }
         $banners = Banner::where('status', 1)->get(); 
         $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
         // dd($banners);
-        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard'));
+        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard','allProductCount'));
     }
 
 
@@ -428,9 +429,10 @@ class ProductsController extends Controller
             $billboard = DB::table('billboards')->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
             $categories = Category::with('categories')->where(['parent_id' => 0])->get();
             $search_product = $data['product'];
-            $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->offset(0)->limit(12)->get();
-          
-            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard'));
+            $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->paginate(9);
+            $productCount = DB::table('products')->where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->count();
+            // dd($productCount);
+            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard','productCount'));
         }
     }
 
