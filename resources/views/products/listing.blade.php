@@ -48,9 +48,9 @@
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">
 						@if(!empty($search_product))
-						{{$search_product}} items
-						@else
-						{{$categoryDetails->name}} items
+						{{$search_product}} ({{$productCount}}) items
+						@else 
+						{{$categoryDetails->name}} ({{$allProductCount}}) items
 						@endif
 						</h2>
 						@foreach($productAll as $product)
@@ -81,7 +81,7 @@
 					   </div>	
 					   @endforeach
 					</div>
-								
+					<div class="">{{$productAll->links()}}</div>
 				</div>
 			</div>
 		</div>
