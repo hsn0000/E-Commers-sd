@@ -21,7 +21,7 @@ return [
     'add_coupon' => 'Add Coupon',
     'view_coupon' => 'View Coupon',
     'edit_coupon' => 'Edit Coupon',
-
+ 
     'orders' => 'Orders',
     'view_orders' => 'View Orders',
 
@@ -38,6 +38,11 @@ return [
     'users' => 'Users',
     'view_users' => 'View Users',
 
+    'cms_pages' => 'CMS Pages',
+    'add_cms_page' => 'Add CMS Page',
+    'view_cms_page' => 'View CMS Page',
+    'edit_cms_page' => 'Edit CMS Page',
+ 
     'monthly_bandwidth_transfer' => 'Monthly Bandwidth Transfer',
     'disk_space_usage' => 'Disk Space Usage',
 

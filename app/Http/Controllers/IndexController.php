@@ -25,7 +25,11 @@ class IndexController extends Controller
         $banners = Banner::where('status', 1)->get();
         $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(3)->get();
 
-        return view('index')->with(\compact('productAll','categories','banners','billboard'));
+        // meta tags
+        $meta_title = "E-commerce website";
+        $meta_description = "Online Shopping Site for men, woman and kids clothing";
+        $meta_keyword = "eshop website, online shopping, men clothing";
+        return view('index')->with(\compact('productAll','categories','banners','billboard','meta_title','meta_description','meta_keyword'));
 
     }
 }
