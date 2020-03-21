@@ -134,6 +134,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::get('/admin/view-billboard','BillboardsController@viewBillboard');
     Route::match(['get','post'],'/admin/edit-billboard/{id}','BillboardsController@editBillboard');
     Route::get('/admin/delete-billboard/{id}','BillboardsController@deleteBillboard');
+
     // Admin order view routes
     Route::get('admin/view-orders','ProductsController@viewOrders');
     // Admin order detail routes
@@ -144,7 +145,16 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
     //  Admin user route
     Route::get('admin/view-users','UsersController@viewUsers');
-   //  admin cms route
-   Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage');    
 
-});
+   //  admin cms route edit-cms-page 
+   Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage'); 
+   Route::get('/admin/view-cms-page','CmsController@viewCmsPage');
+   Route::match(['get','post'],'/admin/edit-cms-page/{id}','CmsController@editCmsPage'); 
+   Route::get('/admin/delete-cms-page/{id}','CmsController@deleteCmsPage');
+
+}); 
+
+//  display cms page
+Route::match(['get','post'],'/page/{url}','CmsController@cmsPage')->name('page');
+//  display contact page
+Route::match(['get','post'],'/pages/contact','CmsController@contact');     

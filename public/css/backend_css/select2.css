@@ -479,5 +479,6 @@ disabled look for already selected choices in the results dropdown
 	}
 	.select2-search input {
 		background-position: 100% -21px !important;
-	}
+  }
+  
 }

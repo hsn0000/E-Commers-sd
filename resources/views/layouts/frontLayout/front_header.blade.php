@@ -1,9 +1,8 @@
-<?php 
-
-use App\Http\Controllers\Controller;
+@php 
+ use App\Http\Controllers\Controller;
  $mainCategories = Controller::mainCategories(); 
-    
-?>
+ $url = url()->current();
+@endphp
 
 <header id="header">
     <!--header-->
@@ -64,17 +63,16 @@ use App\Http\Controllers\Controller;
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="#"><i class="fa fa-star"></i>{{__('frontend.wishlist')}}</a></li>
-                            <li><a href="{{url('/orders')}}"><i class="fa fa-crosshairs" aria-hidden="true"></i>
+                            <li><a href="{{url('/orders')}}" <?php  if(preg_match("/orders/i", $url)) { ?> class="active" <?php } ?> ><i class="fa fa-crosshairs" aria-hidden="true"></i>
                             {{__('frontend.orders')}}</a></li>
-                            <li><a href="{{url('/cart')}}" class="enter_link"><i class="fa fa-shopping-cart"></i>
-                                    Cart</a></li>
+                            <li><a href="{{url('/cart')}}" class="enter_link <?php  if(preg_match("/cart/i", $url)) { ?> active <?php } ?>"><i class="fa fa-shopping-cart"></i>Cart</a></li>
                             @if(empty(Auth::check()))
-                            <li><a href="{{url('/login-register')}}"><i class="fa fa-lock"></i>{{__('frontend.login')}}</a></li>
+                            <li><a href="{{url('/login-register')}}" <?php  if(preg_match("/login-register/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-lock"></i>{{__('frontend.login')}}</a></li>
                             @else
-                            <li><a href="{{url('/account')}}"><i class="fa fa-user"></i> {{__('frontend.account')}}</a></li>
-                            <li><a href="{{url('/user-logout')}}"><i class="fa fa-sign-out"></i> {{__('frontend.logout')}}</a></li>
+                            <li><a href="{{url('/account')}}" <?php  if(preg_match("/account/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-user"></i> {{__('frontend.account')}}</a></li>
+                            <li><a href="{{url('/user-logout')}}" <?php  if(preg_match("/user-logout/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-sign-out"></i> {{__('frontend.logout')}}</a></li>
                             @endif
                         </ul>
                     </div>
@@ -83,7 +81,6 @@ use App\Http\Controllers\Controller;
         </div>
     </div>
     <!--/header-middle-->
-
     <div class="header-bottom">
         <!--header-bottom-->
         <div class="container">
@@ -100,8 +97,8 @@ use App\Http\Controllers\Controller;
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="{{url('/')}}" class="active">{{__('frontend.home')}}</a></li>
-                            <li class="dropdown"><a href="#">{{__('frontend.shop')}}<i class="fa fa-angle-down"></i></a>
+                            <li><a href="{{url('/')}}" @if($url == "http://localhost:9000") class="active" @elseif($url == "http://localhost:8000") class="active" @elseif($url == "http://localhost:7000") class="active" @elseif($url == "http://localhost:5000") class="active" @endif >{{__('frontend.home')}}</a></li>
+                            <li class="dropdown"><a href="#" <?php  if(preg_match("/products/i", $url)) { ?> class="active" <?php } ?>>{{__('frontend.shop')}}<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     @foreach($mainCategories as $cat)
                                     @if($cat->status == "1")
@@ -116,7 +113,7 @@ use App\Http\Controllers\Controller;
                                     <li><a href="#">Blog Single</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="{{url('/pages/contact')}}" <?php  if(preg_match("/contact/i", $url)) { ?> class="active" <?php } ?>> Contact </a></li>
                         </ul>
                     </div>
                 </div>

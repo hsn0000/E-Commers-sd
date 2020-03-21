@@ -2,7 +2,7 @@
 <html lang="en">  
 <head>
 <title>
-@yield('title')
+ @yield('title')
 </title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,6 +18,8 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- custom css -->
+<link rel="stylesheet" href="{{asset('css/backend_css/custom.css')}}">
 @yield('link')
 </head>
 <body>
