@@ -30,7 +30,7 @@
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box"> 
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
             <h5>{{__('backend.add_cms_page')}}</h5>
           </div>
@@ -40,7 +40,7 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.title')}}</label>
                 <div class="controls">
-                  <input type="text" name="title" id="title" class="@error('title') is-invalid @enderror" value="{{old('title')}}" required>
+                  <input type="text" name="title" @error('title') id="is-invalid-title"  @enderror value="{{old('title')}}" required>
                   @error('title')
                       <span class="invalid-feedback" role="alert">
                           <strong style="color: orangered;"> Title cannot be empty ! </strong>
@@ -51,7 +51,7 @@
               <div class="control-group">
                 <label class="control-label">CMS Page URL</label>
                 <div class="controls">
-                  <input type="text" name="url" id="url" class="@error('url') is-invalid @enderror"  value="{{old('url')}}" required >
+                  <input type="text" name="url" @error('url') id="is-invalid-url"  @enderror value="{{old('url')}}" required >
                    @error('url')
                         <span class="invalid-feedback" role="alert">
                             <strong style="color: orangered;"> URL cannot be empty ! </strong>

@@ -155,4 +155,6 @@ Route::group(['middleware' => ['adminlogin']], function() {
 }); 
 
 //  display cms page
-Route::get('page/{url}','CmsController@cmsPage')->name('page.url');
+Route::match(['get','post'],'/page/{url}','CmsController@cmsPage')->name('page');
+//  display contact page
+Route::match(['get','post'],'/pages/contact','CmsController@contact');     

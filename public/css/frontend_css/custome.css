@@ -1,0 +1,4 @@
+.is-invalid, #is-invalid {
+    border-style: solid;
+    border-color: orangered;
+}

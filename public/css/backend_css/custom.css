@@ -2,3 +2,5 @@
 .tdCen {
     text-align: center;
 }
+
+.is-invalid, #is-invalid, #is-invalid-title, #is-invalid-url { border-style: solid; border-color: orangered; }

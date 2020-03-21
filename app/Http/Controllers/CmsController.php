@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\CmsPage;
 use App\Category;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class CmsController extends Controller
 {
@@ -87,6 +89,44 @@ class CmsController extends Controller
         } 
 
     }
+
+
+    public function contact(Request $request) {
+
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            $validator = Validator::make($data, [
+                'name' => 'required|max:255',
+                'email' => 'required',
+                'subject' => 'required',
+                'message' => 'required'
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+             }
+            $email = "admin.ecomerce@yopmail.com";
+            $messageData = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'subject' => $data['subject'],
+                'comment' => $data['message']
+            ];
+           Mail::send('emails.enquiry', $messageData, function ($message) use ($email) {
+               $message->to($email)->subject('Enquiry from E-com Website');
+           });
+
+           return redirect()->back()->with('flash_message_success','Thanks for your enquiry. We will get back to you soon. ');
+        }
+            $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+            // meta tags
+            $meta_title = "Contact Us - E-commerce Website";
+            $meta_description = "Contact us for any queries related to our products.";
+            $meta_keyword = "contact us, queries";
+
+        return view('pages.contact')->with(\compact('categories','meta_title','meta_description','meta_keyword'));
+    }
+
+
 
 
 }

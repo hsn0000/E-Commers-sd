@@ -40,7 +40,7 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.title')}}</label>
                 <div class="controls">
-                  <input type="text" name="title" id="title" value="{{ old('title') ?: $cmsPage->title }}" class="@error('title') is-invalid @enderror" required>
+                  <input type="text" name="title"  @error('title') id="is-invalid-title" @enderror value="{{ old('title') ?: $cmsPage->title }}" class="@error('title') is-invalid @enderror" required>
                         @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong style="color: orangered;"> Title cannot be empty  !</strong>
@@ -51,7 +51,7 @@
               <div class="control-group">
                 <label class="control-label">CMS Page URL</label>
                 <div class="controls">
-                  <input type="text" name="url" id="url" value="{{ old('url') ?: $cmsPage->url }}" class="@error('title') is-invalid @enderror" required>
+                  <input type="text" name="url" @error('title') id="is-invalid-title" @enderror value="{{ old('url') ?: $cmsPage->url }}" class="@error('title') is-invalid @enderror" required>
                       @error('url')
                             <span class="invalid-feedback" role="alert">
                                 <strong style="color: orangered;"> URL cannot be empty ! </strong>
