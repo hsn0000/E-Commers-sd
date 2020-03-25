@@ -66,8 +66,8 @@ use Carbon\Carbon
                   <td style="text-align:center;"> @if($coupon->status==1)<span class="badge badge-success">{{__('backend.active')}}</span>@else <span class="badge badge-danger" style="background-color:Crimson;">{{__('backend.inactive')}}</span>@endif</td>
                   <td class="center" style="text-align:center;" width="18%;">
                     <a href="{{url('/admin/edit-coupon/'.$coupon->id)}} " class="btn btn-warning btn-mini" style="margin:30px 0 0 10px;" title="{{__('backend.edit')}}"> <i class="icon-cogs" style="padding:0 4px"></i> {{__('backend.edit')}}</a> 
-                    <a rel="{{$coupon->id}}" rel1="delete-coupon" rel2="{{$coupon->coupon_code}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" style="margin:30px 0 0 10px;" title="{{__('backend.delete')}}"> 
-                      <i class="icon-remove" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
+                    <a rel="{{$coupon->id}}" rel1="delete-coupon" rel2="{{$coupon->coupon_code}}" href="javascript:" onclick="deleteProdt(this)" class="btn btn-danger btn-mini" style="margin:30px 0 0 10px;" title="{{__('backend.delete')}}"> 
+                      <i class="icon-trash" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
                   </td>
                 </tr>
                  @endforeach

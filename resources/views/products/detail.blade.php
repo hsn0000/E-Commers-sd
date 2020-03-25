@@ -69,9 +69,9 @@
 									</p>
 									<img src="images/product-details/rating.png" alt="" />
 									<span>
-										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price,2)}}</span>
-										<label>Quantity:</label>
-										<input class="is-valid" type="number" name="quantity" value="" required type="number" min="1" max="100"/>
+										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price,2)}}</span> <br> <br> <br> <br>
+										<label>Quantity :</label>
+										<input class="is-valid" type="number" name="quantity" value="1" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
 										<button type="submit" class="btn btn-fefault cart" id="cartButton">
 											<i class="fa fa-shopping-cart"></i>
@@ -81,7 +81,12 @@
 									</span>
 									<p><b>Availability :</b> @if($total_stock > 0) <span style="color:green;" id="Availability"><b>In Stock</b></span> @else <span style="color:red;" id="outAvailability"><b>Out Of Stock</b></span> @endif</p>
 									<p><b>Condition : <span style="color:orange;">New</span></b> </p>
-									<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+									<p><b>Delivery :</b>
+									<input type="text" name="pincode" class="" id="chkPincode" placeholder="Check Pincode" required>
+									<button type="button" class="" onclick=" return checkPincode()">Go</button>
+									</p>
+									<p id="pincodeResponse"></p>
+									<a href="javascript:"><img src="https://images.vexels.com/media/users/3/136817/isolated/preview/c31f80ee80f25dddba49957fe5339e27-share-icon-outline-by-vexels.png" class="share img-responsive" width="42px" alt=""/></a>
 								</div><!--/product-information-->
 							</form>
 						</div>

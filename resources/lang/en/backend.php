@@ -234,13 +234,13 @@ return [
     'billboard_image_has_ben_deleted' => 'Billboard ImageImage Has Ben Deleted !',
 
     // categoryController
-    'category_added_successfully!' => 'Category Added Successfully !',
-    'category_updated_successfully!' => 'Category Updated Successfully !',
+    'category_added_successfully' => 'Category Added Successfully !',
+    'category_updated_successfully' => 'Category Updated Successfully !',
     'category_deleted_successfully' => 'Category Deleted Successfully !',
    
     // couponController
-    'coupon_has_been_added_successfully !' => 'Coupon has been added Successfully !',
-    'coupon_has_been_updated_successfully !' => 'Coupon has been updated Successfully !',
+    'coupon_has_been_added_successfully' => 'Coupon has been added Successfully !',
+    'coupon_has_been_updated_successfully' => 'Coupon has been updated Successfully !',
     'coupon_has_been_deleted_successfully' => 'Coupon has been deleted successfully !',
 
     // productController

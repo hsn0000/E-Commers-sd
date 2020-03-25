@@ -26,7 +26,10 @@ class CmsController extends Controller
             $cmspage->title = $data['title'];
             $cmspage->description = $data['description'] ?: "";
             $cmspage->url = $data['url'];
-            $cmspage->status = $data['status'] ?: 0;
+            $cmspage->meta_title = $data['meta_title'] ?: "";
+            $cmspage->meta_description = $data['meta_description'] ?: "";
+            $cmspage->meta_keywords = $data['meta_keywords'] ?? "";
+            $cmspage->status = $data['status'] ?? "0";
             $cmspage->save();
 
             return redirect()->back()->with('flash_message_success','CMS Page has been added successfully !');
@@ -50,12 +53,16 @@ class CmsController extends Controller
                 'title' => $data['title'],
                 'url' => $data['url'],
                 'description' => $data['description'],
+                'meta_title' => $data['meta_title'],
+                'meta_description' => $data['meta_description'],
+                'meta_keywords' => $data['meta_keywords'],
                 'status' => $data['status'] ?? 0
             ]);
-            
+         
             return redirect()->back()->with('flash_message_success','CMS Page has been updated successfully !');
 
         }
+
         return view('admin.pages.edit_cms_page')->with(\compact('cmsPage'));
     }
 
@@ -83,9 +90,14 @@ class CmsController extends Controller
             $cmsPageDetails = DB::table('cms_pages')->where('url',$url)->first();
             // $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
             $categories = Category::with('categories')->where(['parent_id' => 0])->get();
-            return view('pages.cms_page')->with(\compact('cmsPageDetails','categories'));
+            // meta tags
+            $meta_title = $cmsPageDetails->meta_title;
+            $meta_description = $cmsPageDetails->meta_description;
+            $meta_keyword = $cmsPageDetails->meta_keywords;
+
+            return view('pages.cms_page')->with(\compact('cmsPageDetails','categories','meta_title','meta_description','meta_keyword'));
         } else {
-            \abort(404);
+            \abort(404); 
         } 
 
     }

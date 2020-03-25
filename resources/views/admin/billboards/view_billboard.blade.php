@@ -68,8 +68,7 @@ use Carbon\Carbon;
                                         <td style="text-align:center;">{{Carbon::parse($bill->created_at)->format('l, j F Y | H:i')}}</td>
                                         <td style="text-align:center;" style="width: 166px; height: 215px;">
                                             @if(!empty($bill->image))
-                                            <img src="{{ asset('images/backend_images/banners/'.$bill->image )}}"
-                                                alt="image billboard">
+                                              <a href="javascript:"> <img src="{{ asset('images/backend_images/banners/'.$bill->image )}}" alt="image billboard" onclick="popupGambar(this)"> </a>
                                             @endif
                                         </td>
                                         <td class="center" style="text-align:center;" width="14%;">
@@ -78,10 +77,10 @@ use Carbon\Carbon;
                                                 title="Edit Billboard"> <i class="icon-cogs" style="padding:0 4px"></i>
                                                 {{__('backend.edit')}}</a>
                                             <a rel="{{$bill->id}}" rel1="delete-billboard" rel2="{{$bill->title}}"
-                                                href="javascript:" class="deleteProd btn btn-danger btn-mini"
+                                                href="javascript:" onclick="deleteProdt(this)" class="btn btn-danger btn-mini"
                                                 data-del-id="{{$bill->id}}" style="margin:35px 0 0 10px;"
                                                 title="{{__('backend.delete')}}">
-                                                <i class="icon-remove" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
+                                                <i class="icon-trash" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
                                         </td>
                                     </tr>
                                     @endforeach

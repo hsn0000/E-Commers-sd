@@ -61,7 +61,7 @@
   });
 </script>
 
-@include('layouts.adminLayout.additional.adt_master')
+@include('layouts.adminLayout.additional.adt_admin_design')
 
 </body>
 </html>

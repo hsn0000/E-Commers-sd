@@ -9,7 +9,7 @@ class CreateCategoryTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return void 
      */
     public function up()
     {
@@ -19,6 +19,9 @@ class CreateCategoryTable extends Migration
             $table->string('name'); 
             $table->text('description');
             $table->string('url');
+            $table->string('meta_title',255);
+            $table->string('meta_description',255);
+            $table->string('meta_keywords',255);
             $table->tinyInteger('status');
             $table->rememberToken();
             $table->timestamps();

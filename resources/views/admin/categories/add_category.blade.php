@@ -18,12 +18,12 @@
             <h5>{{__('backend.add_category')}}</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/add-category')}}" name="add_category" id="add_category" novalidate="novalidate">
+            <form class="form-horizontal" method="post" action="{{url('/admin/add-categories')}}" name="add_category" id="add_category">
             {{csrf_field()}}
               <div class="control-group">
                 <label class="control-label">{{__('backend.category_name')}}</label>
                 <div class="controls">
-                  <input type="text" name="category_name" id="category_name">
+                  <input type="text" name="category_name" id="category_name" value="{{old('category_name')}}" required>
                 </div>
               </div>
               <div class="control-group">
@@ -40,13 +40,31 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.description')}}</label> 
                 <div class="controls">
-                 <textarea name="description" id="description"></textarea>
+                 <textarea name="description" id="description" value="{{old('description')}}"></textarea>
                 </div>
               </div> 
               <div class="control-group">
                 <label class="control-label">{{__('backend.category_url')}}</label>
                 <div class="controls">
-                  <input type="text" name="url" id="url">
+                  <input type="text" name="url" id="url" value="{{old('url')}}" required>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Title</label>
+                <div class="controls">
+                  <input type="text" name="meta_title"  id="meta_title" value="{{old('meta_title')}}">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Description</label>
+                <div class="controls">
+                  <input type="text" name="meta_description" id="meta_description"  value="{{old('meta_description')}}" >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Keywords</label>
+                <div class="controls">
+                  <input type="text" name="meta_keywords" id="meta_keywords"  value="{{old('meta_keywords')}}">
                 </div>
               </div>
               <div class="control-group">

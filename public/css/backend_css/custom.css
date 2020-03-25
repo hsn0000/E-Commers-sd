@@ -4,3 +4,24 @@
 }
 
 .is-invalid, #is-invalid, #is-invalid-title, #is-invalid-url { border-style: solid; border-color: orangered; }
+
+/* overlay zoom image */
+
+#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    top: 0;
+    left: 0;
+    z-index: 5;
+    display: none;
+    text-align: center;
+}
+
+#overlay img {
+    height: 85vh;
+    margin: 3.5%;
+    width: 45vw;
+    margin-left: 4vw;
+}

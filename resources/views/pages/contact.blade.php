@@ -4,6 +4,8 @@
 
 <section>
     <div class="container">
+    <div id="app">
+    </div>
         <div class="row">
             <div class="col-sm-3">
                 @include('layouts.frontLayout.front_sidebar')
