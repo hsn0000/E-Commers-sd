@@ -59,6 +59,8 @@ Route::get('/user-logout','UsersController@logout');
 Route::match(['get','post'],'/search-products','ProductsController@searcchProducts');
 // check if user already exist check-email
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
+// check pincode
+Route::match(['get','post'],'/check-pincode','ProductsController@checkPincode');
 
 // all route before login
 Route::group(['middleware' => ['frontlogin']], function() {

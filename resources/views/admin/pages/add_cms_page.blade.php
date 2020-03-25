@@ -66,6 +66,39 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Meta Title</label>
+                <div class="controls">
+                  <input type="text" name="meta_title" @error('meta_title') id="is-invalid"  @enderror value="{{old('meta_title')}}" required>
+                  @error('meta_title')
+                      <span class="invalid-feedback" role="alert">
+                          <strong style="color: orangered;"> Meta Title cannot be empty ! </strong>
+                       </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Description</label>
+                <div class="controls">
+                  <input type="text" name="meta_description" @error('meta_description') id="is-invalid"  @enderror value="{{old('meta_description')}}" required>
+                  @error('meta_description')
+                      <span class="invalid-feedback" role="alert">
+                          <strong style="color: orangered;"> Meta Description cannot be empty ! </strong>
+                       </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Keywords</label>
+                <div class="controls">
+                  <input type="text" name="meta_keywords" @error('meta_keywords') id="is-invalid"  @enderror value="{{old('meta_keywords')}}" required>
+                  @error('meta_keywords')
+                      <span class="invalid-feedback" role="alert">
+                          <strong style="color: orangered;"> Meta Keywords cannot be empty ! </strong>
+                       </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">{{__('backend.enable')}}</label>
                 <div class="controls">
                   <input type="checkbox" name="status" id="status" value="1">

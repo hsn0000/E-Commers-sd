@@ -85,7 +85,7 @@
                 <label class="control-label">{{__('backend.old_image')}}</label>
                 <div class="controls">
                @if(!empty($productDetails->image))
-                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" width="110px;"> | <a rel="{{$productDetails->id}}" rel1="delete-product-image" rel2="{{__('backend.old_image')}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" id="" >{{__('backend.delete')}}</a>
+                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" width="110px;"> | <a rel="{{$productDetails->id}}" rel1="delete-product-image" rel2="{{__('backend.old_image')}}" href="javascript:" class="btn btn-danger btn-mini" id="" onclick="deleteProdt(this)">{{__('backend.delete')}}</a>
                @endif
                 </div>
               </div>
