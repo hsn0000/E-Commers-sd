@@ -65,8 +65,8 @@ use Carbon\Carbon;
                   <td style="text-align:center;" width="24%;">
                     <a href="#myModal{{$page->id}}" data-toggle="modal" class="btn btn-success btn-mini" style="margin:0 0 0 0;" title=" {{__('backend.view')}}"> <i class="icon-eye-open" style="padding:0 4px"></i> {{__('backend.view')}}</a>
                     <a href="{{url('/admin/edit-cms-page/'.$page->id)}} " class="btn btn-warning btn-mini" style="margin:0 0 0 10px;" title="{{__('backend.edit')}}"> <i class="icon-cogs" style="padding:0 4px"></i>  {{__('backend.edit')}}</a> 
-                    <a rel="{{$page->id}}" rel1="delete-cms-page" rel2="{{$page->title}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" data-del-id="{{$page->id}}" style="margin:0 0 0 10px;" title=" {{__('backend.delete')}}"> 
-                      <i class="icon-remove" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
+                    <a rel="{{$page->id}}" rel1="delete-cms-page" rel2="{{$page->title}}" href="javascript:" onclick="deleteProdt(this)" class="btn btn-danger btn-mini" data-del-id="{{$page->id}}" style="margin:0 0 0 10px;" title=" {{__('backend.delete')}}"> 
+                      <i class="icon-trash" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
                  </td>
                   <div id="myModal{{$page->id}}" class="modal hide">
                      <div class="modal-header">

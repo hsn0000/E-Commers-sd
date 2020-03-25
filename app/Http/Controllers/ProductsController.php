@@ -18,7 +18,7 @@ use App\Coupon;
 use App\Banner;
 use App\User;
 use App\Country;
-use App\DeliveryAddress;
+use App\DeliveryAddress; 
 use App\Order;
 use App\OrdersProduct;
 
@@ -415,8 +415,12 @@ class ProductsController extends Controller
         }
         $banners = Banner::where('status', 1)->get(); 
         $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
-        // dd($banners);
-        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard','allProductCount'));
+        // meta tags
+        $meta_title = $categoryDetails->meta_title;
+        $meta_description = $categoryDetails->meta_description;
+        $meta_keyword = $categoryDetails->meta_keywords;
+
+        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard','allProductCount','meta_title','meta_description','meta_keyword'));
     }
 
 
@@ -463,8 +467,11 @@ class ProductsController extends Controller
         // get Attribute stock
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
         $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(2)->get();
+        $meta_title = $productDetails->product_name;
+        $meta_description = $productDetails->description;
+        $meta_keyword = $productDetails->product_name;
 
-        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct','billboard'));
+        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct','billboard','meta_title','meta_description','meta_keyword'));
     }
 
 
@@ -571,7 +578,10 @@ class ProductsController extends Controller
            
         }
  
-        return view('products.cart')->with(\compact('userCart'));
+        $meta_title ="Shopping Cart - E-commerce web";
+        $meta_description = "View Shopping Cart Of E-commerce Web";
+        $meta_keyword = "shopping cart, e-com Website";
+        return view('products.cart')->with(\compact('userCart','meta_title','meta_description','meta_keyword'));
     }
 
 
@@ -750,8 +760,9 @@ class ProductsController extends Controller
             return redirect()->action('ProductsController@orderReview');
             
         }
-
-        return view('products.checkout')->with(\compact('userDetails','countries','shippingCount','shippingDetails'));
+        
+        $meta_title ="Checkout - E-com Website";
+        return view('products.checkout')->with(\compact('userDetails','countries','shippingCount','shippingDetails','meta_title'));
 
     }
 
@@ -771,7 +782,8 @@ class ProductsController extends Controller
            
         }
 
-        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart'));
+        $meta_title ="Order Review - E-com Website";
+        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart','meta_title'));
     }
     
     
@@ -945,6 +957,23 @@ class ProductsController extends Controller
 
             return redirect()->back()->with('flash_message_success','Order Status Has been Update Successfully');
         }
+    }
+
+
+    public function checkPincode(Request $request) {
+
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            $pincodeCount = DB::table('pincodes')->where('pincode',$data['pincode'])->count();
+            if($pincodeCount > 0 ) {
+                echo true;
+            } else {
+                echo false;
+            }
+
+        }
+        // $data = $request->all();
+        // echo "<pre>"; print_r($data); die;
     }
 
 

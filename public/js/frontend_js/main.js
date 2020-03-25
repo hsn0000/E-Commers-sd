@@ -268,7 +268,7 @@ $(document).ready(function () {
 			   current_pwd:current_pwd,
 			   "_token": $('meta[name="csrf-token"]').attr('content')
 		},
-		   dataType: "JSON",
+		   dataType: "JSON", 
 		   success:function(resp){
 			   if(!resp)
 			   {
@@ -366,6 +366,9 @@ function selectPaymentMethod()
 		alert("Please Select Payment Method")
 	}
 }
+
+
+
 
 
 

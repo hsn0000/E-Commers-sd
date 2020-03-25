@@ -23,7 +23,7 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.category_name')}}</label>
                 <div class="controls">
-                  <input type="text" name="category_name" id="category_name" value="{{$categoryDetails->name}}">
+                  <input type="text" name="category_name" id="category_name" value="{{old('category_name') ?? $categoryDetails->name}}">
                 </div>
               </div>
               <div class="control-group">
@@ -32,7 +32,7 @@
                    <select name="parent_id" id="" style="width:220px;">
                        <option value="0">{{__('backend.main_category')}}</option>
                        @foreach($levels as $val)
-                          <option value="{{$val->id}}" @if($val->id == $categoryDetails->parent_id)selected @endif > {{$val->name}}</option>
+                          <option value="{{$val->id}}" @if($val->id == $categoryDetails->parent_id) selected @endif > {{$val->name}}</option>
                        @endforeach
                    </select>
                 </div>
@@ -40,13 +40,31 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.description')}}</label> 
                 <div class="controls">
-                 <textarea name="description" id="description">{{$categoryDetails->description}}</textarea>
+                 <textarea name="description" id="description">{{old('description') ?? $categoryDetails->description}}</textarea>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">{{__('backend.category_url')}}</label>
                 <div class="controls">
-                  <input type="text" name="url" id="url" value="{{$categoryDetails->url}}">
+                  <input type="text" name="url" id="url" value="{{old('url') ?? $categoryDetails->url}}">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Title</label>
+                <div class="controls">
+                  <input type="text" name="meta_title"  id="meta_title" value="{{old('meta_title') ?? $categoryDetails->meta_title}}">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Description</label>
+                <div class="controls">
+                  <input type="text" name="meta_description" id="meta_description"  value="{{old('meta_description') ?? $categoryDetails->meta_description}}" >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Meta Keywords</label>
+                <div class="controls">
+                  <input type="text" name="meta_keywords" id="meta_keywords"  value="{{old('meta_keywords') ?? $categoryDetails->meta_keywords}}">
                 </div>
               </div>
               <div class="control-group">

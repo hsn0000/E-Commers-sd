@@ -73,7 +73,7 @@ use Carbon\Carbon;
                   <td>{{Carbon::parse($product->created_at)->format('l, j F Y | H:i')}}</td>
                   <td style="text-align:center;">
                    @if(!empty($product->image))
-                     <img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="image product" width="110">
+                     <a href="javascript:"><img src="{{ asset('images/backend_images/products/small/'.$product->image )}}" alt="image product" width="110" onclick="popupGambar(this)"></a>
                    @endif
                   </td>
                   {{-- url('/admin/delete-product/'.$product->id) --}}
@@ -82,8 +82,8 @@ use Carbon\Carbon;
                     <a href="{{url('/admin/add-attribute/'.$product->id)}} " class="btn btn-primary btn-mini" style="margin:35px 0 0 10px;" title="{{__('backend.add_product_attributes')}}"> <i class="icon-plus" style="padding:0 4px"></i> {{__('backend.add')}} Attr</a>
                     <a href="{{url('/admin/add-images/'.$product->id)}} " class="btn btn-info btn-mini" style="margin:35px 0 0 10px;" title="{{__('backend.add_product_mages')}}"> <i class="icon-plus-sign" style="padding:0 4px"></i>  {{__('backend.add')}}  Img</a>
                     <a href="{{url('/admin/edit-product/'.$product->id)}} " class="btn btn-warning btn-mini" style="margin:35px 0 0 10px;" title="{{__('backend.edit_product')}}"> <i class="icon-cogs" style="padding:0 4px"></i>  {{__('backend.edit')}}</a> 
-                    <a rel="{{$product->id}}" rel1="delete-product" rel2="{{$product->product_name}}" href="javascript:" class="deleteProd btn btn-danger btn-mini" data-del-id="{{$product->id}}" style="margin:35px 0 0 10px;" title=" {{__('backend.delete')}}"> 
-                      <i class="icon-remove" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
+                    <a rel="{{$product->id}}" rel1="delete-product" rel2="{{$product->product_name}}" href="javascript:" class="btn btn-danger btn-mini" onclick="deleteProdt(this)" data-del-id="{{$product->id}}" style="margin:35px 0 0 10px;" title=" {{__('backend.delete')}}"> 
+                      <i class="icon-trash" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
                  </td>
                   <div id="myModal{{$product->id}}" class="modal hide">
                      <div class="modal-header">

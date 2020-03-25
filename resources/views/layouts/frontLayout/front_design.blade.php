@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="author" content="">
     @if(!empty($meta_description)) <meta name="description" content=" {{$meta_description}} "> @endif
     @if(!empty($meta_keyword)) <meta name="keywords" content=" {{$meta_keyword}} "> @endif
     <title>@if(!empty($meta_title)) {{ $meta_title }} @else Home | E-Commers @endif</title>
@@ -49,8 +48,11 @@
     <script src="{{ asset('js/frontend_js/jquery.validate.js') }}"></script>
     <script src="{{ asset('js/frontend_js/passtrength.js') }}"></script>
     <script src="{{ asset('js/frontend_js/easyzoom.js') }}"></script>
+    <!-- <script src="{{ asset('js/app.js')}}"></script> -->
 
-    @yield('script');
+    @yield('script')
     
+    @include('layouts.frontLayout.additional.adt_front_design')
+
 </body>
 </html>

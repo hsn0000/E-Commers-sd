@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+ use Carbon\Carbon; 
+@endphp
+
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">{{__('backend.categories')}}</a>
@@ -43,6 +47,8 @@
                   <th>{{__('backend.category_name')}}</th>
                   <th>{{__('backend.category_level')}}</th>
                   <th>{{__('backend.category_url')}}</th>
+                  <th>{{__('backend.created_at')}}</th>
+                  <th>{{__('backend.status')}}</th>
                   <th>{{__('backend.actions')}}</th>
                 </tr>
               </thead>
@@ -54,9 +60,11 @@
                   <td>{{$category->name}}</td>
                   <td>{{$category->parent_id}}</td>
                   <td>{{$category->url}}</td>
+                  <td style="text-align:center;">{{Carbon::parse($category->created_at)->format('l, j F Y | H:i')}}</td>
+                  <td style="text-align:center;"> @if($category->status==1)<span class="badge badge-success">{{__('backend.active')}}</span>@else <span class="badge badge-danger" style="background-color:Crimson;">{{__('backend.inactive')}}</span>@endif</td>
                   <td style="text-align:center;" class="center" width="25%">
                   <a href="{{url('/admin/edit-category/'.$category->id)}}" class="btn btn-warning btn-mini" style="margin:0 12px 0 0"><i class="icon-cogs" style="padding:0 4px"></i>{{__('backend.edit')}}</a> 
-                   <a rel="{{$category->id}}" rel1="delete-category" rel2="{{$category->name}}" href="javascript:" class="delCat btn btn-danger btn-mini delCat" id="" style="margin:0 0 0 9px"><i class="icon-remove" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
+                   <a rel="{{$category->id}}" rel1="delete-category" rel2="{{$category->name}}" href="javascript:" class=" btn btn-danger btn-mini" onclick='deleteThis(this)' style="margin:0 0 0 9px"><i class="icon-trash" style="padding: 0 5px"></i>{{__('backend.delete')}}</a>
                  </td>
                 </tr>
                  @endforeach

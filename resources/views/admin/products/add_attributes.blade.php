@@ -113,7 +113,7 @@
                   <td><input type="text" name="stock[]" value="{{$attribute->stock}}"></td>
                   <td class="center" style="text-align:center;" width="">
                     <i class="icon-cogs" style="padding:0 4px"></i> <input type="submit" value="Update" class="btn btn-warning btn-mini">
-                    <a rel="{{$attribute->id}}" rel1="delete-attribute" href="javascript:" class="del-attribute btn btn-danger btn-mini" style="margin:0 7px"><i class="icon-remove" style="padding: 0 5px"></i>Delete</a>
+                    <a rel="{{$attribute->id}}" rel1="delete-attribute" href="javascript:" class=" btn btn-danger btn-mini" onclick='deleteAttr(this)' style="margin:0 7px"><i class="icon-trash" style="padding: 0 5px"></i>Delete</a>
                  </td>
                 </tr>
                  @endforeach

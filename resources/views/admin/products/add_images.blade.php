@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+ use Carbon\Carbon;
+@endphp
+
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">{{__('backend.products')}}</a>
@@ -78,21 +82,23 @@
                   <th style="font-size:100%;">{{__('backend.images_id')}}</th>
                   <th style="font-size:100%;">{{__('backend.product_id')}}</th>
                   <th style="font-size:100%;">{{__('backend.image')}}</th>
-                  <th style="font-size:100%;">{{__('backend.actions')}}</th>
+                  <th style="font-size:100%;">{{__('backend.created_at')}}</th>
+                  <th style="font-size:100%; width: 193px;">{{__('backend.actions')}}</th>
                 </tr>
               </thead>
               <tbody>
-               @php
+               @php 
                $no = 0;
                @endphp
                 @foreach($productsImages as $pimage)
                   <tr>
-                     <td style="text-align:center; width:20px;">{{++$no}}</td>
-                     <td style="text-align:center; width:50px;">{{$pimage->id}}</td>
-                     <td style="text-align:center; width:50px;">{{$pimage->product_id}}</td>
-                     <td style="text-align:center; width:150px;"><img src="/images/backend_images/products/small/{{$pimage->image}}" alt="Alternate Images"></td>
-                     <td style="text-align:center; width:70px;"><a rel="{{$pimage->id}}" rel1="delete-alt-image" href="javascript:" class="del-alt-img btn btn-danger" style="margin:40px; padding:8px" Title="{{__('backend.delete_product_image')}}">
-                       <i class="icon-remove" style="padding: 0 8px"></i>{{__('backend.delete')}}</a></td>
+                     <td style="text-align:center;">{{++$no}}</td>
+                     <td style="text-align:center;">{{$pimage->id}}</td>
+                     <td style="text-align:center;">{{$pimage->product_id}}</td>
+                     <td style="text-align:center; width:244px;"> <a href="javascript:"> <img src="/images/backend_images/products/small/{{$pimage->image}}" alt="Alternate Images" onclick="popupGambar(this)"></a></td>
+                     <td style="text-align:center; width:322px;">{{Carbon::parse($pimage->created_at)->format('l, j F Y | H:i')}}</td>
+                     <td style="text-align:center;"><a rel="{{$pimage->id}}" rel1="delete-alt-image" href="javascript:" onclick="deleteAltImg(this)" class="btn btn-danger" style="margin:50px; padding:8px; width: 83px;" Title="{{__('backend.delete_product_image')}}">
+                       <i class="icon-trash" style="padding: 0 8px"></i>{{__('backend.delete')}}</a></td>
                   </tr>
                 @endforeach
               </tbody>

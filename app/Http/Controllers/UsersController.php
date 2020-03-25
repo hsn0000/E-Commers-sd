@@ -37,7 +37,8 @@ class UsersController extends Controller
 
     public function userLoginRegister()
     {
-        return view('users.login_register');
+        $meta_title ="User Login/Register - E-com Website";
+        return view('users.login_register')->with(\compact('meta_title'));
     }
 
 

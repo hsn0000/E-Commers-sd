@@ -70,8 +70,7 @@ use Carbon\Carbon;
                                         <td style="text-align:center;">{{Carbon::parse($banner->created_at)->format('l, j F Y | H:i')}}</td>
                                         <td style="text-align:center;" width="25%">
                                             @if(!empty($banner->image))
-                                            <img src="{{ asset('images/backend_images/banners/'.$banner->image )}}"
-                                                alt="image product">
+                                           <a href="javascript:"> <img src="{{ asset('images/backend_images/banners/'.$banner->image )}}" alt="image product" onclick="popupGambar(this)"> </a>
                                             @endif
                                         </td>
                                         <td class="center" style="text-align:center;" width="14%;">
@@ -80,10 +79,10 @@ use Carbon\Carbon;
                                                 title="Edit Banner"> <i class="icon-cogs" style="padding:0 4px"></i>
                                                 {{__('backend.edit')}}</a>
                                             <a rel="{{$banner->id}}" rel1="delete-banner" rel2="{{$banner->title}}"
-                                                href="javascript:" class="deleteProd btn btn-danger btn-mini"
+                                                href="javascript:" class="btn btn-danger btn-mini" onclick="deleteProdt(this)"
                                                 data-del-id="{{$banner->id}}" style="margin:35px 0 0 10px;"
                                                 title="{{__('backend.delete')}}">
-                                                <i class="icon-remove" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
+                                                <i class="icon-trash" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
                                         </td>
                                     </tr>
                                     @endforeach
