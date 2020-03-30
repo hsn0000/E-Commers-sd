@@ -48,10 +48,11 @@
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">
 						@if(!empty($search_product))
-						{{$search_product}} ({{$productCount}}) items
+						   {{$search_product}} ({{$productCount}}) items
 						@else 
-						{{$categoryDetails->name}} ({{$allProductCount}}) items
+						   {{$categoryDetails->name}} ({{$allProductCount}}) items
 						@endif
+						   <!-- ({{ count($productAll)}}) -->
 						</h2>
 						@foreach($productAll as $product)
 						<div class="col-sm-4">

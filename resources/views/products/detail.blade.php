@@ -67,7 +67,7 @@
 											@endforeach
 										</select>
 									</p>
-									<img src="images/product-details/rating.png" alt="" />
+									<img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 									<span>
 										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price,2)}}</span> <br> <br> <br> <br>
 										<label>Quantity :</label>
@@ -95,9 +95,11 @@
 					<div class="category-tab shop-details-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+							   <li class="active"><a href="#reviews" data-toggle="tab">Review</a></li>
+								<li><a href="#description" data-toggle="tab">Description</a></li>
 								<li><a href="#care" data-toggle="tab">Material & Care</a></li>
 								<li><a href="#delivery" data-toggle="tab">Delivery Options</a></li>
+								<li><a href="#video" data-toggle="tab">Product Video</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -119,6 +121,16 @@
 								       Cash on delivery</p>
 								</div>
 							</div>
+
+							<div class="tab-pane fade" id="video" >
+							    <div class="col-sm-12">
+								 @if($productDetails->video)
+								    <video src="{{asset('videos/'.$productDetails->video)}}" width="100%" controls> </video>
+								  @else
+								    <img src="{{asset('images/video-thumbnail.png')}}" width="100%" controls alt="alt-video-thumbnail" >
+								  @endif
+								</div>
+							</div>
 							
 							<div class="tab-pane fade active in" id="reviews" >
 								<div class="col-sm-12">
@@ -136,7 +148,7 @@
 											<input type="email" placeholder="Email Address"/>
 										</span>
 										<textarea name="" ></textarea>
-										<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
+										<b>Rating: </b> <img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 										<button type="button" class="btn btn-default pull-right">
 											Submit
 										</button>

@@ -1,6 +1,27 @@
-
-
+<!-- *** -->
 <script>
+/* overlay zoom image */ 
+var $overlay = $('<div id="overlay"></div>');
+var $image = $("<img>");
+var $caption = $("<p></p>");
+/* add the elements onto each other */
+$overlay.append($image);
+$overlay.append($caption);
+$("body").append($overlay);
+/* click event */
+function popupGambar(event) {
+    var imageLocation = event["src"];
+    $image.attr("src", imageLocation);
+    var captionText = event["alt"];
+    $caption.text(captionText);
+    $overlay.show(); 
+};
+/* click event */
+$overlay.click(function() {
+    $overlay.hide();
+}); 
+
+/* pincode check*/
 function checkPincode() {
 
 var pincode = $('#chkPincode').val()

@@ -56,7 +56,7 @@ Route::post('/user-login','UsersController@login');
 // users logout
 Route::get('/user-logout','UsersController@logout');
 // search product
-Route::match(['get','post'],'/search-products','ProductsController@searcchProducts');
+Route::match(['get','post'],'/search-products','ProductsController@searchProducts');
 // check if user already exist check-email
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
 // check pincode
@@ -109,6 +109,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::match(['get','post'],'/admin/add-product','ProductsController@addProduct');
     Route::match(['get','post'],'/admin/edit-product/{id}','ProductsController@editProduct');
     Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
+    Route::get('/admin/delete-product-video/{id}','ProductsController@deleteProductVideo');
     Route::get('/admin/delete-product/{id}','ProductsController@deleteProduct');
     Route::get('/admin/view-product','ProductsController@viewProducts');
 
@@ -160,3 +161,5 @@ Route::group(['middleware' => ['adminlogin']], function() {
 Route::match(['get','post'],'/page/{url}','CmsController@cmsPage')->name('page');
 //  display contact page
 Route::match(['get','post'],'/pages/contact','CmsController@contact');     
+// display post page (vue.js)
+Route::match(['get','post'],'/page/post','CmsController@addPost');

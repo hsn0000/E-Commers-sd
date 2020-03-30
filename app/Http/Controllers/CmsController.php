@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CmsPage;
 use App\Category;
 use DB;
+use Date;
 use Illuminate\Support\Facades\Mail;
 use Validator;
 
@@ -118,7 +119,7 @@ class CmsController extends Controller
              }
             $email = "admin.ecomerce@yopmail.com";
             $messageData = [
-                'name' => $data['name'],
+                'name' => $data['name'], 
                 'email' => $data['email'],
                 'subject' => $data['subject'],
                 'comment' => $data['message']
@@ -126,6 +127,14 @@ class CmsController extends Controller
            Mail::send('emails.enquiry', $messageData, function ($message) use ($email) {
                $message->to($email)->subject('Enquiry from E-com Website');
            });
+
+           DB::table('enquiries')->insert([
+                'name' => $data['name'], 
+                'email' => $data['email'],
+                'subject' => $data['subject'],
+                'message' => $data['message'],
+                'created_at' => date('Y-m-d H:i:s')
+           ]);
 
            return redirect()->back()->with('flash_message_success','Thanks for your enquiry. We will get back to you soon. ');
         }
@@ -138,7 +147,17 @@ class CmsController extends Controller
         return view('pages.contact')->with(\compact('categories','meta_title','meta_description','meta_keyword'));
     }
 
-
+    // public function addPost(Request $request) {
+    //     if($request->isMethod('post')) {
+    //         $data = $request->all();
+    //         DB::table('enquiries')->insert([
+    //             'name' => $data['name'],
+    //             'email' => $data['email'],
+    //             'subject' => $data['subject'],
+    //             'message' => $data['message']
+    //         ]);
+    //     }
+    // }
 
 
 }

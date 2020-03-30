@@ -2,13 +2,13 @@
 @section('content')
 
 @if(Session::has('flash_message_error'))
-<div class="alert alert-dark alert-block" style="background-color:red; color:white; width:18%; margin-left:27%;">
+<div class="alert alert-dark alert-block" style="background-color:red; color:white; width:19%; margin-left:27%;">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <strong> {{Session::get('flash_message_error')}}</strong>
 </div>
 @endif
 @if(Session::has('flash_message_success'))
-<div class="alert alert-dark alert-block" style="background-color:green; color:white; width:18%; margin-left:27%;">
+<div class="alert alert-dark alert-block" style="background-color:green; color:white; width:19%; margin-left:27%;">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <strong> {{Session::get('flash_message_success')}}</strong>
 </div>
@@ -25,7 +25,6 @@
         </div>
         <div class="shopper-informations">
             <div class="row">
-
             </div>
         </div>
 
@@ -107,8 +106,7 @@
                     @foreach($userCart as $cart)
                     <tr>
                         <td class="cart_product">
-                            <a href=""><img style="width:200px;"
-                                    src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}"" alt=""></a>
+                            <a href="javascript:"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" onclick="popupGambar(this)" alt=""></a>
                         </td>
                         <td class=" cart_description">
                                 <h4>{{$cart->product_name}}</h4>
@@ -161,13 +159,16 @@
                 <span>
                     <label><b>Select Payment Method :</b></label>
                 </span>
+                @if($codPincodeCount > 0)
                 <span>
                     <label><b><input type="radio" name="payment_method" id="COD" name="COD" value="COD">COD</b></label>
                 </span>
+                @endif
+                @if($prepaidPincodeCount > 0)
                 <span>
-                    <label><b><input type="radio" name="payment_method" id="Paypal" name="Paypal"
-                                value="Paypal">Paypal</b></label>
+                    <label><b><input type="radio" name="payment_method" id="Paypal" name="Paypal" value="Paypal">Paypal</b></label>
                 </span>
+                @endif
                 <span style="float:right;">
                     <button type="submit" class="btn btn-warning" onclick="selectPaymentMethod();">Place Order</button>
                 </span>
