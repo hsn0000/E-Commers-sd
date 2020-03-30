@@ -1,5 +1,7 @@
 @php 
  use App\Http\Controllers\Controller;
+ use App\Product;
+ $cartCount = Product::cartCount();
  $mainCategories = Controller::mainCategories(); 
  $url = url()->current();
 @endphp
@@ -67,7 +69,7 @@
                             <li><a href="#"><i class="fa fa-star"></i>{{__('frontend.wishlist')}}</a></li>
                             <li><a href="{{url('/orders')}}" <?php  if(preg_match("/orders/i", $url)) { ?> class="active" <?php } ?> ><i class="fa fa-crosshairs" aria-hidden="true"></i>
                             {{__('frontend.orders')}}</a></li>
-                            <li><a href="{{url('/cart')}}" class="enter_link <?php  if(preg_match("/cart/i", $url)) { ?> active <?php } ?>"><i class="fa fa-shopping-cart"></i>Cart</a></li>
+                            <li><a href="{{url('/cart')}}" class="enter_link <?php  if(preg_match("/cart/i", $url)) { ?> active <?php } ?>"><i class="fa fa-shopping-cart"></i>Cart @if($cartCount) (<span style="color:chocolate">{{ $cartCount }}</span>) @endif</a></li>
                             @if(empty(Auth::check()))
                             <li><a href="{{url('/login-register')}}" <?php  if(preg_match("/login-register/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-lock"></i>{{__('frontend.login')}}</a></li>
                             @else

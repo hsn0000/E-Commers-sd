@@ -51,6 +51,12 @@
         <li <?php if(preg_match("/view-cms-page'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-cms-page')}}">{{__('backend.view_cms_page')}}</a></li>
       </ul>
     </li>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-certificate"></i> <span>Currencies</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/currencies/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-currencies'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-currencies')}}">Add Currencies</a></li>
+        <li <?php if(preg_match("/view-currencies'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-currencies')}}">View Currencies</a></li>
+      </ul>
+    </li>
 
     <li><a href="javascript:"><i class="icon icon-th"></i> <span>Tables</span></a></li>
     

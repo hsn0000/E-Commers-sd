@@ -21,6 +21,7 @@ use App\Country;
 use App\DeliveryAddress; 
 use App\Order;
 use App\OrdersProduct;
+use \Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductsController extends Controller
          $product->care = $data['care'] ?? "";
 
          $product->price = $price;
-         //upload image
+         /* upload image */
          if($request->hasFile('image'))
          {
              $image_tmp = $data['image'];
@@ -73,6 +74,15 @@ class ProductsController extends Controller
              }
             
          }
+
+        /* upload vidio */  
+        if($request->hasFile('video')) {
+            $video_tmp = $data['video'];
+            $video_name = $video_tmp->getClientOriginalName();
+            $video_patch = 'videos/';
+            $video_tmp->move($video_patch,$video_name);
+            $product->video = $video_name;
+        }
 
          $product->status = $data['status']  ?? 0;
          $product->feature_item = $data['feature_item'] ?? 0;
@@ -124,7 +134,22 @@ class ProductsController extends Controller
                 }
                 
             }
-            // dd($filename);
+
+            /* upload vidio */  
+            if($request->hasFile('video')) {
+                $video_tmp = $data['video'];
+                $video_name = $video_tmp->getClientOriginalName();
+                $video_patch = 'videos/';
+                $video_tmp->move($video_patch,$video_name);
+            }   
+
+            if(isset($video_tmp)) {
+                 /* Delete video if exists in folder */      
+                 if(Storage::disk('public')->exists($video_patch.$data['current-video'])) {
+                        unlink($video_patch.$data['current-video']);
+                }
+            }
+    
             Product::where(['id' => $id])->update([
                 'id' => $id,
                 'category_id' => $data['category_id'],
@@ -134,6 +159,7 @@ class ProductsController extends Controller
                 'care' => $data['care'] ?? $data['care'] = "",
                 'description' => $data['description'],
                 'image' => $filename ?? $data['current-image'],
+                'video' => $video_name ?? $data['current-video'],
                 'feature_item' => $data['feature_item'] ?? 0,
                 'status' => $data['status'] ?? 0,
                 'price' => $price,
@@ -196,6 +222,13 @@ class ProductsController extends Controller
        {
            \unlink($small_image_patch.$productImage->image);
        }
+
+       $video_patch = "videos/";
+            /* Delete video if exists in folder */   
+            if(file_exists($video_patch.$productImage->video)) {
+                unlink($video_patch.$productImage->video);
+           }
+
        // delete image from product table
        Product::where(['id' => $id])->delete();
        return \redirect()->back()->with('flash_message_success','product_has_been_deleted_successfully');
@@ -230,6 +263,20 @@ class ProductsController extends Controller
         Product::where(['id' => $id])->update(['image'=>'']);
 
         return \redirect()->back()->with('flash_message_success','product_image_has_been_deleted_successfully');
+    }
+
+
+    public function deleteProductVideo($id = null) {
+ 
+        $productVideo = DB::table('products')->select('video')->where('id',$id)->first();
+        $video_patch = 'videos/';
+       /* Delete video if exists in folder */   
+        if(file_exists($video_patch.$productVideo->video)) {
+             unlink($video_patch.$productVideo->video);
+        }
+        /* delete video from table product */
+        DB::table('products')->where('id', $id)->update(['video' => '']);
+        return redirect()->back()->with('flash_message_success','Product video has ben deleted successfully'); 
     }
 
 
@@ -353,7 +400,7 @@ class ProductsController extends Controller
 
     }
 
-
+    
     public function deleteAltImage($id=null)
     {
         // get product image nama
@@ -395,23 +442,26 @@ class ProductsController extends Controller
         }
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         $categoryDetails = Category::where(['url' => $url])->first();
-        
+                
         if($categoryDetails->parent_id == 0)
         {
             // if url is main category url
+            $countSubCategories = Category::where(['parent_id' => $categoryDetails->id])->count();
+            if($countSubCategories == 0 ) {
+                  abort(400);
+            } 
             $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();
             foreach($subCategories as $key => $subcat)
             { 
                 $cat_ids[] = $subcat->id;
             }
-            $productAll = Product::whereIn('category_id', $cat_ids)->where('status',1)->paginate(9);
+            $productAll = Product::whereIn('category_id', $cat_ids)->where('status',1)->orderBy('id','desc')->paginate(9);
             // $productAll = \json_decode(\json_encode($productAll));
             $allProductCount = Product::whereIn('category_id', $cat_ids)->where('status',1)->count();
         }else{
             // If url is sub category url
-            $productAll = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->paginate(9);
-            $allProductCount = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->count();
-           
+            $productAll = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->orderBy('id','desc')->paginate(9);
+            $allProductCount = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->count();     
         }
         $banners = Banner::where('status', 1)->get(); 
         $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(1)->get();
@@ -424,7 +474,7 @@ class ProductsController extends Controller
     }
 
 
-    public function searcchProducts(Request $request)
+    public function searchProducts(Request $request)
     {
         if($request->isMethod('post')) {
             $data = $request->all();
@@ -757,6 +807,10 @@ class ProductsController extends Controller
                 $shipping->mobile = $data['shipping_mobile'];
                 $shipping->save();
             }
+                $pincodeCount = DB::table('pincodes')->where('pincode',$data['shipping_pincode'])->count();
+                if($pincodeCount == 0 ) {
+                    return \redirect()->back()->with('flash_message_error','Your location is not available for delivery. please choose another location');
+                }
             return redirect()->action('ProductsController@orderReview');
             
         }
@@ -778,12 +832,13 @@ class ProductsController extends Controller
         foreach($userCart as $key => $product)
         {
             $productDetails = Product::where('id',$product->product_id)->first();
-            $userCart[$key]->image = "$productDetails->image";
-           
+            $userCart[$key]->image = "$productDetails->image";   
         }
+        $codPincodeCount = DB::table('cod_pincodes')->where('pincode',$shippingDetails->pincode)->count();
+        $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode',$shippingDetails->pincode)->count();
 
         $meta_title ="Order Review - E-com Website";
-        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart','meta_title'));
+        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart','meta_title','codPincodeCount','prepaidPincodeCount'));
     }
     
     
@@ -800,6 +855,11 @@ class ProductsController extends Controller
             $user_email = Auth::user()->email;
             // get shippong address off user
             $shippingDetails = DeliveryAddress::where(['user_email' => $user_email])->first();
+            $pincodeCount = DB::table('pincodes')->where('pincode',$shippingDetails->pincode)->count();
+
+            if($pincodeCount == 0 ) {
+                return \redirect()->back()->with('flash_message_error','Your location is not available for delivery. please choose another location');
+            }
             
             $order = new Order;
             $order->user_id = $user_id;
