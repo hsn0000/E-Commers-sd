@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a32c8ff2ed220a7bd2519f080725067",
+    "content-hash": "2db5b5b54a7e2b97db18885b256fe3db",
     "packages": [
         {
             "name": "andywer/js-localization",
@@ -380,6 +380,50 @@
                 "validator"
             ],
             "time": "2020-02-13T22:36:52+00:00"
+        },
+        {
+            "name": "emojione/emojione",
+            "version": "3.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emojione/emojione.git",
+                "reference": "85ee3eda3e7fe80a03ff7b440aa7718b048c1cc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emojione/emojione/zipball/85ee3eda3e7fe80a03ff7b440aa7718b048c1cc5",
+                "reference": "85ee3eda3e7fe80a03ff7b440aa7718b048c1cc5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6 || ~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Emojione\\": "lib/php/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(CC-BY-4.0 and MIT)"
+            ],
+            "description": "EmojiOne is a complete set of emojis designed for the web. It includes libraries to easily convert unicode characters to shortnames (:smile:) and shortnames to our custom emoji images. PNG format provided for the emoji images.",
+            "homepage": "http://www.emojione.com",
+            "keywords": [
+                "emoji",
+                "emojione",
+                "emojis",
+                "emoticons",
+                "smileys",
+                "smilies",
+                "unicode"
+            ],
+            "abandoned": true,
+            "time": "2018-07-11T21:35:32+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -1401,6 +1445,56 @@
                 "serialize"
             ],
             "time": "2019-11-29T22:36:02+00:00"
+        },
+        {
+            "name": "overtrue/laravel-emoji",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/laravel-emoji.git",
+                "reference": "cac09af2f96d2fafea2b8a606f0682722379f5a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/laravel-emoji/zipball/cac09af2f96d2fafea2b8a606f0682722379f5a8",
+                "reference": "cac09af2f96d2fafea2b8a606f0682722379f5a8",
+                "shasum": ""
+            },
+            "require": {
+                "emojione/emojione": "^3.1",
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Overtrue\\LaravelEmoji\\EmojiServiceProvider"
+                    ],
+                    "aliases": {
+                        "Emoji": "Overtrue\\LaravelEmoji\\Emoji"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\LaravelEmoji\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com"
+                }
+            ],
+            "description": "An emojione bridge for Laravel 5.",
+            "time": "2018-05-26T04:29:33+00:00"
         },
         {
             "name": "overtrue/laravel-lang",

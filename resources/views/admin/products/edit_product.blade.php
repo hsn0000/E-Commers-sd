@@ -85,7 +85,8 @@
                 <label class="control-label">{{__('backend.old_image')}}</label>
                 <div class="controls">
                @if(!empty($productDetails->image))
-                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" width="110px;"> | <a rel="{{$productDetails->id}}" rel1="delete-product-image" rel2="{{__('backend.old_image')}}" href="javascript:" class="btn btn-danger btn-mini" id="" onclick="deleteProdt(this)">{{__('backend.delete')}}</a>
+                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" style="width:217px; height:219px;">
+                 &nbsp; | | <a rel="{{$productDetails->id}}" rel1="delete-product-image" rel2="{{__('backend.old_image')}}" href="javascript:" class="btn btn-danger btn-mini" id="" onclick="deleteProdt(this)"><i class="icon-trash" ></i> {{__('backend.delete')}}</a>
                @endif
                 </div>
               </div>
@@ -96,6 +97,30 @@
                   <input type="hidden" name="current-image" value="{{$productDetails->image}}"> 
                 </div>
               </div>
+
+              <div class="control-group">
+                <label class="control-label"> Old Video </label>
+                <div class="controls">
+                  @if(!empty($productDetails->video))
+                    <video src="{{asset('videos/'.$productDetails->video)}}" style="border-style: solid;border-color: darkred; width:217px; height:185px;" controls> </video>
+                  @else
+                    <img src="{{asset('images/video-thumbnail.png')}}" width="217" height="185" controls alt="" >
+                  @endif
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">New Video</label>
+                <div class="controls">
+                  <input type="file" name="video" id="video"> 
+                  <input type="hidden" name="current-video" value="{{$productDetails->video}}">
+                   @if(!empty($productDetails->video))
+                    | |  <a href="{{url('videos/'.$productDetails->video)}}" target="blank_" class="btn btn-info btn-mini"><i class="icon-eye-open"></i> View Old Video </a> 
+                    | |  <a rel="{{$productDetails->id}}" rel1="delete-product-video" rel2="{{$productDetails->video}}" href="javascript:" class="btn btn-danger btn-mini" onclick="deleteProdt(this)" data-del-id="{{$productDetails->id}}" title=" {{__('backend.delete')}}">  <i class="icon-trash" ></i> Delete Old Video </a> </a> 
+                   @endif
+                </div>
+              </div>
+
               <div class="control-group">
                 <label class="control-label">{{__('backend.feature_item')}}</label>
                 <div class="controls">

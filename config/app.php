@@ -178,7 +178,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+
+        Overtrue\LaravelEmoji\EmojiServiceProvider::class,
 
     ],
 
@@ -234,6 +236,9 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         
         'Input' => Illuminate\Support\Facades\Input::class,
+
+        'Emoji' => Overtrue\LaravelEmoji\Emoji::class,
+        
     ],
 
 ];
