@@ -35,4 +35,49 @@ class Product extends Model
     }
 
 
+    public static function getCurrencyRates ($price) {
+
+        $getCurrencies = DB::table('currencies')->where('status',1)->get();
+
+        foreach($getCurrencies as $currency) {
+
+            if($currency->currency_code == "IDR") {+
+                $IDR_rate = \round($price/$currency->exchange_rate,2);
+            } else if ($currency->currency_code == "USD") {
+                $USD_rate = \round($price/$currency->exchange_rate,2);
+            } else if ($currency->currency_code == "KHR") {
+                $KHR_rate = \round($price/$currency->exchange_rate,2);
+            } else if ($currency->currency_code == "EUR") {
+                $EUR_rate = \round($price/$currency->exchange_rate,2);
+            }
+
+        }
+    // dd(Session::get('currencyLocale'));
+        $currencyArr = array("IDR_rate" => $IDR_rate, "USD_rate" => $USD_rate, "KHR_rate" => $KHR_rate, "EUR_rate" => $EUR_rate);
+        return $currencyArr;
+    }
+
+
+    public static function currencyRate ($price) {
+        $currencyGet = DB::table('currencies')->where('status',1)->get();
+
+        foreach($currencyGet as $curr) {
+            if(Session::get('currencyLocale')->currency_code == "IDR") {
+                if($curr->currency_code == "IDR") {
+                    $rate_currency = round($price/$curr->exchange_rate,2);
+                }
+            } else if (Session::get('currencyLocale')->currency_code == "USD") {
+                if($curr->currency_code == "USD") {
+                    $rate_currency = round($price/$curr->exchange_rate,2);
+                }
+            } else if (Session::get('currencyLocale')->currency_code == "KHR") {
+                if($curr->currency_code == "KHR") {
+                    $rate_currency = round($price/$curr->exchange_rate,2);
+                }
+            }
+        }
+        return $rate_currency;
+    }
+
+
 }

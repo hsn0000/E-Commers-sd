@@ -41,13 +41,14 @@ $(document).ready(function () {
 			return false;
 		}
 		$.ajax({
-			type:'get',
+			type:'post',
 			url:'/get-product-price',
 			data:{idSize:idSize},
 			success:function (resp) {
 				var arr = resp.split('#');
 				var arr1 = parseFloat(arr[0]).toFixed()
-				// alert(arr1)
+				var arr2 = arr[0].split('-')
+				console.log(arr2)
 				var stylout = "color:red; font-weight:bold;"
 				var stylin = "color:green; font-weight:bold;"
 				$("#getPrice").html("Rp."+arr1);

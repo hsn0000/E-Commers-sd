@@ -7,7 +7,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">Currencies</a>
-     <a href="{{url('/admin/add-category')}}" class="current">Add Currency</a> </div>
+     <a href="{{url('/admin/add-category')}}" class="current">Edit Currency</a> </div>
     <h1>Currencies</h1>
     @if(Session::has('flash_message_error'))
     <div class="alert alert-dark alert-block"
@@ -36,43 +36,43 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Add Currency</h5>
+            <h5>Edit Currency</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/add-currencies')}}" name="add_currencies" id="add_currencies">
+            <form class="form-horizontal" method="post" action="{{url('/admin/edit-currencies/'.$currencyDetail->id)}}" name="edit_currencies" id="edit_currencies">
             {{csrf_field()}}
             <div class="control-group">
                 <label class="control-label">Currency Name</label>
                 <div class="controls">
-                  <input type="text" name="currency_name" id="currency_name" value="{{old('currency_name')}}" required>
+                  <input type="text" name="currency_name" id="currency_name" value="{{old('currency_name') ?? $currencyDetail->currency_name}}" required>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Currency Simbol</label>
                 <div class="controls">
-                  <input type="text" name="currency_simbol" id="currency_simbol" value="{{old('currency_simbol')}}" required>
+                  <input type="text" name="currency_simbol" id="currency_simbol" value="{{old('currency_simbol')  ?? $currencyDetail->currency_simbol}}" required>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Currency Code</label>
                 <div class="controls">
-                  <input type="text" name="currency_code" id="currency_code" value="{{old('currency_code')}}" required>
+                  <input type="text" name="currency_code" id="currency_code" value="{{old('currency_code')  ?? $currencyDetail->currency_code}}" required>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Exchange Rate</label>
                 <div class="controls">
-                  <input type="text" class="price-input" name="exchange_rate" id="exchange_rate" value="{{old('exchange_rate')}}" required>
+                  <input type="text" class="price-input" name="exchange_rate" id="exchange_rate" value="{{old('exchange_rate')  ?? is_number($currencyDetail->exchange_rate,2)}}" required>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">{{__('backend.enable')}}</label>
                 <div class="controls">
-                  <input type="checkbox" name="status" id="status" value="1">
+                  <input type="checkbox" name="status" id="status" value="1" @if($currencyDetail->status == 1) checked @endif>
                 </div>
               </div>
               <div class="form-actions">
-                <input type="submit" value="Add Currency" class="btn btn-success">
+                <input type="submit" value="Edit Currency" class="btn btn-success">
               </div>
             </form>
           </div>
