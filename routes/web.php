@@ -32,7 +32,7 @@ Route::get('/products/{url}','ProductsController@products');
 // category detail page
 Route::get('/product/{id}','ProductsController@product');
 // get product attribute price
-Route::get('/get-product-price','ProductsController@getProductPrice');
+Route::post('/get-product-price','ProductsController@getProductPrice');
 // add to cart
 Route::match(['get','post'],'/admin/add-cart','ProductsController@addtocart');
 // cart page
@@ -157,8 +157,9 @@ Route::group(['middleware' => ['adminlogin']], function() {
 
    // admin currency route
    Route::match(['get','post'],'/admin/add-currencies','CurrencyController@addCurrency'); 
+   Route::match(['get','post'],'/admin/edit-currencies/{id}','CurrencyController@editCurrency'); 
    Route::get('/admin/view-currencies','CurrencyController@viewCurrency');
-      
+   Route::get('/admin/delete-currencies/{id}','CurrencyController@deleteCurrency');
 
 }); 
 
