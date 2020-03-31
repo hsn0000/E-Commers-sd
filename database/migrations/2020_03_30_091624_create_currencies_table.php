@@ -18,7 +18,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('currency_name',255);
             $table->string('currency_simbol',4);
             $table->string('currency_code',10);
-            $table->float('exchange_rate');
+            $table->decimal('exchange_rate');
             $table->tinyInteger('status');
             $table->timestamps();
         });

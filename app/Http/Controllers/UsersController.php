@@ -28,9 +28,19 @@ class UsersController extends Controller
 
     public function language($locale) {
         // App::setLocale('id');
-            Session::put('applocale', $locale);
+        Session::put('applocale', $locale);
+        if($locale == 'id') {
+            $currencyIDR = DB::table('currencies')->where('currency_code','IDR')->first();
+            Session::put('currencyLocale',$currencyIDR);
+        } else if ($locale == 'en') {
+            $currencyUSD = DB::table('currencies')->where('currency_code','USD')->first();
+            Session::put('currencyLocale',$currencyUSD);
+        }  else if ($locale == 'khmer') {
+            $currencyKHR = DB::table('currencies')->where('currency_code','KHR')->first();
+            Session::put('currencyLocale',$currencyKHR);
+        }
         // dd(Config :: get ('languages'));
-        //  dd( Session::get('applocale'));
+        //  dd( Session::get('currencyIDR')->currency_code );
         return redirect()->back();
     }
 

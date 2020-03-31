@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+ use App\Product;
+  $currencyLocale = Session::get('currencyLocale');
+  $getCurrencyRates = Product::currencyRate ($productDetails->price);
+@endphp
+
 	@if(Session::has('flash_message_error'))
 	 <div class="alert alert-dark alert-block" style="width:18%; margin-left:55%; background-color:Tomato; color:white">
 			<button type="button" class="close" data-dismiss="alert">×</button>	
@@ -69,7 +75,7 @@
 									</p>
 									<img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 									<span>
-										<span id="getPrice" style="width:129px;">{{'Rp'. is_number($productDetails->price,2)}}</span> <br> <br> <br> <br>
+										<span id="getPrice" style="width:129px;"> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</span> <br> <br> <br> <br>
 										<label>Quantity :</label>
 										<input class="is-valid" type="number" name="quantity" value="1" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
@@ -168,12 +174,13 @@
 								@foreach($relatedProduct->chunk(3) as $chunk)
 								<div <?php if($count==1) { ?> class="item active" <?php } else { ?> class="item" <?php } ?>>	
 									@foreach($chunk as $item)
+									@php $getCurrencyRates = Product::currencyRate ($item->price); @endphp
 									<div class="col-sm-4">
 										<div class="product-image-wrapper">
 											<div class="single-products">
 												<div class="productinfo text-center">
 													<img style="width:220px; margin-left:25px;" src="{{ asset('/images/backend_images/products/medium/'.$item->image)}}" alt="" />
-													<h2>{{'Rp'.' '.is_number($item->price,2)}}</h2>
+													<h2> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</h2>
 													<p>{{$item->product_name}}</p>
 													<a href="{{$item->id}}">
 													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
