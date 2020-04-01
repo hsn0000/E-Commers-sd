@@ -1,4 +1,56 @@
-<!-- *** -->
+<!-- frontend -->
+<script>
+$(document).ready(function() {
+
+    // Change Price & stock with Size
+	$("#selSize").change(function () {
+		var idSize = $(this).val();
+		if(idSize == "")
+		{
+			return false;
+		}
+		$.ajax({
+			type:'post',
+			url:'/get-product-price',
+			data:{idSize:idSize},
+			success:function (resp) {
+				var arr = resp.split('#');
+				// var arr1 = arr[0][0]
+                var arr2 = arr[0].split('-')
+                var arr3 = arr2[0]
+				// console.log(arr2,arr3,arr2[1])
+				var stylout = "color:red; font-weight:bold;"
+				var stylin = "color:green; font-weight:bold;"
+                var currencyLoc = <?php echo json_encode(Session::get('currencyLocale')); ?>;
+                var currencySimbol = currencyLoc.currency_simbol
+                // console.log(currencyLoc, currencySimbol)
+				$("#getPrice").html(currencySimbol+' '+arr3);
+				$("#price").val(arr2[1]);
+				if(arr[0]==0)
+				{
+					$("#cartButton").hide();
+					$("#Availability").attr("style",stylout);
+					$("#Availability").text("Out OF Stock");
+				}else{
+					$("#cartButton").show();
+					$("#Availability").attr("style",stylin);
+					$("#Availability").text("In Stock");
+				}
+				// alert(resp);
+			},error:function (err) {
+				alert("Error");
+			}
+			
+		});
+
+	});
+
+
+})
+
+</script>
+
+
 <script>
 /* overlay zoom image */ 
 var $overlay = $('<div id="overlay"></div>');
@@ -56,5 +108,12 @@ var pincode = $('#chkPincode').val()
 
 }
 
+</script>
+
+<script>
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 </script>

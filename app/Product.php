@@ -52,7 +52,7 @@ class Product extends Model
             }
 
         }
-    // dd(Session::get('currencyLocale'));
+
         $currencyArr = array("IDR_rate" => $IDR_rate, "USD_rate" => $USD_rate, "KHR_rate" => $KHR_rate, "EUR_rate" => $EUR_rate);
         return $currencyArr;
     }
@@ -62,7 +62,9 @@ class Product extends Model
         $currencyGet = DB::table('currencies')->where('status',1)->get();
 
         foreach($currencyGet as $curr) {
-            if(Session::get('currencyLocale')->currency_code == "IDR") {
+            if(!empty(Session::get('currencyLocale'))) {
+
+            if((Session::get('currencyLocale')->currency_code == "IDR")) {
                 if($curr->currency_code == "IDR") {
                     $rate_currency = round($price/$curr->exchange_rate,2);
                 }
@@ -75,7 +77,16 @@ class Product extends Model
                     $rate_currency = round($price/$curr->exchange_rate,2);
                 }
             }
+
+        } else {
+            if($curr->currency_code == "USD") {
+                $currencyUSD = DB::table('currencies')->where('currency_code','USD')->first();
+                Session::put('currencyLocale',$currencyUSD);
+                $rate_currency = round($price/$curr->exchange_rate,2);
+            }
         }
+    }
+        // dd(Session::get('currencyLocale'), $rate_currency);
         return $rate_currency;
     }
 

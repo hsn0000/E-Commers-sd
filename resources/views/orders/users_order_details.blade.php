@@ -1,6 +1,10 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
 
+@php
+ use App\Product;
+  $currencyLocale = Session::get('currencyLocale');
+@endphp
 
 <div id="loading"></div>
 <section id="cart_items">

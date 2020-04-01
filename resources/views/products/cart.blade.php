@@ -1,6 +1,11 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
 
+@php
+ use App\Product;
+  $currencyLocale = Session::get('currencyLocale');
+@endphp
+
   <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -43,6 +48,7 @@
                 <tbody>
                 <?php $total_amount = 0; ?>
                     @foreach($userCart as $cart )
+                    @php $getCurrencyRates = Product::currencyRate ($cart->price); @endphp
                     <tr>
                         <td class="cart_product">
                             <a href="{{url('/product/'.$cart->product_id)}}"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" alt=""></a>
@@ -53,7 +59,7 @@
                             <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
-                            <p>{{'Rp'.' '.is_number($cart->price)}}</p>
+                            <p> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</p>
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
@@ -65,13 +71,13 @@
                             </div>
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">{{'Rp'.' '.is_number($cart->price * $cart->quantity)}}</p>
+                            <p class="cart_total_price">{{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates * $cart->quantity,2)}}</p>
                         </td>
                         <td class="cart_delete">
                             <a class="cart_quantity_delete" href="{{url('/cart/delete-product-cart/'.$cart->id)}}"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
-                    <?php $total_amount = $total_amount + ($cart->price * $cart->quantity); ?>
+                    <?php $total_amount = $total_amount + ($getCurrencyRates * $cart->quantity); ?>
                     @endforeach
                 </tbody>
             </table>
@@ -103,14 +109,15 @@
                 <div class="total_area">
                     <ul>
                     @if(!empty(Session::get('CouponAmount')))
-                        <li>Sub Total <span> {{'Rp'.' '.is_number($total_amount,2)}} </span></li>
-                        <li>Coupon Discoun <span> {{'Rp'.' '.is_number(Session::get('CouponAmount'),2)}} </span></li>
-                        <li>Grand Total <span> {{'Rp'.' '.is_number(($total_amount - Session::get('CouponAmount')),2)}} </span></li>
+                      @php $rateCurrenyAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
+                        <li>Sub Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2)}} </span></li>
+                        <li>Coupon Discoun <span> {{$currencyLocale->currency_simbol.' '.is_number($rateCurrenyAmoun,2)}} </span></li>
+                        <li>Grand Total <span class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}}" > {{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}} </span></li>
                     @else
-                        <li>Total <span> {{'Rp'.' '.is_number($total_amount,2) }} </span></li>
+                        <li>Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2) }} </span></li>
                     @endif
                     </ul>
-                        <a class="btn btn-default update" href="">Update</a>
+                        <a class="btn btn-default update" href="javacsript:">Update</a>
                         <a class="btn btn-default check_out" href="{{url('/checkout')}}">Check Out</a>
                 </div>
             </div>
