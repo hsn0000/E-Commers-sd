@@ -20,6 +20,7 @@
 			<strong> {{Session::get('flash_message_success')}}</strong>
 		</div>
 	@endif
+
 	<div id="loading"></div>
     <section>
 		<div class="container">
@@ -66,16 +67,15 @@
 									<h2>{{$productDetails->product_name}}</h2>
 									<p>CODE: {{$productDetails->product_code}}</p>
 									<p>
-										<select name="size" id="selSize" style="width:150px;" required >
+										<select name="size" id="selSize" style="width:150px;" required > 
 										<option value="">Select Size</option>
 											@foreach($productDetails->attributes as $sizes)
 											<option value="{{$productDetails->id}}-{{$sizes->size}}">{{$sizes->size}}</option>
 											@endforeach
 										</select>
 									</p>
-									<img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 									<span>
-										<span id="getPrice" style="width:129px;"> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</span> <br> <br> <br> <br>
+										<span id="getPrice" style="width:246px;"> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</span> <br> 
 										<label>Quantity :</label>
 										<input class="is-valid" type="number" name="quantity" value="1" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
@@ -84,7 +84,8 @@
 											Add to cart
 										</button>
 										@endif
-									</span>
+									</span> <br>
+									<img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 									<p><b>Availability :</b> @if($total_stock > 0) <span style="color:green;" id="Availability"><b>In Stock</b></span> @else <span style="color:red;" id="outAvailability"><b>Out Of Stock</b></span> @endif</p>
 									<p><b>Condition : <span style="color:orange;">New</span></b> </p>
 									<p><b>Delivery :</b>
