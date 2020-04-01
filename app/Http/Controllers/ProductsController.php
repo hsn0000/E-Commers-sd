@@ -532,7 +532,9 @@ class ProductsController extends Controller
         $proArr = \explode("-",$data['idSize']);
         $proArr = ProductsAttribute::where(['product_id' => $proArr[0], 'size' => $proArr[1]])->first();
         $getCurrencyRates = Product::getCurrencyRates($proArr->price);
-        echo ($proArr->price."-".$getCurrencyRates['IDR_rate']."-".$getCurrencyRates['USD_rate']."-".$getCurrencyRates['KHR_rate']."-".$getCurrencyRates['EUR_rate']);
+        $price = Product::currencyRate($proArr->price);
+        $price = is_number($price,2);
+        echo ($price."-".$proArr->price."-".$getCurrencyRates['IDR_rate']."-".$getCurrencyRates['USD_rate']."-".$getCurrencyRates['KHR_rate']."-".$getCurrencyRates['EUR_rate']);
         // echo("#");
         // echo(array("t" => $getCurrencyRates['USD_rate']));
         echo("#");

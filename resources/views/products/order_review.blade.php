@@ -1,6 +1,11 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
 
+@php
+ use App\Product;
+  $currencyLocale = Session::get('currencyLocale');
+@endphp
+
 @if(Session::has('flash_message_error'))
 <div class="alert alert-dark alert-block" style="background-color:red; color:white; width:19%; margin-left:27%;">
     <button type="button" class="close" data-dismiss="alert">x</button>
@@ -83,7 +88,7 @@
                             </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
 
         <div class="review-payment">
@@ -104,6 +109,7 @@
                 <tbody>
                     <?php $total_amount = 0; ?>
                     @foreach($userCart as $cart)
+                    @php $getCurrencyRates = Product::currencyRate ($cart->price); @endphp
                     <tr>
                         <td class="cart_product">
                             <a href="javascript:"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" onclick="popupGambar(this)" alt=""></a>
@@ -114,16 +120,16 @@
                                 <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
-                            <p>{{'Rp'.' '.is_number($cart->price,2)}}</p>
+                            <p>{{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</p>
                         </td>
                         <td class="cart_quantity">
                             {{$cart->quantity}}
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">{{'Rp'.' '.is_number(($cart->price * $cart->quantity),2)}}</p>
+                            <p class="cart_total_price">{{$currencyLocale->currency_simbol.' '.is_number(($getCurrencyRates * $cart->quantity),2)}}</p>
                         </td>
                     </tr>
-                    <?php $total_amount = $total_amount + $cart->price * $cart->quantity ?>
+                    <?php $total_amount = $total_amount + $getCurrencyRates * $cart->quantity ?>
                     @endforeach
                     <tr>
                         <td colspan="4">&nbsp;</td>
@@ -131,20 +137,21 @@
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>{{'Rp'.' '.is_number($total_amount,2)}}</td>
+                                    <td>{{$currencyLocale->currency_simbol.' '.is_number($total_amount,2)}}</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Shipping Cost(+)</td>
-                                    <td>Rp 0</td>
+                                    <td>{{$currencyLocale->currency_simbol}}  0</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Discount Amount(-)</td>
-                                    <td>@if (!empty(Session::get('CouponAmount'))) Rp
-                                        {{is_number(Session::get('CouponAmount'),2)}} @else Rp 0 @endif</td>
+                                    <td>@if (!empty(Session::get('CouponAmount'))) 
+                                    @php $currencyRateCoupponAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
+                                     {{$currencyLocale->currency_simbol.' '.is_number($currencyRateCoupponAmoun,2)}} @else {{$currencyLocale->currency_simbol}}  0 @endif</td>
                                 </tr>
                                 <tr>
                                     <td>Grand Total</td>
-                                    <td><span>{{'Rp'.' '.is_number($grant_total = $total_amount - Session::get('CouponAmount'),2)}}</span>
+                                    <td><span>{{$currencyLocale->currency_simbol.' '.is_number($grant_total = $total_amount - $currencyRateCoupponAmoun,2)}}</span>
                                     </td>
                                 </tr>
                             </table>

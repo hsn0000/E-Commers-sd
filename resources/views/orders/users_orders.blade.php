@@ -1,6 +1,10 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
 
+@php
+ use App\Product;
+  $currencyLocale = Session::get('currencyLocale');
+@endphp
 
 <div id="loading"></div>
 <section id="cart_items">
@@ -38,7 +42,7 @@
                             @endforeach
                         </td>
                         <td style="text-align:center;">{{$order->payment_method}}</td>
-                        <td style="text-align:center;">Rp {{is_number($order->grant_total,2)}}</td>
+                        <td style="text-align:center;">{{$currencyLocale->currency_simbol.' '.is_number($order->grant_total,2)}}</td>
                         <td style="text-align:center;">{{$order->created_at}}</td>
                     </tr>
                     @endforeach

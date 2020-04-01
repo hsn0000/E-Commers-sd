@@ -1,7 +1,11 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
 
-<?php use App\Order; ?>
+@php
+ use App\Product;
+ use App\Order;
+  $currencyLocale = Session::get('currencyLocale');
+@endphp
 
 <div id="loading"></div>
 <section id="cart_items">
@@ -29,7 +33,7 @@
                   ?>
 
             <p>Your order number is <b style="color:green;">{{Session::get('order_id')}}</b> and total payable about is
-                <b style="color:green;">Rp {{is_number(Session::get('grant_total'))}}</b></p>
+                <b style="color:green;">{{$currencyLocale->currency_simbol.' '.is_number(Session::get('grant_total'),2)}}</b></p>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post"> {{csrf_field()}}
                 <input type="hidden" name="cmd" value="_xclick">
                 <input type="hidden" name="business" value="Muhamad.husin0412.com">

@@ -33,45 +33,6 @@ $(document).ready(function(){
 $(document).ready(function () { 
 	// var isNumberScript = "<php echo is_number ?>"
 	// console.log(isNumberScript)
-// Change Price & stock with Size
-	$("#selSize").change(function () {
-		var idSize = $(this).val();
-		if(idSize == "")
-		{
-			return false;
-		}
-		$.ajax({
-			type:'post',
-			url:'/get-product-price',
-			data:{idSize:idSize},
-			success:function (resp) {
-				var arr = resp.split('#');
-				var arr1 = parseFloat(arr[0]).toFixed()
-				var arr2 = arr[0].split('-')
-				console.log(arr2)
-				var stylout = "color:red; font-weight:bold;"
-				var stylin = "color:green; font-weight:bold;"
-				$("#getPrice").html("Rp."+arr1);
-				$("#price").val(arr1);
-				if(arr[1]==0)
-				{
-					$("#cartButton").hide();
-					$("#Availability").attr("style",stylout);
-					$("#Availability").text("Out OF Stock");
-				}else{
-					$("#cartButton").show();
-					$("#Availability").attr("style",stylin);
-					$("#Availability").text("In Stock");
-				}
-				// alert(resp);
-			},error:function (err) {
-				alert("Error");
-			}
-			
-		});
-
-	});
-
 
 // Replace main image with alternate image
    $(".changeImage").click(function () {
