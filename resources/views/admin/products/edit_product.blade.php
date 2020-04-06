@@ -76,6 +76,28 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label ">Sleeve</label>
+                <div class="controls">
+                  <select name="sleeve"  name="sleeve" id="sleeve" class="form-control" style="width:220px;">
+                  <option selected disabled>Select Sleeve</option>
+                  @foreach(config('customeArr.sleeveArray') as $sleeve)
+                    <option value="{{$sleeve}}" @if(!empty($productDetails->sleeve) && $productDetails->sleeve == $sleeve) selected @endif>{{$sleeve}}</option>
+                  @endforeach 
+                  </select> 
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label ">Pattern</label>
+                <div class="controls">
+                  <select name="pattern"  name="pattern" id="pattern" class="form-control" style="width:220px;">
+                  <option selected disabled >Select Pattern</option>
+                  @foreach(config('customeArr.patternArray') as $patterns)
+                    <option value="{{$patterns}}" @if(!empty($productDetails->pattern) && $productDetails->pattern == $patterns) selected @endif>{{$patterns}}</option>
+                  @endforeach 
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label ">{{__('backend.price')}}</label>
                 <div class="controls">
                   <input class="price-input-Rp" type="text" name="price" id="price" value="{{$productDetails->price}}">

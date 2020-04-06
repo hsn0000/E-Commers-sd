@@ -20,6 +20,8 @@ class CreateProductsTable extends Migration
             $table->string('product_code',255);
             $table->string('product_color',255);
             $table->text('care');
+            $table->string('sleeve',255);
+            $table->string('pattern',255);
             $table->text('description');
             $table->decimal('price',8,2)->nullable()->default(0);
             $table->string('image',255);
