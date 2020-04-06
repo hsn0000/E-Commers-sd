@@ -4,7 +4,7 @@
  $cartCount = Product::cartCount();
  $mainCategories = Controller::mainCategories(); 
  $url = url()->current();
-@endphp
+@endphp 
 
 <header id="header">
     <!--header-->
@@ -15,8 +15,8 @@
                 <div class="col-sm-6">
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
-                            <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                            <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i> +628 0188 821</a></li>
+                            <li><a href="#"><i class="fa fa-envelope"></i> info@ecommerce.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="{{url('/')}}" @if($url == "http://localhost:9000") class="active" @elseif($url == "http://localhost:8000") class="active" @elseif($url == "http://localhost:7000") class="active" @elseif($url == "http://localhost:5000") class="active" @endif >{{__('frontend.home')}}</a></li>
+                            <li><a href="{{url('/')}}" @foreach(config('customeArr.link') as $links) @if($url == "$links") class="active" @endif @endforeach >{{__('frontend.home')}}</a></li>
                             <li class="dropdown"><a href="#" <?php  if(preg_match("/products/i", $url)) { ?> class="active" <?php } ?>>{{__('frontend.shop')}}<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     @foreach($mainCategories as $cat)

@@ -59,6 +59,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+   <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e85681bbd750c55"></script> -->\
+
+<!-- www.sharethis.com -->
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e858d8c182c2700121b7779&product=sticky-share-buttons&cms=website' async='async'></script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e858d8c182c2700121b7779&product=inline-share-buttons&cms=website' async='async'></script>
+
     <!-- <script src="{{ asset('js/app.js')}}"></script> -->
 
     @yield('script')

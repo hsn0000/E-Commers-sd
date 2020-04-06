@@ -29,6 +29,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 // Cataegory / list page
 Route::get('/products/{url}','ProductsController@products');
+/* product filter page */ 
+Route::match(['get','post'],'products/filter','ProductsController@filter');
 // category detail page
 Route::get('/product/{id}','ProductsController@product');
 // get product attribute price

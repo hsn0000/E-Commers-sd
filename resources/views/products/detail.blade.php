@@ -6,6 +6,7 @@
  use App\Product;
   $currencyLocale = Session::get('currencyLocale');
   $getCurrencyRates = Product::currencyRate ($productDetails->price);
+  $lie = "lie";
 @endphp
 
 	@if(Session::has('flash_message_error'))
@@ -30,7 +31,7 @@
 				</div>
 				
 				<div class="col-sm-9 padding-right">
-					<div class="product-details" style="padding-bottom:20px;"><!--product-details-->
+					<div class="product-details" style="padding-bottom:0px;"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
 							  <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
@@ -62,10 +63,25 @@
 								<input type="hidden" name="product_color" value="{{$productDetails->product_color}}">
 								<input type="hidden" name="price" id="price" value="{{$productDetails->price}}">
 
-								<div class="product-information"><!--/product-information-->
+								<div class="product-information" style="padding-top: 6px;"><!--/product-information-->
 									<img src="" class="newarrival" alt="" />
-									<h2>{{$productDetails->product_name}}</h2>
-									<p>CODE: {{$productDetails->product_code}}</p>
+									<h2 style="margin-bottom: 0px;">{{$productDetails->product_name}}</h2>
+									
+									  <p style="height: 16px;"><b>CODE : <span style="color:dodgerblue;"> {{$productDetails->product_code}} </span></b></p>
+									@if($productDetails->product_color == "White")
+									  <p style="height: 16px;"><b>COLOR : <span style="color:black;"> {{$productDetails->product_color}} </span></b></p>
+									@else
+									  <p style="height: 16px;"><b>COLOR : <span style="color:{{$productDetails->product_color}};"> {{$productDetails->product_color}} </span></b></p>
+									@endif
+
+									@if(!empty($productDetails->sleeve))
+									  <p style="height: 16px;"><b>SLEEVE : <span  style="color:dodgerblue;"> {{$productDetails->sleeve}} </span> </b></p>
+									@endif
+
+									@if(!empty($productDetails->pattern))
+									  <p style="height: 16px;"><b>PATTERN : <span  style="color:dodgerblue;"> {{$productDetails->pattern}} </span> </b></p> <br> <br>
+									@else <br> <br>@endif		
+
 									<p>
 										<select name="size" id="selSize" style="width:150px;" required > 
 										<option value="">Select Size</option>
@@ -73,10 +89,10 @@
 											<option value="{{$productDetails->id}}-{{$sizes->size}}">{{$sizes->size}}</option>
 											@endforeach
 										</select>
-									</p>
+									</p> 
 									<span>
 										<span id="getPrice" style="width:246px;"> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</span> <br> 
-										<label>Quantity :</label>
+  										<label>Quantity :</label>
 										<input class="is-valid" type="number" name="quantity" value="1" required type="number" min="1" max="100"/>
 										@if($total_stock > 0)
 										<button type="submit" class="btn btn-fefault cart" id="cartButton">
@@ -92,8 +108,10 @@
 									<input type="text" name="pincode" class="" id="chkPincode" placeholder="Check Pincode" required>
 									<button type="button" class="" onclick=" return checkPincode()">Go</button>
 									</p>
-									<p id="pincodeResponse"></p>
-									<a href="javascript:"><img src="https://images.vexels.com/media/users/3/136817/isolated/preview/c31f80ee80f25dddba49957fe5339e27-share-icon-outline-by-vexels.png" class="share img-responsive" width="42px" alt=""/></a>
+									<p id="pincodeResponse"></p> <br>
+									<!-- <a href="javascript:"><img src="https://images.vexels.com/media/users/3/136817/isolated/preview/c31f80ee80f25dddba49957fe5339e27-share-icon-outline-by-vexels.png" class="share img-responsive" width="42px" alt=""/></a> -->					
+									<!-- Go to www.addthis.com/dashboard to customize your tools -->
+									<div class="sharethis-inline-share-buttons" style="margin-left: -5vw;"></div>
 								</div><!--/product-information-->
 							</form>
 						</div>
