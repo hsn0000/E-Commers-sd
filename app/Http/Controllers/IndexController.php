@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\Banner;
+use App\ProductsAttribute;
 use DB;
 
 class IndexController extends Controller
@@ -18,18 +19,20 @@ class IndexController extends Controller
         // // in descending order
         // $productAll = Product::orderBy('id','DESC')->get();
         // in random order
-        $productAll = Product::inRandomOrder()->orderBy('id','DESC')->where('status',1)->where('feature_item',1)->paginate(12); 
+        $productAll = Product::inRandomOrder()->orderBy('id','DESC')->where('status',1)->where('feature_item',1)->paginate(15); 
         // get all category and sub category
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         // $categories = \json_decode(json_encode($categories));
         $banners = Banner::where('status', 1)->get();
-        $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(3)->get();
-
+        $billboard = DB::table('billboards')->inRandomOrder()->orderBy('id','DESC')->where('status',1)->offset(0)->limit(2)->get();
+        $sizeArray = ProductsAttribute::select('size')->where('size', '!=', '')->where('size', '!=', 'tes')->groupBy('size')->get();
+        $sizeArray = array_flatten(json_decode(json_encode($sizeArray),true));
+        // dd($sizeArray);
         // meta tags
         $meta_title = "E-commerce website";
         $meta_description = "Online Shopping Site for men, woman and kids clothing";
         $meta_keyword = "eshop website, online shopping, men clothing";
-        return view('index')->with(\compact('productAll','categories','banners','billboard','meta_title','meta_description','meta_keyword'));
+        return view('index')->with(\compact('productAll','categories','banners','billboard','meta_title','meta_description','meta_keyword','sizeArray'));
 
     }
 }
