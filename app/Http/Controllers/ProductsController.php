@@ -461,10 +461,13 @@ class ProductsController extends Controller
             $productAll = DB::table('products')->whereIn('products.category_id', $cat_ids)->where('products.status',1)->orderBy('products.id','desc');
             // $productAll = \json_decode(\json_encode($productAll));
             $allProductCount = Product::whereIn('category_id', $cat_ids)->where('status',1)->count();
+            $breadcrumb = "<a href='/' style='color: darkorange;'>Home</a> / <a href='".$categoryDetails->url."' style='color: darkorange;' >".$categoryDetails->name."</a>";
         }else{
             // If url is sub category url
             $productAll = DB::table('products')->where(['products.category_id' => $categoryDetails->id])->where('products.status',1)->orderBy('id','desc');
-            $allProductCount = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->count();     
+            $allProductCount = Product::where(['category_id' => $categoryDetails->id])->where('status',1)->count();    
+            $mainCategory = DB::table('categories')->where('id',$categoryDetails->parent_id)->first();
+            $breadcrumb = "<a href='/' style='color: darkorange;'>Home</a> / <a href='".$mainCategory->url."' style='color: darkorange;' >".$mainCategory->name."</a> / <a href='".$categoryDetails->url."' style='color: darkorange;' >".$categoryDetails->name."</a>";
         }
 
         if(!empty($_GET['color'])) {
@@ -506,7 +509,7 @@ class ProductsController extends Controller
         $meta_description = $categoryDetails->meta_description;
         $meta_keyword = $categoryDetails->meta_keywords;
 
-        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard','allProductCount','meta_title','meta_description','meta_keyword','sizeArray'));
+        return view('products.listing')->with(\compact('categoryDetails','productAll','categories','banners','billboard','allProductCount','meta_title','meta_description','meta_keyword','sizeArray','breadcrumb'));
     }
 
 
@@ -573,8 +576,12 @@ class ProductsController extends Controller
             $categories = Category::with('categories')->where(['parent_id' => 0])->get();
             $search_product = $data['product'];
             // $productAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->paginate(9);
-            $productCount = DB::table('products')->where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)
-            ->orwhere('description','like','%'.$search_product.'%')->orwhere('product_color','like','%'.$search_product.'%')->where('status',1)->count();
+            $productCount = DB::table('products')->where( function($query) use ($search_product) {
+                $query->where('product_name','like','%'.$search_product.'%')
+                ->orwhere('product_code',$search_product)
+                ->orwhere('description','like','%'.$search_product.'%')
+                ->orwhere('product_color','like','%'.$search_product.'%');
+            })->where('status',1)->count();
 
             $productAll = DB::table('products')->where( function($query) use ($search_product) {
                 $query->where('product_name','like','%'.$search_product.'%')
@@ -582,8 +589,11 @@ class ProductsController extends Controller
                 ->orwhere('description','like','%'.$search_product.'%')
                 ->orwhere('product_color','like','%'.$search_product.'%');
             })->where('status',1)->get();
-// dd($productAll);
-            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard','productCount'));
+
+            $sizeArray = ProductsAttribute::select('size')->where('size', '!=', '')->where('size', '!=', 'tes')->groupBy('size')->get();
+            $sizeArray = array_flatten(json_decode(json_encode($sizeArray),true));
+
+            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard','productCount','sizeArray'));
         }
     }
 
@@ -609,6 +619,16 @@ class ProductsController extends Controller
          }
         // get all categories and subcategories
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+        $categoryDetails = Category::where(['id' => $productDetails->category_id])->first();
+                
+        if($categoryDetails->parent_id == 0)
+        {
+            $breadcrumb = "<a href='/' style='color: darkorange;'>Home</a> / <a href='/products/".$categoryDetails->url."' style='color: darkorange;' >".$categoryDetails->name."</a> / ".$productDetails->product_name;
+        }else{
+            $mainCategory = DB::table('categories')->where('id',$categoryDetails->parent_id)->first();
+            $breadcrumb = "<a href='/' style='color: darkorange;'>Home</a> / <a href='/products/".$mainCategory->url."' style='color: darkorange;' >".$mainCategory->name."</a> / <a href='/products/".$categoryDetails->url."' style='color: darkorange;' >".$categoryDetails->name."</a> / <span style='color: cornflowerblue;' > ".$productDetails->product_name." </span>";
+        }
+
         //Get Products Alternate Images
         $productAltImage = ProductsImage::where('product_id',$id)->get();
         // get Attribute stock
@@ -618,7 +638,7 @@ class ProductsController extends Controller
         $meta_description = $productDetails->description;
         $meta_keyword = $productDetails->product_name;
 
-        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct','billboard','meta_title','meta_description','meta_keyword'));
+        return \view('products.detail')->with(\compact('productDetails','categories','productAltImage','total_stock','relatedProduct','billboard','meta_title','meta_description','meta_keyword','breadcrumb'));
     }
 
 
@@ -951,10 +971,39 @@ class ProductsController extends Controller
             $data = $request->all();
 
             if(empty($data['payment_method'])) {
+                $request->validate([
+                    'payment_method' => 'required'
+                ]);
                 return back()->with('flash_message_error','Please select method payment');
             }
             $user_id = Auth::user()->id;
             $user_email = Auth::user()->email;
+            // Prevent out of stock produck from ordering
+            $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+            foreach($userCart as $cart) {
+                $getAttributeCount = Product::getAttributeCount($cart->product_id, $cart->size); 
+                if($getAttributeCount == 0) {
+                    Product::deleteCartProduct($cart->product_id, $user_email);
+                    return redirect('/cart')->with('flash_message_error','One the product is not available. Try Again !');
+                }
+
+                $product_stock = Product::getProductStock($cart->product_id, $cart->size); 
+                if($product_stock == 0) {
+                    Product::deleteCartProduct($cart->product_id, $user_email);
+                    return redirect('/cart')->with('flash_message_error','Sold Out Product remove from cart. Try Again !');
+                }
+
+               if($cart->quantity > $product_stock) {
+                    return redirect('/cart')->with('flash_message_error','Reduce Product Stock and try again.');
+               }
+
+               $product_status = Product::getProductStatus($cart->product_id);
+               if($product_status == 0) {
+                  Product::deleteCartProduct($cart->product_id, $user_email);
+                  return redirect('/cart')->with('flash_message_error','Disable Product remove from cart. Please placing order again.');
+               }
+            }
+
             // get shippong address off user
             $shippingDetails = DeliveryAddress::where(['user_email' => $user_email])->first();
             $pincodeCount = DB::table('pincodes')->where('pincode',$shippingDetails->pincode)->count();
@@ -997,6 +1046,15 @@ class ProductsController extends Controller
                $cartPro->product_price = $pro->price;
                $cartPro->product_qty = $pro->quantity;
                $cartPro->save();
+
+              //  reduce stoct script starrt
+              $getProductStock = DB::table('products_attributes')->where('sku',$pro->product_code)->first();
+              $newStock = $getProductStock->stock - $pro->quantity;
+              if($newStock <0) {
+                  $newStock = 0;
+              }
+              DB::table('products_attributes')->where('sku',$pro->product_code)->update(['stock' => $newStock]);
+            //   dd("Original Stock :".$getProductStock->stock, "Stock to reduce :".$pro->quantity);
             }
 
             Session::put('order_id',$order_id);

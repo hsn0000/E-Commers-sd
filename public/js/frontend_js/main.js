@@ -325,7 +325,7 @@ function selectPaymentMethod()
 	if($("#Paypal").is(':checked') || $("#COD").is(':checked')) {
 		// alert('check')
 	}else{
-		alert("Please Select Payment Method")
+		// alert("Please Select Payment Method")
 	}
 }
 
