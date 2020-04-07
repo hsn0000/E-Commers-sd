@@ -25,12 +25,12 @@
             <h3>YOUR ORDER HAS BEEN PLACED</h3>
             <img style="width:170px; height:90px;" src="{{asset('/images/frontend_images/Than.jpg')}}" alt="">
             <p>Please make payment by clicking on below Payment Button</p>
-            <?php 
-             $orderDetails = Order::getOrderDetails(Session::get('order_id')); 
-             $orderDetails = json_decode(json_encode($orderDetails)); 
-             $nameArr = explode(' ',$orderDetails->name);
-             $getCountryCode = Order::getCountryCode($orderDetails->country); 
-                  ?>
+            @php 
+                $orderDetails = Order::getOrderDetails(Session::get('order_id')); 
+                $orderDetails = json_decode(json_encode($orderDetails)); 
+                $nameArr = explode(' ',$orderDetails->name);
+                $getCountryCode = Order::getCountryCode($orderDetails->country); 
+             @endphp
 
             <p>Your order number is <b style="color:green;">{{Session::get('order_id')}}</b> and total payable about is
                 <b style="color:green;">{{$currencyLocale->currency_simbol.' '.is_number(Session::get('grant_total'),2)}}</b></p>

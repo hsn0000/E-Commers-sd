@@ -79,15 +79,37 @@ class Product extends Model
             }
 
         } else {
-            if($curr->currency_code == "USD") {
-                $currencyUSD = DB::table('currencies')->where('currency_code','USD')->first();
-                Session::put('currencyLocale',$currencyUSD);
+            if($curr->currency_code == "IDR") {
+                $currencyIRD = DB::table('currencies')->where('currency_code','IDR')->first();
+                Session::put('currencyLocale',$currencyIRD);
                 $rate_currency = round($price/$curr->exchange_rate,2);
             }
         }
     }
         // dd(Session::get('currencyLocale'), $rate_currency);
         return $rate_currency;
+    }
+    
+
+    public static function getProductStock($product_id, $product_size) {
+        $getProduckStock = ProductsAttribute::select('stock')->where(['product_id' => $product_id, 'size' => $product_size])->first();
+        return $getProduckStock->stock;
+    }
+
+
+    public static function deleteCartProduct($product_id, $user_email) {
+        DB::table('cart')->where(['product_id' => $product_id, 'user_email' => $user_email])->delete();
+    }
+
+
+    public static function getProductStatus($product_id) {
+        $getProductStatus = Product::select('status')->where('id', $product_id)->first();
+        return $getProductStatus->status;
+    }
+
+    public static function getAttributeCount($product_id, $product_size) {
+        $getAttributeCount = ProductsAttribute::where(['product_id' => $product_id, 'size' => $product_size])->count();
+        return $getAttributeCount;
     }
 
 
