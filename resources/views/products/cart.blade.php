@@ -54,9 +54,10 @@
                             <a href="{{url('/product/'.$cart->product_id)}}"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" alt=""></a>
                         </td>
                         <td class="cart_description">
-                            <h4>{{$cart->product_name}}</h4>
+                            <h4>{{$cart->product_name}}</h4> <br>
                             <p>Code : {{$cart->product_code}}</p>
-                            <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
+                            <p>Size : {{$cart->size}}</p>
+                            <p>Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
                             <p> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</p>

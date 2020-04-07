@@ -60,6 +60,10 @@
 						@endif
 						   <!-- ({{ count($productAll)}}) -->
 						</h2>
+						@if(!empty($breadcrumb))
+						<div align="left"> {!! $breadcrumb !!} </div>
+						<div> &nbsp; </div>
+						@endif
 						@foreach($productAll as $product)
 						@php $getCurrencyRates = Product::currencyRate ($product->price); @endphp
 						<div class="col-sm-4">

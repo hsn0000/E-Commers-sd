@@ -115,9 +115,10 @@
                             <a href="javascript:"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" onclick="popupGambar(this)" alt=""></a>
                         </td>
                         <td class=" cart_description">
-                                <h4>{{$cart->product_name}}</h4>
+                                <h4>{{$cart->product_name}}</h4> <br>
                                 <p>Code : {{$cart->product_code}}</p>
-                                <p>Size : {{$cart->size}} | Color : {{$cart->product_color}}</p>
+                                <p>Size : {{$cart->size}} </p>
+                                <p>Color : {{$cart->product_color}}</p>
                         </td>
                         <td class="cart_price">
                             <p>{{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</p>
@@ -145,9 +146,14 @@
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Discount Amount(-)</td>
-                                    <td>@if (!empty(Session::get('CouponAmount'))) 
-                                    @php $currencyRateCoupponAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
-                                     {{$currencyLocale->currency_simbol.' '.is_number($currencyRateCoupponAmoun,2)}} @else {{$currencyLocale->currency_simbol}}  0 @endif</td>
+                                    <td> 
+                                        @if (!empty(Session::get('CouponAmount'))) 
+                                        @php $currencyRateCoupponAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
+                                        @else
+                                        @php $currencyRateCoupponAmoun = "0"; @endphp
+                                       @endif
+                                        {{$currencyLocale->currency_simbol.' '.is_number($currencyRateCoupponAmoun,2)}}
+                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Grand Total</td>
@@ -164,7 +170,12 @@
             <div class="payment-options">
                 <input type="hidden" name="grant_total" id="grant_total" value="{{$grant_total}}">
                 <span>
-                    <label><b>Select Payment Method :</b></label>
+                    <label><b  @error('payment_method') class="is-invalid"  @enderror>Select Payment Method :</b></label>
+                @error('payment_method')
+                  <span class="invalid-feedback" role="alert">
+                    <strong style="color: orangered; margin-left: -21px; margin-right: 17px;"> Please select method payment ! </strong>
+                  </span>
+                @enderror
                 </span>
                 @if($codPincodeCount > 0)
                 <span>

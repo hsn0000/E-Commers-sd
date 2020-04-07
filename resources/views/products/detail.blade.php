@@ -65,6 +65,8 @@
 
 								<div class="product-information" style="padding-top: 6px;"><!--/product-information-->
 									<img src="" class="newarrival" alt="" />
+									<div align="left"> {!! $breadcrumb !!} </div>
+					             	<div> &nbsp; </div>
 									<h2 style="margin-bottom: 0px;">{{$productDetails->product_name}}</h2>
 									
 									  <p style="height: 16px;"><b>CODE : <span style="color:dodgerblue;"> {{$productDetails->product_code}} </span></b></p>
