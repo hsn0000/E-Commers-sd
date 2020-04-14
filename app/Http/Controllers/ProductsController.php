@@ -54,6 +54,7 @@ class ProductsController extends Controller
             $product->pattern = $data['pattern'] ?? "";
             $product->care = $data['care'] ?? "";
             $product->price = $price;
+            $product->weight = $data['weight'] ?? "";
          /* upload image */
          if($request->hasFile('image'))
          {
@@ -166,6 +167,7 @@ class ProductsController extends Controller
                 'feature_item' => $data['feature_item'] ?? 0,
                 'status' => $data['status'] ?? 0,
                 'price' => $price,
+                'weight' => $data['weight'] ?? "",
             ]);
             
             return \redirect()->back()->with('flash_message_success','product_has_been_updated_successfully');
@@ -205,32 +207,34 @@ class ProductsController extends Controller
     public function deleteProduct($id=null) 
     {
        // get product image nama
-       $productImage = Product::where(['id' => $id])->first();
+       $productImgVideo = Product::where(['id' => $id])->first();
        // get product image patch
        $large_image_patch = 'images/backend_images/products/large/';
        $medium_image_patch = 'images/backend_images/products/medium/';
        $small_image_patch = 'images/backend_images/products/small/';
        // Delete large image if not exist folder
-       if(\file_exists($large_image_patch.$productImage->image))
+       if(\file_exists($large_image_patch.$productImgVideo->image))
        {
-           \unlink($large_image_patch.$productImage->image);
-       }
+           \unlink($large_image_patch.$productImgVideo->image);
+       } 
         // Delete medium image if not exist folder
-        if(\file_exists($medium_image_patch.$productImage->image))
+        if(\file_exists($medium_image_patch.$productImgVideo->image))
         {
-            \unlink($medium_image_patch.$productImage->image);
+            \unlink($medium_image_patch.$productImgVideo->image);
         }
          // Delete small image if not exist folder
-       if(\file_exists($small_image_patch.$productImage->image))
+       if(\file_exists($small_image_patch.$productImgVideo->image))
        {
-           \unlink($small_image_patch.$productImage->image);
+           \unlink($small_image_patch.$productImgVideo->image);
        }
 
        $video_patch = "videos/";
-            /* Delete video if exists in folder */   
-            if(file_exists($video_patch.$productImage->video)) {
-                unlink($video_patch.$productImage->video);
-           }
+            /* Delete video if exists in folder */ 
+        if(!empty($productImgVideo->video)) {
+            if(file_exists($video_patch.$productImgVideo->video)) {
+                unlink($video_patch.$productImgVideo->video);
+            }
+        }
 
        // delete image from product table
        Product::where(['id' => $id])->delete();
@@ -592,8 +596,9 @@ class ProductsController extends Controller
 
             $sizeArray = ProductsAttribute::select('size')->where('size', '!=', '')->where('size', '!=', 'tes')->groupBy('size')->get();
             $sizeArray = array_flatten(json_decode(json_encode($sizeArray),true));
+            $breadcrumb = "<a href='/' style='color: darkorange;'>Home</a> / ".$search_product;
 
-            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard','productCount','sizeArray'));
+            return view('products.listing')->with(\compact('search_product','productAll','categories','banners','billboard','productCount','sizeArray','breadcrumb'));
         }
     }
 
@@ -951,16 +956,21 @@ class ProductsController extends Controller
         $userDetails = User::where('id',$user_id)->first();
 
         $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+        $total_weight = 0;
         foreach($userCart as $key => $product)
         {
             $productDetails = Product::where('id',$product->product_id)->first();
             $userCart[$key]->image = "$productDetails->image";   
+            $total_weight = $total_weight + $productDetails->weight;
         }
         $codPincodeCount = DB::table('cod_pincodes')->where('pincode',$shippingDetails->pincode)->count();
         $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode',$shippingDetails->pincode)->count();
+        //  fetch shipping charges
+        $shippingCharges = Product::getShippingCharges($total_weight, $shippingDetails->country);
+        Session::put("ShippingCharges",$shippingCharges);
 
         $meta_title ="Order Review - E-com Website";
-        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart','meta_title','codPincodeCount','prepaidPincodeCount'));
+        return view('products.order_review')->with(\compact('shippingDetails','userDetails','userCart','meta_title','codPincodeCount','prepaidPincodeCount','shippingCharges'));
     }
     
     
@@ -1000,7 +1010,14 @@ class ProductsController extends Controller
                $product_status = Product::getProductStatus($cart->product_id);
                if($product_status == 0) {
                   Product::deleteCartProduct($cart->product_id, $user_email);
-                  return redirect('/cart')->with('flash_message_error','Disable Product remove from cart. Please placing order again.');
+                  return redirect('/cart')->with('flash_message_error','Disable Product remove from cart. Please try again. !');
+               }
+
+               $getCategoryId = DB::table('products')->select('category_id')->where('id',$cart->product_id)->first();
+               $category_status = Product::getCategoryStatus($getCategoryId->category_id);
+               if($category_status == 0) {
+                    Product::deleteCartProduct($cart->product_id, $user_email);
+                    return redirect('/cart')->with('flash_message_error','One of the product category is disabled. Please try again. !');
                }
             }
 
@@ -1011,7 +1028,9 @@ class ProductsController extends Controller
             if($pincodeCount == 0 ) {
                 return \redirect()->back()->with('flash_message_error','Your location is not available for delivery. please choose another location');
             }
-            
+           /*  //  fetch shipping charges
+            $shippingCharges = Product::getShippingCharges($shippingDetails->country);  */
+
             $order = new Order;
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -1026,6 +1045,7 @@ class ProductsController extends Controller
             $order->coupon_amount = Session::get('CouponAmount') ?? "";
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
+            $order->shipping_charges = Session::get('ShippingCharges');
             $order->grant_total = $data['grant_total'];
             $order->save();
 

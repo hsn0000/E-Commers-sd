@@ -71,7 +71,7 @@ use App\Product;
                             Color
                         </a>
                     </h4>
-                </div>
+                </div> 
                 @if(!empty($_GET['color']))
                   @php $colorArray = explode( '-', $_GET['color']);  @endphp
                 @endif 

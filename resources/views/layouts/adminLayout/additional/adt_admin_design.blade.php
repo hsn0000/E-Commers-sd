@@ -1,5 +1,24 @@
 <script>
 $(document).ready(function() {
+
+   /*Admin Roles*/ 
+  $("#type").change(function() {
+     var type = $("#type").val();
+     if(type == "Admin") {
+         $("#access").hide();
+     } else {
+         $("#access").show();
+     }
+  })
+
+  var type = $("#type").val();
+     if(type == "Admin") {
+         $("#access").hide();
+     } else {
+         $("#access").show();
+     }
+   /*end admin Roles*/ 
+   
     // logout  admin
     $(".logoutUser").click(function() {
         Swal.fire({ 

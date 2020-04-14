@@ -83,7 +83,7 @@ use Carbon\Carbon;
                                 </tr>
                                 <tr>
                                     <td class="taskDesc">{{__('backend.shipping_charges')}}</td>
-                                    <td class="taskStatus">{{$orderDetails->shipping_changes}}</td>
+                                    <td class="taskStatus">Rp {{is_number($orderDetails->shipping_charges)}}</td>
                                 </tr>
                                 <tr>
                                     <td class="taskDesc">{{__('backend.coupon_code')}}</td>

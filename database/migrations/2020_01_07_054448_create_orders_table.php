@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('pincode');
             $table->string('country');
             $table->string('mobile');
-            $table->float('shipping_changes');
+            $table->float('shipping_charges');
             $table->string('coupon_code');
             $table->decimal('coupon_amount');
             $table->string('order_status');

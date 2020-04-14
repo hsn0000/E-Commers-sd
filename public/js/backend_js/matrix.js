@@ -162,13 +162,20 @@ $(document).ready(function(){
 		$('#lightbox').hide(200);
 	});
 
-	// animate loading
+	/*animate loading*/ 
 	// var loading = document.getElementById('loading');  
 	window.addEventListener('load', function () {
 		$("#loading").delay(1100).fadeOut("slow");
 		// loading.style.display="none";
 	}); 
+   	/*end animate loading*/ 
 
+	/*toas*/
+   $(".gritter-item-wrapper").delay(7000).fadeOut("slow"); 
+   $(".closeToast").click(function() {
+	   $(".gritter-item-wrapper").remove()
+   })
+   /*end toas*/    
 	
 });
 
