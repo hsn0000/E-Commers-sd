@@ -48,7 +48,7 @@ return [
 
     // header admin
     'husin_e_comerce_admin' => 'Husin E-comerce Admin',
-    'welcome_user' => 'Welcome User',
+    'welcome' => 'Welcome',
     'my_profile' => 'My Profile',
     'my_tasks' => 'My Tasks',
     'log_out' => 'Log Out',

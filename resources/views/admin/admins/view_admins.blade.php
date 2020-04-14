@@ -65,8 +65,12 @@ use Carbon\Carbon;
                                               $roles = "<span class='badge badge-pill' style='background-color: dodgerblue;'>All</span>";
                                           } else {
                                               $roles = "";
-                                              if($admin->categories_access == 1) {
-                                                  $roles .= "<span class='badge badge-pill' style='background-color: deepskyblue;'>Categories </span> &nbsp;";
+                                              if($admin->categories_view_access == 1) {
+                                                  $roles .= "<span class='badge badge-pill' style='background-color: deepskyblue;'>View Categories Only </span> &nbsp;";
+                                              } if($admin->categories_edit_access == 1) {
+                                                  $roles .= "<span class='badge badge-pill' style='background-color: darkslategrey;'> Edit Categories Only</span> &nbsp;";
+                                              } if($admin->categories_full_access == 1) {
+                                                  $roles .= "<span class='badge badge-pill' style='background-color: darkorchid;'>Full Categories </span> &nbsp;";
                                               } if($admin->products_access == 1) {
                                                   $roles .= "<span class='badge badge-pill' style='background-color: palevioletred;'>Products </span> &nbsp;";
                                               } if($admin->order_access == 1) {

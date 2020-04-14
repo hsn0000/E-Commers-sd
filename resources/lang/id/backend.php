@@ -43,7 +43,7 @@ return [
 
     // header admin
     'husin_e_comerce_admin' => 'Husin E-comerce Admin',
-    'welcome_user' => 'Selamat Datang Pengguna',
+    'welcome' => 'Selamat Datang',
     'my_profile' => 'Profil saya',
     'my_tasks' => 'Tugas saya',
     'log_out' => 'Keluar',
