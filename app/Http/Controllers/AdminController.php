@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use App\User;
 use App\Admin;
+use DB;
+use Date;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -86,5 +88,87 @@ class AdminController extends Controller
         Session::flush();
         return redirect('/admin')->with('flash_message_success','logged_out_successfully');
     }
+
+
+    public function viewAdmins() {
+
+        $admins = DB::table('admins')->orderBy('created_at','desc')->get();
+
+        return view('admin.admins.view_admins')->with(\compact('admins'));
+    }
+
+
+    public function addAdmins(Request $request) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
+            $adminCount = DB::table('admins')->where('username',$data['username'])->count();
+            if($adminCount > 1) {
+                return \redirect()->back()->with('flash_message_error','Admin / Sub Admin already exists !, please chose another.');
+            } else {
+                if($data['type'] == "Admin") {
+                    $admin = new Admin;
+                    $admin->type = $data['type'];
+                    $admin->username = $data['username'];
+                    $admin->password = md5($data['password']);
+                    $admin->status = $data['status'] ?? 0;
+                    $admin->categories_access = 0;
+                    $admin->products_access = 0;
+                    $admin->order_access = 0;
+                    $admin->users_access =  0;
+                    $admin->save();
+                    return \redirect()->back()->with('flash_message_success','Admin added successfully !');
+
+                } else if($data['type'] == "Sub Admin") {
+                    $admin = new Admin;
+                    $admin->type = $data['type'];
+                    $admin->username = $data['username'];
+                    $admin->password = md5($data['password']);
+                    $admin->categories_access = $data['categories_access'] ?? 0;
+                    $admin->products_access = $data['products_access'] ?? 0;
+                    $admin->order_access = $data['order_access'] ?? 0;
+                    $admin->users_access = $data['users_access'] ?? 0;
+                    $admin->status = $data['status'] ?? 0;
+                    $admin->save();
+                    
+                    return \redirect()->back()->with('flash_message_success','Sub Admin added successfully !');
+                }
+            }
+        }
+        return \view('admin.admins.add_admins');
+    }
+
+    
+    public function editAdmins($id = null, Request $request) {
+
+        $adminDetails = DB::table('admins')->where('id',$id)->first();
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
+            if($data['type'] == "Admin") {
+                DB::table('admins')->where('username',$data['username'])->update([
+                     'password' => md5($data['password']),
+                     'status' => $data['status'] ?? 0,
+                     'updated_at' => date('Y-m-d H:i:s')
+                ]);
+                return \redirect()->back()->with('flash_message_success','Admin Updated successfully !');
+
+            } else if($data['type'] == "Sub Admin") {
+                DB::table('admins')->where('username',$data['username'])->update([
+                    'password' => md5($data['password']),
+                    'categories_access' => $data['categories_access'] ?? 0,
+                    'products_access' => $data['products_access'] ?? 0,
+                    'order_access' => $data['order_access'] ?? 0,
+                    'users_access' => $data['users_access'] ?? 0,
+                    'status' => $data['status'] ?? 0,
+                    'updated_at' => date('Y-m-d H:i:s')
+               ]);                
+                return \redirect()->back()->with('flash_message_success','Sub Admin updated successfully !');
+            }
+        }
+        return view('admin.admins.edit_admins')->with(compact('adminDetails'));
+    }
+
+
 
 }

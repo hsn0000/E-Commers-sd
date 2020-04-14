@@ -20,6 +20,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- custom css -->
 <link rel="stylesheet" href="{{asset('css/backend_css/custom.css')}}">
+<!-- togle switch custome bootsrap -->
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<style>
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; min-width: 13px; min-height: 11px;}
+  .toggle.ios .toggle-handle { border-radius: 20rem; min-width: 13px; min-height: 11px; }
+</style>
+<!-- end togle switch custome bootsrap -->
+
 @yield('link')
 </head>
 <body>
@@ -49,6 +57,8 @@
 <script src="{{asset('js/backend_js/custom.js')}}"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- togle switch custome bootsrap -->
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 @yield('script')
 

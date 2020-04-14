@@ -142,7 +142,7 @@
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Shipping Cost(+)</td>
-                                    <td>{{$currencyLocale->currency_simbol}}  0</td>
+                                    <td>{{$currencyLocale->currency_simbol.' '.is_number($shippingCharges)}}</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Discount Amount(-)</td>
@@ -157,7 +157,7 @@
                                 </tr>
                                 <tr>
                                     <td>Grand Total</td>
-                                    <td><span>{{$currencyLocale->currency_simbol.' '.is_number($grant_total = $total_amount - $currencyRateCoupponAmoun,2)}}</span>
+                                    <td><span>{{$currencyLocale->currency_simbol.' '.is_number($grant_total = ($total_amount + $shippingCharges) - $currencyRateCoupponAmoun,2)}}</span>
                                     </td>
                                 </tr>
                             </table>

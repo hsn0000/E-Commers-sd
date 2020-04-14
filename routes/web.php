@@ -135,7 +135,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::get('/admin/view-banner','BannersController@viewBanners');
     
     //Admin shipping route
-    Route::match(['get', 'post'], '/admin/add-billboard','BillboardsController@addBillboard');
+    Route::match(['get', 'post'],'/admin/add-billboard','BillboardsController@addBillboard');
     Route::get('/admin/view-billboard','BillboardsController@viewBillboard');
     Route::match(['get','post'],'/admin/edit-billboard/{id}','BillboardsController@editBillboard');
     Route::get('/admin/delete-billboard/{id}','BillboardsController@deleteBillboard');
@@ -150,6 +150,10 @@ Route::group(['middleware' => ['adminlogin']], function() {
     Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
     //  Admin user route
     Route::get('admin/view-users','UsersController@viewUsers');
+    //  Admin Roles route
+    Route::get('/admin/view-admins','AdminController@viewAdmins');
+    Route::match(['get', 'post'],'/admin/add-admins','AdminController@addAdmins');
+    Route::match(['get', 'post'],'/admin/edit-admins/{id}','AdminController@editAdmins');
 
    //  admin cms route edit-cms-page 
    Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage'); 
@@ -162,6 +166,10 @@ Route::group(['middleware' => ['adminlogin']], function() {
    Route::match(['get','post'],'/admin/edit-currencies/{id}','CurrencyController@editCurrency'); 
    Route::get('/admin/view-currencies','CurrencyController@viewCurrency');
    Route::get('/admin/delete-currencies/{id}','CurrencyController@deleteCurrency');
+
+   //  admin shipping charges
+   Route::get('/admin/view-shipping','ShippingController@viewShipping');   
+   Route::match(['get','post'],'/admin/edit-shipping/{id}','ShippingController@editShipping'); 
 
 }); 
 

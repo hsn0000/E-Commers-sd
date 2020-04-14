@@ -104,10 +104,16 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label ">Weight (g)</label>
+                <div class="controls">
+                  <input class="" type="number" name="weight" id="weight" value="{{$productDetails->weight}}">
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">{{__('backend.old_image')}}</label>
                 <div class="controls">
                @if(!empty($productDetails->image))
-                 <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" style="width:217px; height:219px;">
+                 <a href="javascript:"> <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="{{__('backend.old_image')}}" style="width:217px; height:219px;" onclick="popupGambar(this)"> </a>
                  &nbsp; | | <a rel="{{$productDetails->id}}" rel1="delete-product-image" rel2="{{__('backend.old_image')}}" href="javascript:" class="btn btn-danger btn-mini" id="" onclick="deleteProdt(this)"><i class="icon-trash" ></i> {{__('backend.delete')}}</a>
                @endif
                 </div>

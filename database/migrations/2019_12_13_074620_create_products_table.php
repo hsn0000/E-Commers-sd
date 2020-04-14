@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('pattern',255);
             $table->text('description');
             $table->decimal('price',8,2)->nullable()->default(0);
+            $table->integer('weight',11);
             $table->string('image',255);
             $table->string('video',255);
             $table->tinyInteger('feature_item')->default(0);

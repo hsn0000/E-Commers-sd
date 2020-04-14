@@ -115,6 +115,5 @@ use Carbon\Carbon;
 @endsection
 
 @section('script')
-  
 
 @endsection

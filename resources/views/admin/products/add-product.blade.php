@@ -104,6 +104,12 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label ">Weight (g)</label>
+                <div class="controls">
+                  <input class="" type="number" name="weight" id="weight" placeholder="">
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">{{__('backend.image')}}</label>
                 <div class="controls">
                   <input type="file" name="image" id="image">
