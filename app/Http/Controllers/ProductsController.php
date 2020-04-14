@@ -33,7 +33,9 @@ class ProductsController extends Controller
 
     public function addProduct(Request $request) 
     {
-
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         if($request->isMethod('post')) 
         {
             $data = $request->all();
@@ -112,6 +114,9 @@ class ProductsController extends Controller
    
     public function editProduct(Request $request, $id=null)
     {   
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         if($request->isMethod('post'))
         {
             $data = $request->all();
@@ -206,6 +211,9 @@ class ProductsController extends Controller
 
     public function deleteProduct($id=null) 
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
        // get product image nama
        $productImgVideo = Product::where(['id' => $id])->first();
        // get product image patch
@@ -245,6 +253,9 @@ class ProductsController extends Controller
 
     public function deleteProductImage($id=null)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         // get product image nama
         $productImage = Product::where(['id' => $id])->first();
         // get product image patch
@@ -274,7 +285,9 @@ class ProductsController extends Controller
 
 
     public function deleteProductVideo($id = null) {
- 
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         $productVideo = DB::table('products')->select('video')->where('id',$id)->first();
         $video_patch = 'videos/';
        /* Delete video if exists in folder */   
@@ -289,6 +302,9 @@ class ProductsController extends Controller
 
     public function viewProducts(Request $request)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         $products = Product::orderBy('id','DESC')->get();
         $products = \json_decode(\json_encode($products));
         foreach($products as $key => $val)
@@ -345,6 +361,9 @@ class ProductsController extends Controller
 
     public function editAtributes(Request $request, $id = null)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
       if($request->isMethod('post'))
       {
          $data = $request->all();
@@ -363,6 +382,9 @@ class ProductsController extends Controller
 
     public function deleteAttribute($id=null)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         ProductsAttribute::where(['id' => $id])->delete();
         return redirect()->back()->with('flash_message_success','attribute_has_been_deleted');
     }
@@ -370,6 +392,9 @@ class ProductsController extends Controller
 
     public function addImages(Request $request, $id=null)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         $productDetails = Product::with('attributes')->where(['id' => $id])->first();
         // $productDetails = \json_decode(\json_encode($productDetails));
         if($request->isMethod('post'))
@@ -410,6 +435,9 @@ class ProductsController extends Controller
     
     public function deleteAltImage($id=null)
     {
+        if(Session::get('adminDetails')['products_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         // get product image nama
         $productImage = ProductsImage::where(['id' => $id])->first();
         // get product image patch
@@ -1156,6 +1184,9 @@ class ProductsController extends Controller
      
     public function viewOrders() 
     {
+        if(Session::get('adminDetails')['order_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         $orders = Order::with('orders')->orderBy('id','desc')->get();
         return view('admin.orders.view_orders')->with(\compact('orders'));
     }
@@ -1163,6 +1194,9 @@ class ProductsController extends Controller
 
     public function viewOrderDetails($order_id)
     {
+        if(Session::get('adminDetails')['order_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         $orderDetails = Order::with('orders')->where('id',$order_id)->first();
         $orderDetails = json_decode(\json_encode($orderDetails));
         $user_id = $orderDetails->user_id;
@@ -1175,6 +1209,9 @@ class ProductsController extends Controller
 
     public function viewOrderInvoice($order_id)
     {
+        if(Session::get('adminDetails')['order_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }   
         $orderDetails = Order::with('orders')->where('id',$order_id)->first();
         $orderDetails = json_decode(\json_encode($orderDetails));
         $user_id = $orderDetails->user_id;
@@ -1187,6 +1224,9 @@ class ProductsController extends Controller
 
     public function updateOrderStatus(Request $request) 
     {
+        if(Session::get('adminDetails')['order_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }
         if($request->isMethod('post'))
         {
             $data = $request->all();

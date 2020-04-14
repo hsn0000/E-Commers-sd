@@ -25,7 +25,9 @@ class Adminlogin
             $adminDetails = DB::table('admins')->where('username',Session::get('adminSession'))->first();
             $adminDetails = json_decode(json_encode($adminDetails), true);
             if($adminDetails['type'] == "Admin") {
-                $adminDetails['categories_access'] = 1; 
+                $adminDetails['categories_view_access'] = 1; 
+                $adminDetails['categories_edit_access'] = 1; 
+                $adminDetails['categories_full_access'] = 1; 
                 $adminDetails['products_access'] = 1; 
                 $adminDetails['order_access'] = 1; 
                 $adminDetails['users_access'] = 1; 
@@ -33,10 +35,10 @@ class Adminlogin
             Session::put('adminDetails',$adminDetails);
             // get current patch
             $currentPatch = Route::getFacadeRoot()->current()->uri();
-            if($currentPatch == "admin/view-categories" && Session::get('adminDetails')['categories_access'] == 0) {
+            if($currentPatch == "admin/view-categories" && Session::get('adminDetails')['categories_view_access'] == 0) {
                 return redirect()->back()->with('flash_message_error','You have no access for this module !');
 
-            } if($currentPatch == "admin/add-categories" && Session::get('adminDetails')['categories_access'] == 0) {
+            } if($currentPatch == "admin/add-categories" && Session::get('adminDetails')['categories_edit_access'] == 0) {
                 return redirect()->back()->with('flash_message_error','You have no access for this module !');
 
             } if($currentPatch == "admin/view-product" && Session::get('adminDetails')['products_access'] == 0) {

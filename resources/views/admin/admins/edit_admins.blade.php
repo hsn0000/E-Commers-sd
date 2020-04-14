@@ -9,27 +9,42 @@
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">Admins / Roles</a>
      <a href="{{url('/admin/add-category')}}" class="current">Add Admins / Roles</a> </div>
     <h1> Edit Admins / Roles</h1>
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_error')}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_drop'))
-        <div class="alert alert-success alert-block"
-            style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_drop')}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:green; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_success')}}</strong>
-        </div>
-    @endif
+@if(Session::has('flash_message_success')) 
+  <div id="gritter-item-1" class="gritter-item-wrapper" style="position: fixed;z-index: 500;float: right; right: 14px; top: 55px;">
+     <a href="javascript:" class="closeToast"> <span style="background-color: black; float: right; width: 23px; text-align: center; color: white;"> x </span> </a>
+  <div class="gritter-top">
+  </div>
+      <div class="gritter-item" style="background: lightseagreen;">
+        <div class="gritter-close" style="display: none;">
+          </div><img src="{{url('images/done.png')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
+            <div class="gritter-with-image">
+              <span class="gritter-title"> <b>Successfully ! </b></span>
+             <p><b> {{Session::get('flash_message_success')}} </b></p>
+           </div ><div style="clear:both">
+          </div>
+         </div>
+       <div class="gritter-bottom">
+     </div>
+  </div>
+@endif
+@if(Session::has('flash_message_error')) 
+ <div id="gritter-item-1" class="gritter-item-wrapper" style="position: fixed;z-index: 500;float: right; right: 14px; top: 55px;">
+     <a href="javascript:" class="closeToast"> <span style="background-color: black; float: right; width: 23px; text-align: center; color: white;"> x </span> </a>
+  <div class="gritter-top">
+  </div>
+      <div class="gritter-item" style="background: red;">
+        <div class="gritter-close" style="display: none;">
+          </div><img src="{{url('images/fail.jpg')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
+            <div class="gritter-with-image">
+              <span class="gritter-title"> <b>Failed ! </b></span>
+             <p><b> {{Session::get('flash_message_error')}} </b></p>
+           </div ><div style="clear:both">
+          </div>
+         </div>
+       <div class="gritter-bottom">
+     </div>
+  </div>
+@endif
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
@@ -63,7 +78,9 @@
               <div class="control-group" id="access">
                  <label class="control-label">Access </label>
                 <div class="controls">
-                    <input type="checkbox" name="categories_access" id="categories_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="info" @if($adminDetails->categories_access == 1 ) checked @endif> &nbsp; Categories &nbsp; &nbsp; &nbsp;
+                    <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="info" @if($adminDetails->categories_view_access == 1 ) checked @endif> &nbsp; View Categories Only &nbsp; &nbsp; &nbsp;
+                    <input type="checkbox" name="categories_edit_access" id="categories_edit_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="info" @if($adminDetails->categories_edit_access == 1 ) checked @endif> &nbsp; Edit Categories Only &nbsp; &nbsp; &nbsp;
+                    <input type="checkbox" name="categories_full_access" id="categories_full_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="info" @if($adminDetails->categories_full_access == 1 ) checked @endif> &nbsp; Full Categories &nbsp; &nbsp; &nbsp;
                     <input type="checkbox" name="products_access" id="products_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="primary" @if($adminDetails->products_access == 1 ) checked @endif> &nbsp; Products &nbsp; &nbsp; &nbsp;
                     <input type="checkbox" name="order_access" id="order_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="success" @if($adminDetails->order_access == 1 ) checked @endif> &nbsp; Order &nbsp; &nbsp; &nbsp;
                     <input type="checkbox" name="users_access" id="users_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="warning" @if($adminDetails->users_access == 1 ) checked @endif> &nbsp; Users &nbsp; &nbsp; &nbsp;
