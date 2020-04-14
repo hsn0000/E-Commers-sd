@@ -39,7 +39,7 @@ return [
 
     // header admin
     'husin_e_comerce_admin' => 'Husin រដ្ឋបាលអេឡិចត្រូនិច',
-    'welcome_user' => 'អ្នកប្រើប្រាស់ស្វាគមន៍',
+    'welcome' => 'សូមស្វាគមន៍',
     'my_profile' => 'ប្រវត្តិរូបរបស់ខ្ញុំ',
     'my_tasks' => 'ការងាររបស់ខ្ញុំ',
     'log_out' => 'ចេញ',

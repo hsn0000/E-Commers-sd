@@ -93,7 +93,7 @@ Route::group(['middleware' => ['frontlogin']], function() {
 
 });
 
-Route::group(['middleware' => ['adminlogin']], function() {
+Route::group(['middleware' => ['adminlogin']], function() { 
  
      Route::get('/admin/dashboard','AdminController@dashboard');
      Route::get('/admin/profile-role','AdminController@profileRole');

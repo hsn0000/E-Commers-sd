@@ -112,19 +112,35 @@ class AdminController extends Controller
                     $admin->username = $data['username'];
                     $admin->password = md5($data['password']);
                     $admin->status = $data['status'] ?? 0;
-                    $admin->categories_access = 0;
-                    $admin->products_access = 0;
-                    $admin->order_access = 0;
-                    $admin->users_access =  0;
+                    $admin->categories_view_access = 1;
+                    $admin->categories_edit_access = 1;
+                    $admin->categories_full_access = 1;
+                    $admin->products_access = 1;
+                    $admin->order_access = 1;
+                    $admin->users_access =  1;
                     $admin->save();
                     return \redirect()->back()->with('flash_message_success','Admin added successfully !');
 
                 } else if($data['type'] == "Sub Admin") {
+                    if(empty($data['categories_view_access'])) {
+                        $data['categories_view_access'] = 0;
+                    } if(empty($data['categories_edit_access'])) {
+                        $data['categories_edit_access'] = 0;
+                    } if(empty($data['categories_full_access'])) {
+                        $data['categories_full_access'] = 0;
+                    } else {
+                        if($data['categories_full_access'] == 1) {
+                            $data['categories_view_access'] = 1;
+                            $data['categories_edit_access'] = 1;
+                        }
+                    }
                     $admin = new Admin;
                     $admin->type = $data['type'];
                     $admin->username = $data['username'];
                     $admin->password = md5($data['password']);
-                    $admin->categories_access = $data['categories_access'] ?? 0;
+                    $admin->categories_view_access = $data['categories_view_access'];
+                    $admin->categories_edit_access = $data['categories_edit_access'];
+                    $admin->categories_full_access = $data['categories_full_access'];
                     $admin->products_access = $data['products_access'] ?? 0;
                     $admin->order_access = $data['order_access'] ?? 0;
                     $admin->users_access = $data['users_access'] ?? 0;
@@ -156,7 +172,9 @@ class AdminController extends Controller
             } else if($data['type'] == "Sub Admin") {
                 DB::table('admins')->where('username',$data['username'])->update([
                     'password' => md5($data['password']),
-                    'categories_access' => $data['categories_access'] ?? 0,
+                    'categories_view_access' => $data['categories_view_access'] ?? 0,
+                    'categories_edit_access' => $data['categories_edit_access'] ?? 0,
+                    'categories_full_access' => $data['categories_full_access'] ?? 0,
                     'products_access' => $data['products_access'] ?? 0,
                     'order_access' => $data['order_access'] ?? 0,
                     'users_access' => $data['users_access'] ?? 0,
