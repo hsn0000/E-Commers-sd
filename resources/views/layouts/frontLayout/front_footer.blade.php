@@ -133,9 +133,11 @@
 					<div class="col-sm-3 col-sm-offset-1">
 						<div class="single-widget">
 							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+							<form action="javascript:void(0)" class="searchform" type="post"> {{ csrf_field() }}
+								<input onfocus="enableSubscriber()" onfocusout="checkSubscriber()" name="subscriber_email" id="subscriber_email" type="email" placeholder="Your email address" required/>
+								<button onclick="checkSubscriber()" id="btnSubmit" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<br>
+								<p id="statusSubscribe" style="display: none;"></p>
 								<p>Get the most recent updates from <br />our site and be updated your self...</p>
 							</form>
 						</div>
@@ -154,4 +156,33 @@
 			</div>
 		</div>
 		
-	</footer><!--/Footer-->
+	</footer>
+ <!--/Footer-->
+
+<!-- Button trigger modal -->
+<a href="javascript:" class="btn btn-primary hidden" data-toggle="modal" data-target="#exampleModal" id="modalkitabersama">
+  Launch demo modal
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px;">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" style="background: black;" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

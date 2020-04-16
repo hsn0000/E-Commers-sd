@@ -63,7 +63,8 @@ Route::match(['get','post'],'/search-products','ProductsController@searchProduct
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
 // check pincode
 Route::match(['get','post'],'/check-pincode','ProductsController@checkPincode');
-
+// check subscriber email
+Route::post('/check-subscriber-email','NewsletterController@checkSubscriber');
 // all route before login
 Route::group(['middleware' => ['frontlogin']], function() {
       // user account page
