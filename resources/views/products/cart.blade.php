@@ -48,7 +48,11 @@
                 <tbody>
                 <?php $total_amount = 0; ?>
                     @foreach($userCart as $cart )
-                    @php $getCurrencyRates = Product::currencyRate ($cart->price); @endphp
+                    <?php  ?>
+                    @php 
+                        $product_price = Product::getProductPrice($cart->product_id, $cart->size);
+                        $getCurrencyRates = Product::currencyRate ($product_price); 
+                    @endphp
                     <tr>
                         <td class="cart_product">
                             <a href="{{url('/product/'.$cart->product_id)}}"><img style="width:200px;" src="{{ asset('images/backend_images/products/medium/'.$cart->image) }}" alt=""></a>
