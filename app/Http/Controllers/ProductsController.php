@@ -470,7 +470,6 @@ class ProductsController extends Controller
     {
         // Show 404 page if category URL does not exist
         $countCategory = Category::where(['url' => $url,'status'=> 1])->count();
-        // dd($countCategory);
         if($countCategory == 0)
         {
             abort(404);
@@ -1058,7 +1057,8 @@ class ProductsController extends Controller
             }
            /*  //  fetch shipping charges
             $shippingCharges = Product::getShippingCharges($shippingDetails->country);  */
-
+            $grandTotal = Product::getGrandTotal();
+            // dd($grandTotal);
             $order = new Order;
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -1074,7 +1074,7 @@ class ProductsController extends Controller
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
             $order->shipping_charges = Session::get('ShippingCharges');
-            $order->grant_total = $data['grant_total'];
+            $order->grant_total = $grandTotal;
             $order->save();
 
             $order_id = DB::getPdo()->lastInsertId();
@@ -1106,7 +1106,7 @@ class ProductsController extends Controller
             }
 
             Session::put('order_id',$order_id);
-            Session::put('grant_total',$data['grant_total']);
+            Session::put('grant_total',$grandTotal);
 
             if($data['payment_method'] == "COD")
             {
