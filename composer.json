@@ -16,6 +16,7 @@
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.1",
+        "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.31",
         "overtrue/laravel-emoji": "^1.1",
         "overtrue/laravel-lang": "~3.0"

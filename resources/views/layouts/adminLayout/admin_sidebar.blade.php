@@ -95,6 +95,8 @@
         <li <?php if(preg_match("/view-shipping'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-shipping')}}">Shipping Charges</a></li>
       </ul>
     </li>
+
+    <li><a href="{{url('/admin/view-newsletter-subscribers')}}"><i class="icon icon-rss"></i> <span>Newsletter Subscribers</span></a></li>
     @endif
     <li><a href="javascript:"><i class="icon icon-th"></i> <span>Tables</span></a></li>
     

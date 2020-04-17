@@ -46,6 +46,7 @@ use Carbon\Carbon;
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
                         <h5>{{__('backend.view_users')}}</h5>
+                        <a href="{{url('/admin/export-users')}}" class="btn btn-success btn-xm" style="float: right; margin-right: 18px;"> <i class=" icon-screenshot" style="margin-right: 7px;"></i> Export Excel</a>
                     </div>
                     <div class="widget-content nopadding">
                         <div class="table-responsive">
