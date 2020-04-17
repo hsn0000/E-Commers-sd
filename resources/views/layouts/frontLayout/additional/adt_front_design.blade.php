@@ -136,6 +136,44 @@
     }
 
 
+    function addSubscriber() {
+        var subscriber_email = $("#subscriber_email").val()
+		   $.ajax({
+               type: "post",
+               url: '/add-subscriber-email',
+               data: {
+                   subscriber_email: subscriber_email
+               },
+               success:function(resp) {
+                   if(resp=="exists1") {
+                       $("#modalkitabersama").click()
+                       $(".modal-title").text("Email exists !")
+                       $(".modal-body").text("Subscriber email already exists !")
+                       $(".modal-content").attr('style',"background-color: orangered; color: white; border-color: white;");
+                       $(".modal-footer").hide()
+                       $("#statusSubscribe").show()
+                       $("#statusSubscribe").attr('style',"color: red; margin-top: 14px;")
+                       $("#statusSubscribe").text("Error : Subscriber email already exists !")
+                       $("#btnSubmit").hide()
+                   } else if (resp == "save1") {
+                       $("#modalkitabersama").click()
+                       $(".modal-title").text("Thankyou !")
+                       $(".modal-body").text("Succeess : Thank for subscribing !!")
+                       $(".modal-content").attr('style',"background-color: midnightblue; color: white; border-color: white;");
+                       $(".modal-footer").hide()
+                       $("#statusSubscribe").show()
+                       $("#statusSubscribe").attr('style',"color: green; margin-top: 14px;")
+                       $("#statusSubscribe").text("Succeess : Thank for subscribing !")
+                    //    $("#btnSubmit").hide()
+                   }
+
+               },error:function(err) {
+                   alert("error")
+               }
+           })
+    }
+
+
     function enableSubscriber() {
         $("#btnSubmit").show()
         $("#statusSubscribe").hide()
