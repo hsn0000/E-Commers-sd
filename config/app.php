@@ -182,6 +182,8 @@ return [
 
         Overtrue\LaravelEmoji\EmojiServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -238,6 +240,8 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
 
         'Emoji' => Overtrue\LaravelEmoji\Emoji::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         
     ],
 

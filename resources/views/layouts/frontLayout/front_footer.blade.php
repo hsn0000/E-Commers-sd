@@ -135,7 +135,7 @@
 							<h2>About Shopper</h2>
 							<form action="javascript:void(0)" class="searchform" type="post"> {{ csrf_field() }}
 								<input onfocus="enableSubscriber()" onfocusout="checkSubscriber()" name="subscriber_email" id="subscriber_email" type="email" placeholder="Your email address" required/>
-								<button onclick="checkSubscriber()" id="btnSubmit" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<button onclick="checkSubscriber(); addSubscriber()" id="btnSubmit" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
 								<br>
 								<p id="statusSubscribe" style="display: none;"></p>
 								<p>Get the most recent updates from <br />our site and be updated your self...</p>

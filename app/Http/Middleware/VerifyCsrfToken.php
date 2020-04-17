@@ -21,7 +21,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "/check-pincode",
         "/get-product-price",
-        "/check-subscriber-email"
+        "/check-subscriber-email",
+        "/add-subscriber-email"
     ];
 
 }

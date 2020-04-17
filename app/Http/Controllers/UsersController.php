@@ -16,6 +16,8 @@ use App\Cart;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Excel;
+use App\Exports\usersExport;
 
 
 class UsersController extends Controller
@@ -286,6 +288,11 @@ class UsersController extends Controller
          }
         $users = DB::table('users')->orderBy('created_at','desc')->get();
         return view('admin.users.view_users')->with(\compact('users'));
+    }
+
+
+    public function exportUsers() {
+        return Excel::download(new usersExport, 'users.xlsx');
     }
 
 
