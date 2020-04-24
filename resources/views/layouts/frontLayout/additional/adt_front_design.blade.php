@@ -12,7 +12,7 @@
             $.ajax({
                 type:'post',
                 url:'/get-product-price',
-                data:{idSize:idSize},
+                data:{idSize:idSize}, 
                 success:function (resp) {
                     var arr = resp.split('#');
                     // var arr1 = arr[0][0]

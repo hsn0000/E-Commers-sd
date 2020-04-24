@@ -19,7 +19,7 @@ use Carbon\Carbon;
           </div><img src="{{url('images/done.png')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
             <div class="gritter-with-image">
               <span class="gritter-title"> <b>Successfully ! </b></span>
-             <p><b> {{Session::get('flash_message_success')}} </b></p>
+             <p><b> {{__('backend.'.Session::get('flash_message_success'))}} </b></p>
            </div ><div style="clear:both">
           </div>
          </div>
@@ -37,7 +37,7 @@ use Carbon\Carbon;
           </div><img src="{{url('images/fail.jpg')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
             <div class="gritter-with-image">
               <span class="gritter-title"> <b>Failed ! </b></span>
-             <p><b> {{Session::get('flash_message_error')}} </b></p>
+             <p><b> {{__('backend.'.Session::get('flash_message_error'))}} </b></p>
            </div ><div style="clear:both">
           </div>
          </div>
@@ -54,6 +54,7 @@ use Carbon\Carbon;
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>{{__('backend.view_product')}}</h5>
+            <a href="{{url('/admin/export-products')}}" class="btn btn-success btn-xm" style="float: right; margin-right: 18px;"> <i class=" icon-screenshot" style="margin-right: 7px;"></i> Export Excel</a>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">

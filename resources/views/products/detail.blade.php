@@ -83,7 +83,6 @@
 									@if(!empty($productDetails->pattern))
 									  <p style="height: 16px;"><b>PATTERN : <span  style="color:dodgerblue;"> {{$productDetails->pattern}} </span> </b></p> <br> <br>
 									@else <br> <br>@endif		
-
 									<p>
 										<select name="size" id="selSize" style="width:150px;" required > 
 										<option value="">Select Size</option>
@@ -132,13 +131,13 @@
 						<div class="tab-content">
 							<div class="tab-pane fade" id="description" >
 							    <div class="col-sm-12">
-									<p>{{$productDetails->description}}</p>
+									<div class="test1"><?php echo nl2br($productDetails->description); ?></div>
 								</div>
 							</div>
 							
 							<div class="tab-pane fade" id="care" >
 							    <div class="col-sm-12">
-									<p>{{$productDetails->care}}</p>
+									<p><?php echo nl2br($productDetails->care); ?></p>
 								</div>
 							</div>
 							
@@ -174,7 +173,7 @@
 											<input type="text" placeholder="Your Name"/>
 											<input type="email" placeholder="Email Address"/>
 										</span>
-										<textarea name="" ></textarea>
+										<textarea name="" class="some-textarea" ></textarea>
 										<b>Rating: </b> <img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />
 										<button type="button" class="btn btn-default pull-right">
 											Submit

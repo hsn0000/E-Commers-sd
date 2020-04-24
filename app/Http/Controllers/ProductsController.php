@@ -23,6 +23,11 @@ use App\DeliveryAddress;
 use App\Order;
 use App\OrdersProduct;
 use \Illuminate\Support\Facades\Storage;
+use App\Exports\productsExport;
+use Excel;
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
+use PDF;
 
 class ProductsController extends Controller
 {
@@ -676,12 +681,12 @@ class ProductsController extends Controller
 
     public function getProductPrice(Request $request)
     {
-        $data = $request->all();
+        $data = $request->all();\
         
         $proArr = \explode("-",$data['idSize']);
         $proArr = ProductsAttribute::where(['product_id' => $proArr[0], 'size' => $proArr[1]])->first();
         $getCurrencyRates = Product::getCurrencyRates($proArr->price);
-        $price = Product::currencyRate($proArr->price);
+        $price = Product::currencyRate($proArr->price); 
         $price = is_number($price,2);
         echo ($price."-".$proArr->price."-".$getCurrencyRates['IDR_rate']."-".$getCurrencyRates['USD_rate']."-".$getCurrencyRates['KHR_rate']."-".$getCurrencyRates['EUR_rate']);
         // echo("#");
@@ -1222,6 +1227,33 @@ class ProductsController extends Controller
     }
 
 
+    public function viewPDFInvoice($order_id) {
+        if(Session::get('adminDetails')['order_access'] == 0) {
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
+         }   
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+        $user_id = $orderDetails->user_id;
+        $userDetails = User::where('id', $user_id)->first();
+        $userDetails = json_decode(\json_encode($userDetails));
+        $hello = "hello";
+        // instantiate and use the dompdf class
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml();
+
+        // // (Optional) Setup the paper size and orientation
+        // $dompdf->setPaper('A4', 'landscape');
+
+        // // Render the HTML as PDF
+        // $dompdf->render();
+        // // Output the generated PDF to Browser
+        // $dompdf->stream();
+        $pdf=PDF::loadView('admin.orders.order_invoice', compact('orderDetails','userDetails','hello'));
+        return $pdf->stream('Invoice.pdf');
+        // return view('admin.orders.order_invoice')->with(\compact('orderDetails','userDetails'));
+    }
+
+
     public function updateOrderStatus(Request $request) 
     {
         if(Session::get('adminDetails')['order_access'] == 0) {
@@ -1255,6 +1287,12 @@ class ProductsController extends Controller
         // $data = $request->all();
         // echo "<pre>"; print_r($data); die;
     }
+
+
+    public  function exportProducts() {
+        return Excel::download(new productsExport,'products.xlsx');
+    }
+
 
 
 
