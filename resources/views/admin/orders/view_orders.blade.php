@@ -85,7 +85,9 @@ use Carbon\Carbon;
                                         <td>{{$order->payment_method}}</td>
                                         <td class="center" style="text-align:center;" width="">
                                             <a target="_blank" href="{{url('admin/view-order/'.$order->id)}}" class="btn btn-primary btn-mini"> <i class="icon-eye-open" style=""></i>{{__('backend.view_order_details')}}</a> <br>
+                                            @if($order->order_status == "Shipped" || $order->order_status == "Delivered" || $order->order_status == "Paid") 
                                             <a target="_blank" href="{{url('admin/view-order-invoice/'.$order->id)}}" class="btn btn-info btn-mini" style="margin-top: 5%;"> <i class="icon-book" style=""></i>{{__('backend.view_order_invoice')}}</a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

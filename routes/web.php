@@ -110,13 +110,14 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::match(['get','post'],'/admin/delete-category/{id}','CategoryController@deleteCategory');
       Route::get('/admin/view-categories','CategoryController@viewCategories');
 
-      //  Product Route
+      //  Product Route 
       Route::match(['get','post'],'/admin/add-product','ProductsController@addProduct');
       Route::match(['get','post'],'/admin/edit-product/{id}','ProductsController@editProduct');
       Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
       Route::get('/admin/delete-product-video/{id}','ProductsController@deleteProductVideo');
       Route::get('/admin/delete-product/{id}','ProductsController@deleteProduct');
       Route::get('/admin/view-product','ProductsController@viewProducts');
+      Route::get('/admin/export-products','ProductsController@exportProducts'); 
 
       // Products Atributes Route
       Route::match(['get','post'],'/admin/add-attribute/{id}','ProductsController@addAtributes');
@@ -149,11 +150,13 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::get('admin/view-order/{id}','ProductsController@viewOrderDetails');
       //     Admin order invoice
       Route::get('/admin/view-order-invoice/{id}','ProductsController@viewOrderInvoice');
+      //     Admin order pdf invoice
+      Route::get('/admin/view-pdf-invoice/{id}','ProductsController@viewPDFInvoice');
       // Admin order status
       Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
       //  Admin user route 
       Route::get('admin/view-users','UsersController@viewUsers');
-      Route::get('/admin/export-users','UsersController@exportUsers');
+      Route::get('/admin/export-users','UsersController@exportUsers'); 
       //  Admin Roles route
       Route::get('/admin/view-admins','AdminController@viewAdmins');
       Route::match(['get', 'post'],'/admin/add-admins','AdminController@addAdmins');

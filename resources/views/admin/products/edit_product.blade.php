@@ -1,5 +1,12 @@
 @extends('layouts.adminLayout.admin_design')
-
+@section('link')
+<style>
+  .wysihtml5-sandbox {
+    width: 578.569px;
+    height: 198.9653px;
+}
+</style>
+@endsection
 @section('content')
 
 <div id="content">
@@ -17,7 +24,7 @@
           </div><img src="{{url('images/done.png')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
             <div class="gritter-with-image">
               <span class="gritter-title"> <b>Successfully ! </b></span>
-             <p><b> {{Session::get('flash_message_success')}} </b></p>
+             <p><b>{{__('backend.'.Session::get('flash_message_success'))}} </b></p>
            </div ><div style="clear:both">
           </div>
          </div>
@@ -35,7 +42,7 @@
           </div><img src="{{url('images/fail.jpg')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
             <div class="gritter-with-image">
               <span class="gritter-title"> <b>Failed ! </b></span>
-             <p><b> {{Session::get('flash_message_error')}} </b></p>
+             <p><b>{{__('backend.'.Session::get('flash_message_error'))}} </b></p>
            </div ><div style="clear:both">
           </div>
          </div>
@@ -84,13 +91,13 @@
               <div class="control-group">
                 <label class="control-label">{{__('backend.description')}}</label> 
                 <div class="controls">
-                 <textarea name="description" id="description">{{$productDetails->description}}</textarea>
+                 <textarea name="description" id="description" class="some-textarea span5 " rows="10">{{$productDetails->description}}</textarea>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">{{__('backend.material_care')}}</label> 
                 <div class="controls">
-                 <textarea name="care" id="care">{{$productDetails->care}}</textarea>
+                 <textarea name="care" id="care" class="some-textarea1 span5"  rows="10">{{$productDetails->care}}</textarea>
                 </div>
               </div>
               <div class="control-group">

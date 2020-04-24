@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap.min.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap-responsive.min.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/uniform.css')}}">
+<link rel="stylesheet" href="{{asset('css/backend_css/bootstrap-wysihtml5.css')}}">
 <link rel="stylesheet" href="{{asset('css/backend_css/select2.css')}}">
 <link rel="stylesheet" href="{{asset('css/backend_css/fullcalendar.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/matrix-style.css')}}" />
@@ -22,6 +23,8 @@
 <link rel="stylesheet" href="{{asset('css/backend_css/custom.css')}}">
 <!-- togle switch custome bootsrap -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{{asset('css/backend_css/print.min.css')}}">
 <style>
   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; min-width: 13px; min-height: 11px;}
   .toggle.ios .toggle-handle { border-radius: 20rem; min-width: 13px; min-height: 11px; }
@@ -49,6 +52,18 @@
 <script src="{{asset('js/backend_js/select2.min.js')}}"></script> 
 <script src="{{asset('js/backend_js/jquery.validate.js')}}"></script> 
 <script src="{{asset('js/backend_js/matrix.js')}}"></script> 
+
+<script src="{{asset('js/backend_js/wysihtml5-0.3.0.js')}}"></script> 
+<script src="{{asset('js/backend_js/bootstrap-wysihtml5.js')}}"></script> 
+<script src="{{asset('js/backend_js/fullcalendar.min.js')}}"></script> 
+<script src="{{asset('js/backend_js/jquery.easy-pie-chart.js')}}"></script> 
+<!-- <script src="{{asset('js/backend_js/matrix.calendar.js')}}"></script>  -->
+<!-- <script src="{{asset('js/backend_js/matrix.charts.js')}}"></script>  -->
+<script src="{{asset('js/backend_js/matrix.chat.js')}}"></script> 
+<!-- <script src="{{asset('js/backend_js/matrix.dashboard.js')}}"></script>  -->
+<!-- <script src="{{asset('js/backend_js/matrix.interface.js')}}"></script>  -->
+<!-- <script src="{{asset('js/backend_js/jquery.wizard.js')}}"></script>  -->
+
 <script src="{{asset('js/backend_js/matrix.form_validation.js')}}"></script>
 <script src="{{asset('js/backend_js/matrix.tables.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.dataTables.min.js')}}"></script>
@@ -60,15 +75,21 @@
 <!-- togle switch custome bootsrap -->
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
+<script src="{{asset('js/backend_js/print.min.js')}}"></script> 
+
 @yield('script')
 
 <script>
+ /*datepicker*/  
   $( function() {
     $( "#expiry_date" ).datepicker({ 
         minDate:0,
         dateFormat: 'yy-mm-dd'
       });
   });
+  /*wysihtml5*/
+  $('.some-textarea').wysihtml5();
+  $('.some-textarea1').wysihtml5();
 </script>
 
 @include('layouts.adminLayout.additional.adt_admin_design')

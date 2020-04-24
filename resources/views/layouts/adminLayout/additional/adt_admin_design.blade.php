@@ -332,5 +332,6 @@ $(document).ready(function() {
       window.location.href ="/admin/delete-newslatter-emai/"+id;
   }   
 
+
 </script>
 

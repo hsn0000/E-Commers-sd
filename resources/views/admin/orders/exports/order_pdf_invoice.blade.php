@@ -2,26 +2,23 @@
 <html lang="en">
 
 <head>
-    @if(empty($hello))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{__('backend.order_invoice')}}</title>
     <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{asset('css/backend_css/print.min.css')}}">
+	<script src="{{ asset('js/frontend_js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/frontend_js/jquery.js') }}"></script>
     <!------ Include the above in your HEAD tag ---------->
-    @endif
     <style>
+
     body {
         margin-top: 27px;
         background-color: currentColor;
     }
-
     .container {
         background-color: white;
         margin-top: 3%;
     }
-
     .invoice-title h2,
     .invoice-title h3 {
         display: inline-block;
@@ -40,22 +37,14 @@
     }
     </style>
 </head>
-{{-- url('admin/view-pdf-invoice/'.$orderDetails->id) --}}
 
 <body>
-    @php
-    use Carbon\Carbon;
-    @endphp
-    <div class="container" id="con">
+@php
+use Carbon\Carbon;
+@endphp
+
+    <div class="container">
         <div class="row">
-            @if(empty($hello))
-            <div class="col-xs-12" style=" background: currentColor; padding-bottom: 19px;">
-                <div class="headajah" style=" float: right;">
-                    <a href="javascript:" class="btn btn-danger btn-mini" style="margin-top: 5%;"  onclick="printJS({printable: base64, type: 'pdf', base64: true});">
-                        <i class="icon-eye-open" style=""></i>Export PDF Invoice</a>
-                </div>
-            </div>
-            @endif
             <div class="col-xs-12">
                 <div class="invoice-title">
                     <h2>{{__('backend.order_invoice')}}</h2>
@@ -148,8 +137,7 @@
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
-                                        <td class="thick-line text-right"><strong>{{__('backend.subtotal')}}</strong>
-                                        </td>
+                                        <td class="thick-line text-right"><strong>{{__('backend.subtotal')}}</strong></td>
                                         <td class="thick-line text-right">{{'Rp'.' '.is_number($subtotal,2)}}</td>
                                     </tr>
                                     <tr>
@@ -158,8 +146,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>{{__('backend.shipping_changes')}}
-                                                (+)</strong></td>
+                                        <td class="no-line text-right"><strong>{{__('backend.shipping_changes')}} (+)</strong></td>
                                         <td class="no-line text-right">Rp 00</td>
                                     </tr>
                                     <tr>
@@ -168,8 +155,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>{{__('backend.coupon_discount')}}
-                                                (-)</strong></td>
+                                        <td class="no-line text-right"><strong>{{__('backend.coupon_discount')}} (-)</strong></td>
                                         <td class="no-line text-right">
                                             {{'Rp'.' '.is_number($orderDetails->coupon_amount,2)}}</td>
                                     </tr>
@@ -179,8 +165,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-right"><strong>{{__('backend.grand_total')}}</strong>
-                                        </td>
+                                        <td class="no-line text-right"><strong>{{__('backend.grand_total')}}</strong></td>
                                         <td class="no-line text-right">
                                             {{'Rp'.' '.is_number($orderDetails->grant_total,2)}}</td>
                                     </tr>
@@ -194,25 +179,5 @@
     </div>
 
 </body>
-
-<script src="{{ asset('js/frontend_js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/frontend_js/jquery.js') }}"></script>
-
-    <script src="{{asset('js/backend_js/print.min.js')}}"></script> 
-<script>
-/* test prind pdf invoice order */
-function prindPdf() {
-    var doc = document.getElementById(con);
-    // console.log(con)
-    //Wait until PDF is ready to print    
-    if (typeof doc.print === 'undefined') {
-        setTimeout(function() {
-            printDocument(doc);
-        }, 1000);
-    } else {
-        doc.print();
-    }
-}
-</script>
 
 </html>
