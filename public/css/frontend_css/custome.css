@@ -27,3 +27,11 @@
     width: 45vw;
     margin-left: 4vw;
 }
+
+.emptyItem {
+    text-align: center;
+    font-size: initial;
+    font-size: xxx-large;
+    font-family: cursive;
+    margin: 17%;
+}

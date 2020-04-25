@@ -28,6 +28,7 @@ use Excel;
 // reference the Dompdf namespace
 use Dompdf\Dompdf;
 use PDF;
+use Carbon\Carbon;
 
 class ProductsController extends Controller
 {
@@ -681,7 +682,7 @@ class ProductsController extends Controller
 
     public function getProductPrice(Request $request)
     {
-        $data = $request->all();\
+        $data = $request->all();
         
         $proArr = \explode("-",$data['idSize']);
         $proArr = ProductsAttribute::where(['product_id' => $proArr[0], 'size' => $proArr[1]])->first();
@@ -702,12 +703,60 @@ class ProductsController extends Controller
         Session::forget('CouponAmount');
         Session::forget('CouponCode');
         $data = $request->all();
-        //  check product stock is available or not
-        $product_size = explode("-",$data['size']);
-        $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $product_size["1"]])->first();
-        if($getProductStock->stock < $data['quantity']) {
-            return \redirect()->back()->with('flash_message_error','Required Quantity is not available !');
+        // dd($data);
+        if(!empty($data['wishListButton']) && $data['wishListButton'] == "Wish List"  ) {
+            // check user is login in
+            if(!Auth::check()) {
+                return redirect()->back()->with('flash_message_error','Please login to add product in your Wish List');
+            }
+            // check size is selected
+            if(empty($data['size'])) {
+                return redirect()->back()->with('flash_message_error', 'please select size to add product in your wish list');
+            }
+            // get product size
+            $sizeArr = \explode("-",$data['size']);
+            $product_sizes = $sizeArr[1];
+            // get product price
+            $proPrice = DB::table('products_attributes')->where(['product_id' => $data['product_id'], 'size' =>$product_sizes])->first();
+            $product_price = $proPrice->price;
+            // get user email
+            $user_email = Auth::user()->email;
+            // sert quantity as 1
+            $quantity = 1;
+            // get current date
+            $created_at = Carbon::now();
+
+            $wishListCount = DB::table('wish_list')->where(['user_email' => $user_email, 'product_id' => $data['product_id'], 'product_color' => $data['product_color'], 'product_code' => $data['product_code'], 'size' => $product_sizes])->count();
+            if($wishListCount > 0) {
+                return redirect()->back()->with('flash_message_error','Product already exists in Wish List !');
+            } else {
+                // insert product in wishlist
+                DB::table("wish_list")->insert([
+                    'product_id' => $data['product_id'],
+                    'product_name' => $data['product_name'],
+                    'product_code' => $data['product_code'],
+                    'product_color' => $data['product_color'],
+                    'price' => $product_price,
+                    'size' => $product_sizes,
+                    'quantity' => $quantity,
+                    'user_email' => $user_email,
+                    'created_at' => $created_at
+                ]);
+                return redirect()->back()->with('flash_message_success','Product hash been added in Wish List');
+            }
+
+        } else {
+            // if product added from wish list
+            if(!empty($data['cartButtom']) && $data['cartButtom'] == "Add to Cart" ){
+                $data['quantity'] = 1;
+            }
+            // check product stock is available or not
+            $product_size = explode("-",$data['size']);
+            $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $product_size["1"]])->first();
+            if($getProductStock->stock < $data['quantity']) {
+                return \redirect()->back()->with('flash_message_error','Required Quantity is not available !');
         }
+
         $session_id = Session::get('session_id');
         if(!isset($session_id))
         { 
@@ -765,7 +814,9 @@ class ProductsController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         // }       
-        return redirect('/cart')->with('flash_message_success','Product has been added in Cart !');
+            return redirect('/cart')->with('flash_message_success','Product has been added in Cart !');
+        }
+
     }
 
 
@@ -801,6 +852,26 @@ class ProductsController extends Controller
         
         DB::table('cart')->where('id',$id)->delete();
         return redirect('/cart')->with('flash_message_success','Product has been deleted from cart');
+    }
+
+    
+    public function wishList() {
+        if(Auth::check()) {
+            $user_email = Auth::user()->email;
+            $userWishList = DB::table('wish_list')->where('user_email',$user_email)->get();
+            foreach($userWishList as $key => $product)
+            {
+                $productDetails = Product::where('id',$product->product_id)->first();
+                $userWishList[$key]->image = "$productDetails->image";
+            }
+        }else {
+            $userWishList = array();
+        }
+
+        $meta_title ="Wish List - E-commerce web";
+        $meta_description = "View Wish List Of E-commerce Web";
+        $meta_keyword = "wish list, e-com Website";
+        return view('products.wish_list')->with(\compact('userWishList','meta_title','meta_description','meta_keyword'));
     }
 
 
@@ -1237,20 +1308,7 @@ class ProductsController extends Controller
         $userDetails = User::where('id', $user_id)->first();
         $userDetails = json_decode(\json_encode($userDetails));
         $hello = "hello";
-        // instantiate and use the dompdf class
-        // $dompdf = new Dompdf();
-        // $dompdf->loadHtml();
-
-        // // (Optional) Setup the paper size and orientation
-        // $dompdf->setPaper('A4', 'landscape');
-
-        // // Render the HTML as PDF
-        // $dompdf->render();
-        // // Output the generated PDF to Browser
-        // $dompdf->stream();
-        $pdf=PDF::loadView('admin.orders.order_invoice', compact('orderDetails','userDetails','hello'));
-        return $pdf->stream('Invoice.pdf');
-        // return view('admin.orders.order_invoice')->with(\compact('orderDetails','userDetails'));
+        return view('admin.orders.order_invoice')->with(\compact('orderDetails','userDetails','hello'));
     }
 
 
@@ -1291,6 +1349,12 @@ class ProductsController extends Controller
 
     public  function exportProducts() {
         return Excel::download(new productsExport,'products.xlsx');
+    }
+
+
+    public function deleteWishlistProduct($id = null) {
+        DB::table('wish_list')->where('id', $id)->delete();
+        return redirect()->back()->with('flash_message_success','Product has been delete from Wish List');
     }
 
 

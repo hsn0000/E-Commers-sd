@@ -28,12 +28,24 @@ class Product extends Model
         return $cartCount;
     }
 
+    
+    public static function userWislishCount() {
+        if(Auth::check()) {
+            $user_email = Auth::user()->email;
+            $userWislishCount = DB::table('wish_list')->where('user_email',$user_email)->count();
+        } else {
+            $userWislishCount = array();
+        }
+        return $userWislishCount;
+    }
+
 
     public static function productCount($cat_id) {
           $catCount = product::where(['category_id' => $cat_id, 'status' => 1 ])->count();
         //   dd($catCount);
           return $catCount;
     }
+
 
 
     public static function getCurrencyRates ($price) {
