@@ -18,7 +18,7 @@
     <link href="{{ asset('css/frontend_css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/easyzoom.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/frontend_css/passtrength.css') }}" rel="stylesheet"> bootstrap3-wysihtml5.css
+    <link href="{{ asset('css/frontend_css/passtrength.css') }}" rel="stylesheet">
     <!-- *wysihtml5* -->
     <!-- <link href="{{ asset('css/frontend_css/bootstrap3-wysihtml5.css') }}" rel="stylesheet"> -->
     <!-- custom css -->

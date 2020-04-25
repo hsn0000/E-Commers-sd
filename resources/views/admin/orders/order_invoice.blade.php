@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{__('backend.order_invoice')}}</title>
     <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
-
     <link rel="stylesheet" href="{{asset('css/backend_css/print.min.css')}}">
-    <!------ Include the above in your HEAD tag ---------->
+    @elseif(!empty($hello))
+    <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     @endif
-    <style>
+
+    <!------ Include the above in your HEAD tag ---------->
+    <style> 
     body {
         margin-top: 27px;
         background-color: currentColor;
@@ -40,7 +43,6 @@
     }
     </style>
 </head>
-{{-- url('admin/view-pdf-invoice/'.$orderDetails->id) --}}
 
 <body>
     @php
@@ -51,7 +53,7 @@
             @if(empty($hello))
             <div class="col-xs-12" style=" background: currentColor; padding-bottom: 19px;">
                 <div class="headajah" style=" float: right;">
-                    <a href="javascript:" class="btn btn-danger btn-mini" style="margin-top: 5%;"  onclick="printJS({printable: base64, type: 'pdf', base64: true});">
+                    <a href="{{ url('admin/view-pdf-invoice/'.$orderDetails->id) }}" class="btn btn-danger btn-mini" style="margin-top: 5%;">
                         <i class="icon-eye-open" style=""></i>Export PDF Invoice</a>
                 </div>
             </div>
@@ -195,24 +197,10 @@
 
 </body>
 
-<script src="{{ asset('js/frontend_js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/frontend_js/jquery.js') }}"></script>
-
-    <script src="{{asset('js/backend_js/print.min.js')}}"></script> 
 <script>
-/* test prind pdf invoice order */
-function prindPdf() {
-    var doc = document.getElementById(con);
-    // console.log(con)
-    //Wait until PDF is ready to print    
-    if (typeof doc.print === 'undefined') {
-        setTimeout(function() {
-            printDocument(doc);
-        }, 1000);
-    } else {
-        doc.print();
-    }
-}
+$(document).ready(function () {
+    window.print();
+});
 </script>
 
 </html>

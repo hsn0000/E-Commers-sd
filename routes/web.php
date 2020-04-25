@@ -93,7 +93,10 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::get('paypal/thanks','ProductsController@thanksPaypal');
       // Paypal Thank Page
       Route::get('paypal/cancel','ProductsController@cancelPaypal');
-
+      // wish list page
+      Route::match(['get','post'],'/wish-list','ProductsController@wishList');
+      // delete product from wish list
+      Route::get('/wish-list/delete-product/{id}','ProductsController@deleteWishlistProduct');
 });
 
 Route::group(['middleware' => ['adminlogin']], function() { 

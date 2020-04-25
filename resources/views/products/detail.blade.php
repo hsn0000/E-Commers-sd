@@ -95,11 +95,10 @@
 										<span id="getPrice" style="width:246px;"> {{$currencyLocale->currency_simbol.' '.is_number($getCurrencyRates,2)}}</span> <br> 
   										<label>Quantity :</label>
 										<input class="is-valid" type="number" name="quantity" value="1" required type="number" min="1" max="100"/>
+										<br> <br>
 										@if($total_stock > 0)
-										<button type="submit" class="btn btn-fefault cart" id="cartButton">
-											<i class="fa fa-shopping-cart"></i>
-											Add to cart
-										</button>
+										<button style="margin: 0;" type="submit" class="btn btn-warning" id="cartButton" name="cartButton" value="Shopping Cart"><i class="fa fa-shopping-cart"></i>&nbsp; Add to cart</button>
+										<button style="margin: 0;" type="submit" class="btn btn-info" id="wishListButton" name="wishListButton" value="Wish List"><i class="fa fa-star"></i>&nbsp; Add to wishlist</button>
 										@endif
 									</span> <br>
 									<img src="{{asset('images/frontend_images/product-details/rating.png')}}" alt="" />

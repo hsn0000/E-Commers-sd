@@ -3,7 +3,8 @@
 
 @php
  use App\Product;
-  $currencyLocale = Session::get('currencyLocale');
+    $cartCount = Product::cartCount();
+    $currencyLocale = Session::get('currencyLocale');
 @endphp
 
   <section id="cart_items">
@@ -32,7 +33,8 @@
                 <strong> {{Session::get('flash_message_success')}}</strong>
             </div>
         @endif
-        <div id="loading"></div>      
+        <div id="loading"></div>  
+      @if(!empty($cartCount))   
         <div class="table-responsive cart_info" >
             <table class="table table-condensed">
                 <thead>
@@ -87,47 +89,53 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</section> <!--/#cart_items-->
+     </div>
+  </section> <!--/#cart_items-->
 
-<section id="do_action">
-    <div class="container">
-        <div class="heading">
-            <h3>What would you like to do next?</h3>
-            <p>Choose if you have a discount code or reward points you want to use.</p>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="chose_area">
-                    <ul class="user_option">
-                      <form action="{{ url('/cart/apply-coupon')}}" method="post"> {{csrf_field()}} 
-                        <li>
-                            <label>Use Coupon Code</label> 
-                            <input type="text" name="coupon_code" required>
-                            <input type="submit" value="Apply" class="btn btn-warning" style="width:20%;">
-                        </li>
-                        </form>
-                    </ul>             
-                </div>
+    <section id="do_action">
+        <div class="container">
+            <div class="heading">
+                <h3>What would you like to do next?</h3>
+                <p>Choose if you have a discount code or reward points you want to use.</p>
             </div>
-            <div class="col-sm-6">
-                <div class="total_area">
-                    <ul>
-                    @if(!empty(Session::get('CouponAmount')))
-                      @php $rateCurrenyAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
-                        <li>Sub Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2)}} </span></li>
-                        <li>Coupon Discoun <span> {{$currencyLocale->currency_simbol.' '.is_number($rateCurrenyAmoun,2)}} </span></li>
-                        <li>Grand Total <span class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}}" > {{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}} </span></li>
-                    @else
-                        <li>Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2) }} </span></li>
-                    @endif
-                    </ul>
-                        <a class="btn btn-default update" href="javacsript:">Update</a>
-                        <a class="btn btn-default check_out" href="{{url('/checkout')}}">Check Out</a>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="chose_area">
+                        <ul class="user_option">
+                        <form action="{{ url('/cart/apply-coupon')}}" method="post"> {{csrf_field()}} 
+                            <li>
+                                <label>Use Coupon Code</label> 
+                                <input type="text" name="coupon_code" required>
+                                <input type="submit" value="Apply" class="btn btn-warning" style="width:20%;">
+                            </li>
+                            </form>
+                        </ul>             
+                    </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                        @if(!empty(Session::get('CouponAmount')))
+                        @php $rateCurrenyAmoun = Product::currencyRate (Session::get('CouponAmount')); @endphp
+                            <li>Sub Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2)}} </span></li>
+                            <li>Coupon Discoun <span> {{$currencyLocale->currency_simbol.' '.is_number($rateCurrenyAmoun,2)}} </span></li>
+                            <li>Grand Total <span class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}}" > {{$currencyLocale->currency_simbol.' '.is_number($total_amount - $rateCurrenyAmoun,2)}} </span></li>
+                        @else
+                            <li>Total <span> {{$currencyLocale->currency_simbol.' '.is_number($total_amount,2) }} </span></li>
+                        @endif
+                        </ul>
+                            <a class="btn btn-default update" href="javacsript:">Update</a>
+                            <a class="btn btn-default check_out" href="{{url('/checkout')}}">Check Out</a>
+                    </div>
+                </div>
+                @else 
+                <div class="emptyItem" style="">
+                    <span class="empty">The Item Cart Is Still Empty !</span>
+                </div>
+               @endif
             </div>
         </div>
-    </div>
-</section><!--/#do_action-->
+    </section><!--/#do_action-->
+    
 
 @endsection
