@@ -21,7 +21,8 @@
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.31",
         "overtrue/laravel-emoji": "^1.1",
-        "overtrue/laravel-lang": "~3.0"
+        "overtrue/laravel-lang": "~3.0",
+        "milon/barcode": "^6.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
