@@ -147,9 +147,11 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::match(['get','post'],'/admin/edit-billboard/{id}','BillboardsController@editBillboard');
       Route::get('/admin/delete-billboard/{id}','BillboardsController@deleteBillboard');
 
-      // Admin order view routes
+      // Admin order view route
       Route::get('admin/view-orders','ProductsController@viewOrders');
-      // Admin order detail routes
+      //  Admin order chart route 
+      Route::get('admin/view-orders-charts','ProductsController@viewOrdersCharts');
+      // Admin order detail route
       Route::get('admin/view-order/{id}','ProductsController@viewOrderDetails');
       //     Admin order invoice
       Route::get('/admin/view-order-invoice/{id}','ProductsController@viewOrderInvoice');
@@ -160,6 +162,10 @@ Route::group(['middleware' => ['adminlogin']], function() {
       //  Admin user route 
       Route::get('admin/view-users','UsersController@viewUsers');
       Route::get('/admin/export-users','UsersController@exportUsers'); 
+      //  Admin User Chart route 
+      Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
+      //  Admin User country Chart route 
+      Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
       //  Admin Roles route
       Route::get('/admin/view-admins','AdminController@viewAdmins');
       Route::match(['get', 'post'],'/admin/add-admins','AdminController@addAdmins');

@@ -45,6 +45,7 @@
     <li class="submenu"> <a href="#" id=""><i class="icon icon-shopping-cart"></i> <span>{{__('backend.orders')}}</span> <span class="label label-important">1</span></a>
       <ul <?php if(preg_match("/orders/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/view-orders'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-orders')}}">{{__('backend.view_orders')}}</a></li>
+        <li <?php if(preg_match("/charts'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-orders-charts')}}">view orders charts</a></li>
       </ul>
     </li>
     @endif
@@ -66,6 +67,8 @@
     <li class="submenu"> <a href="#" id=""><i class="icon icon-user"></i> <span>{{__('backend.users')}}</span> <span class="label label-important">1</span></a>
       <ul <?php if(preg_match("/users/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/view-users'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users')}}">{{__('backend.view_users')}}</a></li>
+        <li <?php if(preg_match("/charts'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users-charts')}}">view users charts</a></li>
+        <li <?php if(preg_match("/counties'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users-countries-charts')}}">view users counties charts</a></li>
       </ul>
     </li>
     @endif
