@@ -1358,6 +1358,15 @@ class ProductsController extends Controller
     }
 
 
+    public function viewOrdersCharts() {
+        $current_mount_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+        $last_mount_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1)->month)->count();
+        $last_to_last_mount_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+        $thre_month_back_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3)->month)->count();
+         return view('admin.orders.view_orders_charts')->with(compact('current_mount_orders','last_mount_orders','last_to_last_mount_orders','thre_month_back_orders'));
+    }
+
+
 
 
 }
