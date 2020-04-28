@@ -170,4 +170,29 @@ class Product extends Model
     }
 
 
+    public static function categoriesTotal() {
+        $categoriesAll = DB::table('categories')->where('status',1)->count();
+        return $categoriesAll;
+    } 
+
+
+    public static function productTotal() {
+        $productTotalAll = DB::table('products')->where(['status' => 1, 'feature_item' => 1])->count();
+        return $productTotalAll;
+    } 
+
+
+
+    public static function orderTotal() {
+        $orderAll = DB::table('orders')->count();
+        return $orderAll;
+    } 
+
+
+    public static function usersTotal() {
+        $usersAll = DB::table('users')->where('status',1)->count();
+        return $usersAll;
+    } 
+
+
 }

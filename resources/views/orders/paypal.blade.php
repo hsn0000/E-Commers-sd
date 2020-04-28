@@ -51,6 +51,7 @@
                 <input type="hidden" name="country" value="{{$getCountryCode->country_code}}">
                 <input type="hidden" name="return" value="{{url('paypal/thanks')}}">
                 <input type="hidden" name="cancel_return" value="{{url('paypal/cancel')}}">
+                <input type="hidden" name="notify_url" value="{{url('/paypal/ipn')}}">
                 <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_paynow_107x26.png"
                     alt="Pay Now">
                 <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
