@@ -1239,6 +1239,47 @@ class ProductsController extends Controller
         
         return view('orders.paypal');
     }
+
+
+    public function ipnPaypal(Request $request) {
+        $data = $request->all();
+        if($data['payment_status']=="Completed") {
+            // wee will send email to user/admin
+            // update order status to payment captured
+
+            // get order id
+            $order_id = Session::get('order_id');
+
+            // update order
+            Order::where('id',$order_id)->update(['order_status' => 'Payment Captured']);
+            $productDetails = Order::with('orders')->where('id',$order_id)->first();
+            $productDetails = json_decode(json_encode($productDetails));
+
+            $user_id = $productDetails['user_id'];
+            $user_email = $productDetails['user_email'];
+            $name = $productDetails['name'];
+
+            $userDetails = User::where('id',$user_id)->first();
+            $userDetails = json_decode(json_encode($userDetails));
+
+            $email = $user_email;
+            $messageData = [
+                'email' => $email,
+                'name' => $name,
+                'order_id' => $order_id,
+                'productDetails' => $productDetails,
+                'userDetails' => $userDetails
+            ];
+
+            Mail::send('emails.order',$messageData, function($message) use ($email) {
+                $message->to($email)->subject('Order Placed - E-com Website');
+            });
+
+            DB::table('cart')->where('user_email',$user_email)->delete();
+        
+
+        }
+    }
     
 
     public function userOrders()
