@@ -2,6 +2,15 @@
 
 @section('content')
 
+@php 
+use App\Product;
+ $categoriesTotal = Product::categoriesTotal();
+ $productTotal = Product::productTotal();
+ $orderTotal = Product::orderTotal();
+ $usersTotal = Product::usersTotal();
+@endphp
+
+
 <div id="loading"></div>
 
 <!--main-container-part-->
@@ -53,19 +62,19 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href="{{url('/admin/dashboard')}}"> <i class="icon-dashboard"></i> <span class="label label-important">21</span> My Dashboard </a> </li>
+        <li class="bg_lb"> <a href="{{url('/admin/dashboard')}}"> <i class="icon-dashboard"></i> <span class="label label-important">~</span> My Dashboard </a> </li>
 
         @if(Session::get('adminDetails')['categories_view_access'] == 1)
-        <li class="bg_ly"> <a href="{{url('/admin/view-categories')}}"> <i class="icon icon-th-list"></i><span class="label label-success">101</span> Categories </a> </li>
+        <li class="bg_ly"> <a href="{{url('/admin/view-categories')}}"> <i class="icon icon-th-list"></i><span class="label label-success">{{$categoriesTotal}}</span> Categories </a> </li>
         @endif
         @if(Session::get('adminDetails')['products_access'] == 1)
-        <li class="bg_lo"> <a href="{{url('/admin/view-product')}}"> <i class="icon icon-book"></i><span class="label label-success">102</span> Products</a> </li>
+        <li class="bg_lo"> <a href="{{url('/admin/view-product')}}"> <i class="icon icon-book"></i><span class="label label-success">{{$productTotal}}</span> Products</a> </li>
         @endif
         @if(Session::get('adminDetails')['order_access'] == 1)
-        <li class="bg_ls"> <a href="{{url('/admin/view-orders')}}"> <i class="icon icon-shopping-cart"></i><span class="label label-success">103</span> Orders </a> </li>
+        <li class="bg_ls"> <a href="{{url('/admin/view-orders')}}"> <i class="icon icon-shopping-cart"></i><span class="label label-success">{{$orderTotal}}</span> Orders </a> </li>
         @endif
         @if(Session::get('adminDetails')['users_access'] == 1)
-        <li class="bg_lr"> <a href="{{url('/admin/view-users')}}"> <i class="icon icon-user"></i><span class="label label-success">104</span> Users </a> </li>
+        <li class="bg_lr"> <a href="{{url('/admin/view-users')}}"> <i class="icon icon-user"></i><span class="label label-success">{{$usersTotal}}</span> Users </a> </li>
         @endif
 
         <!-- <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Charts</a> </li>

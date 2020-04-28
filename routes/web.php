@@ -99,6 +99,12 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::get('/wish-list/delete-product/{id}','ProductsController@deleteWishlistProduct');
 });
 
+     //payuments
+    /*-- skip --*/
+    
+    // paypal IPN
+    Route::post('/paypal/ipn','ProductsController@ipnPaypal');
+
 Route::group(['middleware' => ['adminlogin']], function() { 
       
       Route::get('/admin/dashboard','AdminController@dashboard');
