@@ -77,7 +77,7 @@
                   <input type="password" name="password" id="password" value="" required>
                 </div>
               </div>
-              <div class="control-group" id="access">
+              <div class="control-group" id="access"> 
                  <label class="control-label">Access </label>
                 <div class="controls">
                     <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" data-toggle="toggle" data-style="ios" data-style="slow" data-width="28px" data-height="2" data-onstyle="info"> &nbsp;View Categories Only &nbsp; &nbsp; &nbsp;
