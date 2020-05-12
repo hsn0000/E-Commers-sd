@@ -111,7 +111,7 @@
         var subscriber_email = $("#subscriber_email").val()
 		   $.ajax({
                type: "post",
-               url: '/check-subscriber-email',
+               url: '/check-subscriber-email', 
                data: {
                    subscriber_email: subscriber_email
                },
