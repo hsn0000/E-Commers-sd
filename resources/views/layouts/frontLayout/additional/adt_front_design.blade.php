@@ -2,6 +2,13 @@
 <script>
     $(document).ready(function() {
 
+        $('#newsTicker15').breakingNews({
+				position : 'fixed-bottom',
+				borderWidth: 1,
+				height: 50,
+				themeColor: 'darkorange'
+			});
+
         // Change Price & stock with Size
         $("#selSize").change(function () {
             var idSize = $(this).val();
@@ -182,5 +189,17 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
    })
+
+   /*link news*/
+   function urlNews(url) {
+    console.log(url)
+    new PNotify({
+        title: 'Error !',
+        text: 'sorry, the page will come soon..',
+        type: 'error',
+        cornerclass: 'ui-pnotify-sharp'
+                });
+   }
+   /*end link*/    
 
 </script>

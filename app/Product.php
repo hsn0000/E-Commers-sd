@@ -15,6 +15,20 @@ class Product extends Model
         return $this->hasMany('App\ProductsAttribute','product_id');
     }
 
+    public function __construct() {
+        if(empty(Session::get('currencyLocale'))) {
+            $currencyIRD = DB::table('currencies')->where('currency_code','IDR')->first();
+            Session::put('currencyLocale',$currencyIRD);
+        }
+     }
+
+
+    public static function newsGetAll() {
+        $newsGetAll = DB::table('news_info')->where('status',1)->orderBy('updated_at','desc')->get();
+        return $newsGetAll;
+    }
+
+
     public static function cartCount() {
         if(Auth::check()) {
             // echo "User is logged in; We will use Auth";
@@ -40,12 +54,11 @@ class Product extends Model
     }
 
 
-    public static function productCount($cat_id) {
+    public static function productCount($cat_id) { 
           $catCount = product::where(['category_id' => $cat_id, 'status' => 1 ])->count();
         //   dd($catCount);
           return $catCount;
     }
-
 
 
     public static function getCurrencyRates ($price) {
@@ -54,7 +67,7 @@ class Product extends Model
 
         foreach($getCurrencies as $currency) {
 
-            if($currency->currency_code == "IDR") {+
+            if($currency->currency_code == "IDR") {
                 $IDR_rate = \round($price/$currency->exchange_rate,2);
             } else if ($currency->currency_code == "USD") {
                 $USD_rate = \round($price/$currency->exchange_rate,2);

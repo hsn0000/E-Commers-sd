@@ -1,4 +1,9 @@
-    <footer id="footer"><!--Footer-->
+    @php
+	 use App\Product; 
+	 $newsGetAll = Product::newsGetAll();
+	@endphp
+
+	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
 				<div class="row">
@@ -150,7 +155,7 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-left">Copyright © 2013 E-COMMERCE|HSN Inc. All rights reserved.</p>
 					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
 				</div>
 			</div>
@@ -158,6 +163,24 @@
 		
 	</footer>
  <!--/Footer-->
+
+<!-- braking news --><div class="bn-breaking-news bn-fixed-bottom bn-effect-scroll bn-direction-ltr" id="newsTicker15" >
+	<div class="bn-label">INFO</div>
+	<div class="bn-news">
+		<ul>
+		@php $no = 1; @endphp
+		@foreach($newsGetAll as $news)
+			<li><a href="javascript:void(0)" onclick="urlNews({{$news->id}})"> <span style="color:#FF8C00">{{$no++}}</span>. {{$news->description}}</a></li>
+		@endforeach
+		</ul>
+	</div>
+	<div class="bn-controls">
+		<button><span class="bn-arrow bn-prev"></span></button>
+		<button><span class="bn-action bn-pause"></span></button>
+		<button><span class="bn-arrow bn-next"></span></button>
+	</div>
+</div>
+<!-- end breaking news -->
 
 <!-- Button trigger modal -->
 <a href="javascript:" class="btn btn-primary hidden" data-toggle="modal" data-target="#exampleModal" id="modalkitabersama">

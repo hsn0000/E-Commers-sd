@@ -64,7 +64,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="widget-content nopadding">
                         <div class="table-responsive">
-                            <table class="table table-bordered data-table">
+                            <table class="table table-bordered data-table" id="newsletter_subscribers">
                                 <thead>
                                     <tr>
                                         <th style="font-size:100%;">{{__('backend.users_id')}}</th>
@@ -129,5 +129,8 @@ use Carbon\Carbon;
 
 @section('script')
 
+<script>
+$(document).ready(function() { {{-- $('#newsletter_subscribers').DataTable({ ordering: false, responsive: true, }) --}} })
+</script>
 
 @endsection
