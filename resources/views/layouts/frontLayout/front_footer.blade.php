@@ -164,7 +164,8 @@
 	</footer>
  <!--/Footer-->
 
-<!-- braking news --><div class="bn-breaking-news bn-fixed-bottom bn-effect-scroll bn-direction-ltr" id="newsTicker15" >
+<!-- braking news --> 
+<div class="bn-breaking-news bn-fixed-bottom bn-effect-scroll bn-direction-ltr" id="newsTicker15" >
 	<div class="bn-label">INFO</div>
 	<div class="bn-news">
 		<ul>

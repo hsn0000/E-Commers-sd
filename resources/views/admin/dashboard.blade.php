@@ -240,9 +240,9 @@
                 @if(Session::get('adminDetails')['users_access'] == 1)
                 <li class="bg_lr"> <a href="{{url('/admin/view-users')}}"> <i class="icon icon-user"></i><span class="label label-success">{{$usersTotal}}</span> Users </a> </li>
                 @endif
-
-                <!-- <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Charts</a> </li>
+              <!-- <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Charts</a> </li> -->
               <li class="bg_ly"> <a href="#"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
+              <!--
               <li class="bg_lo"> <a href="#"> <i class="icon-th"></i> Tables</a> </li>
               <li class="bg_ls"> <a href="#"> <i class="icon-fullscreen"></i> Full width</a> </li>
               <li class="bg_lo span3"> <a href="#"> <i class="icon-th-list"></i> Forms</a> </li>

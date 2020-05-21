@@ -480,16 +480,18 @@ class ProductsController extends Controller
         {
             abort(404);
         }
+
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         $categoryDetails = Category::where(['url' => $url])->first();
-                
+  
         if($categoryDetails->parent_id == 0)
         {
             // if url is main category url
             $countSubCategories = Category::where(['parent_id' => $categoryDetails->id])->count();
             if($countSubCategories == 0 ) {
-                  abort(400);
+                  abort(404);
             } 
+
             $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();
             foreach($subCategories as $key => $subcat)
             { 

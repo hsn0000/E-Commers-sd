@@ -1,6 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title')
+views news information
 @endsection
 
 @section('content')

@@ -99,10 +99,17 @@
       </ul>
     </li>
 
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-certificate"></i> <span>News Info</span> <span class="label label-important">2</span></a>
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-info-sign"></i> <span>News Info</span> <span class="label label-important">2</span></a>
       <ul <?php if(preg_match("/news/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-news')}}">Add News</a></li>
         <li <?php if(preg_match("/view-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-news')}}">View News</a></li>
+      </ul>
+    </li>
+
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-envelope"></i> <span>Inquiries Users</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/enquiries/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/enquiries-list'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/enquiries-list')}}">Inquiries List</a></li>
+        <li <?php if(preg_match("/enquiries-outbox'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/enquiries-outbox')}}">Inquiries Outbox</a></li>
       </ul>
     </li>
 
