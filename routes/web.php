@@ -67,6 +67,9 @@ Route::match(['get','post'],'/check-pincode','ProductsController@checkPincode');
 Route::post('/check-subscriber-email','NewsletterController@checkSubscriber');
 // add subscriber email
 Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
+// page url news
+Route::get('/topageurlnews','NewsInfoController@topageurlNews'); 
+
 // all route before login
 Route::group(['middleware' => ['frontlogin']], function() {
       // user account page
@@ -199,6 +202,15 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::get('/admin/delete-newslatter-emai/{id}','NewsletterController@deleteNewsletterEmail');
       /*export*/
       Route::get(' /admin/export-newsletter-emails','NewsletterController@exportNewsletterEmail');
+
+      // admin news info
+      Route::match(['get','post'],'/admin/add-news','NewsInfoController@addNews');
+      Route::match(['get','post'],'/admin/edit-news/{id}','NewsInfoController@editNews');
+      Route::get('/admin/view-news','NewsInfoController@viewNews')->name('view-news-info');
+      Route::get('/admin/delete-news-info/{id}','NewsInfoController@deleteNews');
+      /*ajax*/ 
+      Route::get('/admin/edit-status-newsinfo','NewsInfoController@editStatusNews');
+      /*end*/
 
 }); 
 

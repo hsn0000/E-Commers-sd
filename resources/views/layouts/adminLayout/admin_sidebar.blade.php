@@ -99,6 +99,13 @@
       </ul>
     </li>
 
+    <li class="submenu"> <a href="#" id=""><i class="icon icon-certificate"></i> <span>News Info</span> <span class="label label-important">2</span></a>
+      <ul <?php if(preg_match("/news/i", $url)) { ?> class="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-news')}}">Add News</a></li>
+        <li <?php if(preg_match("/view-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-news')}}">View News</a></li>
+      </ul>
+    </li>
+
     <li><a href="{{url('/admin/view-newsletter-subscribers')}}"><i class="icon icon-rss"></i> <span>Newsletter Subscribers</span></a></li>
     @endif
     <li><a href="javascript:"><i class="icon icon-th"></i> <span>Tables</span></a></li>

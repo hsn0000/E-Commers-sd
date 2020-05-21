@@ -45,3 +45,16 @@
         let randomStr = Math.random().toString(36).substring(7);
         return randomStr;
     }
+
+    // @error 
+    $('#is-invalid-title').keyup(function(keys) {
+        var val = this.value
+        if(val == '') {
+            $('#is-invalid-title').attr('style','border-color:red')
+            $('.invalid-feedback').attr('style','display:visible');
+        } else {
+            $('#is-invalid-title').attr('style','border-color:white')
+            $('.invalid-feedback').attr('style','display:none');
+        }
+    });
+    // @enderror 

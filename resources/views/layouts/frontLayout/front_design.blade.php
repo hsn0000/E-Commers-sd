@@ -4,12 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://cdn3.iconfinder.com/data/icons/social-media-2068/64/_shopping-512.png" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(!empty($meta_description))
-    <meta name="description" content=" {{$meta_description}} "> @endif
+    <meta name="description" content=" {{$meta_description}} "> 
+    @endif
     @if(!empty($meta_keyword))
-    <meta name="keywords" content=" {{$meta_keyword}} "> @endif
-    <title>@if(!empty($meta_title)) {{ $meta_title }} @else Home | E-Commerce @endif</title>
+    <meta name="keywords" content=" {{$meta_keyword}} "> 
+    @endif
+    <title> @if(!empty($meta_title)) {{ $meta_title }} @else Home | E-Commerce @endif</title>
     <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/prettyPhoto.css') }}" rel="stylesheet">
@@ -19,6 +22,8 @@
     <link href="{{ asset('css/frontend_css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/easyzoom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/passtrength.css') }}" rel="stylesheet">
+    <!-- breaking news tiket -->
+    <link href="{{ asset('css/frontend_css/breaking-news-ticket.min.css') }}" rel="stylesheet">
     <!-- *wysihtml5* -->
     <!-- <link href="{{ asset('css/frontend_css/bootstrap3-wysihtml5.css') }}" rel="stylesheet"> -->
     <!-- custom css -->
@@ -36,10 +41,13 @@
         href="{{ asset('images/frontend_images/ico/apple-touch-icon-72-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed"
         href="{{ asset('images/frontend_images/ico/apple-touch-icon-57-precomposed.png') }}">
+        <!-- notify css -->
+    <link rel="stylesheet" href="{{asset('css/backend_css/pnotify.css')}}">
+    <!-- end not css -->
 </head>
 <!--/head-->
 
-<body>
+<body style="margin-bottom: 31px;">
 
 
     @include('layouts.frontLayout.front_header')
@@ -58,9 +66,11 @@
     <script src="{{ asset('js/frontend_js/jquery.validate.js') }}"></script> 
     <script src="{{ asset('js/frontend_js/passtrength.js') }}"></script>
     <script src="{{ asset('js/frontend_js/easyzoom.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"> </script>
+    <!-- notify -->
+    <script src="{{asset('js/backend_js/pnotify.js')}}"></script> 
+    <script src="{{asset('js/backend_js/notify.custome.js')}}"></script> 
+    <!-- endnot -->
     <!-- * wysihtml5 * -->
     <!-- <script src="{{ asset('js/frontend_js/bootstrap3-wysihtml5.js') }}"></script> -->
 
@@ -74,16 +84,7 @@
 
     <!-- <script src="{{ asset('js/app.js')}}"></script> -->
     <script>
-        // /*datepicker*/  
-        // $( function() {
-        //     $( "#expiry_date" ).datepicker({ 
-        //         minDate:0,
-        //         dateFormat: 'yy-mm-dd'
-        //     });
-        // });
-        /*wysihtml5*/
-        // $('.some-textarea').wysihtml5();
-        // $('.some-textarea1').wysihtml5();
+
     </script>
 
     @yield('script')

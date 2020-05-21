@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">  
 <head>
+<link rel="shortcut icon" href="{{url('images/backend_images/admin.png')}}" />
 <title>
  @yield('title')
-</title>
+</title> 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap.min.css')}}" />
@@ -25,6 +26,9 @@
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('css/backend_css/print.min.css')}}">
+<!-- notify css -->
+<link rel="stylesheet" href="{{asset('css/backend_css/pnotify.css')}}">
+<!-- end not css -->
 <style>
   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; min-width: 13px; min-height: 11px;}
   .toggle.ios .toggle-handle { border-radius: 20rem; min-width: 13px; min-height: 11px; }
@@ -76,7 +80,10 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <script src="{{asset('js/backend_js/print.min.js')}}"></script> 
-
+<!-- notify -->
+<script src="{{asset('js/backend_js/pnotify.js')}}"></script> 
+<script src="{{asset('js/backend_js/notify.custome.js')}}"></script> 
+<!-- endnot -->
 @yield('script')
 
 <script>
