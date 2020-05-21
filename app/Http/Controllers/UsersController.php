@@ -42,7 +42,6 @@ class UsersController extends Controller
             $currencyKHR = DB::table('currencies')->where('currency_code','KHR')->first();
             Session::put('currencyLocale',$currencyKHR);
         }
-        // dd(Config :: get ('languages'));
         //  dd( Session::get('currencyIDR')->currency_code );
         return redirect()->back();
     }
