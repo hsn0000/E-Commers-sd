@@ -211,7 +211,11 @@ Route::group(['middleware' => ['adminlogin']], function() {
       /*ajax*/ 
       Route::get('/admin/edit-status-newsinfo','NewsInfoController@editStatusNews');
       /*end*/
-
+      // admin inquiries users
+      Route::get('/admin/enquiries-list','EnquiriesUsersController@enquiriesList');
+      Route::get('/admin/enquiries-outbox','EnquiriesUsersController@enquiriesOutbox');
+      Route::get('/admin/delete-enquiries-users/{id}','EnquiriesUsersController@deleteEnquiriesUsers');
+      
 }); 
 
 //  display cms page

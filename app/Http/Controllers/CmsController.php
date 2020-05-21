@@ -117,7 +117,7 @@ class CmsController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
              }
-            $email = "admin.ecomerce@yopmail.com";
+            $email = "admin.ecommerce-hsn@yopmail.com";
             $messageData = [
                 'name' => $data['name'], 
                 'email' => $data['email'],
@@ -125,7 +125,7 @@ class CmsController extends Controller
                 'comment' => $data['message']
             ];
            Mail::send('emails.enquiry', $messageData, function ($message) use ($email) {
-               $message->to($email)->subject('Enquiry from E-com Website');
+               $message->to($email)->subject('Enquiry from E-com-hsn Website');
            });
 
            DB::table('enquiries')->insert([
