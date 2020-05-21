@@ -1,9 +1,14 @@
-@php
+<?php
 use App\Product; 
+use App\ProductsAttribute; 
     $url = "t-shirts";
     $currentUrl = url()->current();
-@endphp
-<?php $urlPreg =  preg_match("/product/i",$currentUrl)?>
+    if(!isset($sizeArray))  { 
+        $sizeArray = ProductsAttribute::select('size')->where('size', '!=', '')->where('size', '!=', 'tes')->groupBy('size')->get(); 
+        $sizeArray = array_flatten(json_decode(json_encode($sizeArray),true)); 
+    }
+    $urlPreg =  preg_match("/product/i",$currentUrl)
+?>
 
 <form action="{{url('products/filter')}}" method="post" > {{ csrf_field() }}
  <input type="hidden" value="{{$url}}" name="url">
@@ -127,12 +132,9 @@ use App\Product;
                        </div>
                  </div>
 
-
             </div>
         </div>
     @endif
-
-
 
         <div class="price-range">
             <!--price-range-->
