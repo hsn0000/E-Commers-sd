@@ -28,3 +28,16 @@
 
 /* test */
 
+/* message */
+.imgMessageClass {
+    border-style: groove;
+    background: white;
+    padding: 10px;
+    width: auto;
+    border-color: aliceblue;
+    border-block-start-style: none;
+    border-block-end-width: 0.1px;
+    border-left-width: 0.1px;
+    border-right-width: 0.1px;
+}
+

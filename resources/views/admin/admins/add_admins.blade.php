@@ -1,5 +1,9 @@
 @extends('layouts.adminLayout.admin_design')
 
+@section('title')
+Add Admins | Admin Hsn E-commerce
+@endsection
+
 @section('content')
 
 <div id="loading"></div>
@@ -54,7 +58,7 @@
             <h5>Add Admins / Roles</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/add-admins')}}" name="add_admin" id="add_admin">
+            <form class="form-horizontal" method="post" action="{{url('/admin/add-admins')}}" name="add_admin" id="add_admin" enctype="multipart/form-data" novalidate="novalidate">
             {{csrf_field()}}
             <div class="control-group">
                 <label class="control-label">Type</label>
@@ -75,6 +79,12 @@
                 <label class="control-label">Password</label>
                 <div class="controls">
                   <input type="password" name="password" id="password" value="" required>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Avatar</label>
+                <div class="controls">
+                  <input type="file" name="avatar" id="avatar">
                 </div>
               </div>
               <div class="control-group" id="access"> 

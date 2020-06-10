@@ -21,7 +21,7 @@ use App\User;
 use App\Country;
 use App\DeliveryAddress; 
 use App\Order;
-use App\OrdersProduct;
+use App\OrdersProduct; 
 use \Illuminate\Support\Facades\Storage;
 use App\Exports\productsExport;
 use Excel;

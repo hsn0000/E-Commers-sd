@@ -1,6 +1,10 @@
 @extends('layouts.adminLayout.admin_design')
-@section('content')
 
+@section('title')
+Setting | Admin Hsn E-commerce
+@endsection
+
+@section('content')
 
 <div id="content">
 <div id="content-header">

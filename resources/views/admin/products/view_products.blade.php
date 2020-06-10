@@ -1,4 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
+@section('title')
+View Products | Admin Hsn E-commerce
+@endsection
 
 @section('content')
 @php

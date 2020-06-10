@@ -1,4 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
+@section('title')
+Add CMS Page | Admin Hsn E-commerce
+@endsection
 
 @section('content')
 

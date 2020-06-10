@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +27,50 @@ class Product extends Model
         $newsGetAll = DB::table('news_info')->where('status',1)->orderBy('updated_at','desc')->get();
         return $newsGetAll;
     }
+
+
+    public static function notifycationMsgCount() {
+        $my_id = Auth::id(); 
+        $notifyCount = DB::table('notification_messages')->where(['to' =>$my_id, 'is_read' => 0 ])->count();
+        return $notifyCount;
+    }
+
+
+    public static function notifycationMsg() {
+        $my_id = Auth::id(); 
+        $notifyMsg = DB::table('notification_messages')
+        ->leftJoin('users', 'notification_messages.from', '=', 'users.id')
+        ->where(['notification_messages.to' =>$my_id])
+        ->orderBy('notification_messages.created_at','DESC')
+        // ->offset(0)->limit(10)
+        ->select('notification_messages.id','notification_messages.from','notification_messages.to','notification_messages.title',
+        'notification_messages.body','notification_messages.page','notification_messages.is_read','notification_messages.created_at', 'users.name')
+        ->get();
+
+        return $notifyMsg;
+    }
+    
+    
+    public static function notifycationMsgCountAdm() {
+        $admin_id = Session::get('adminID'); 
+        $notifyCount = DB::table('notification_messages')->where(['to' =>$admin_id, 'is_read' => 0 ])->count();
+        return $notifyCount;
+    }
+
+
+    public static function notifycationMsgAdm() {
+        $admin_id = Session::get('adminID');  
+        $notifyMsg = DB::table('notification_messages')
+        ->leftJoin('users', 'notification_messages.from', '=', 'users.id')
+        ->where(['notification_messages.to' => $admin_id])
+        ->orderBy('notification_messages.created_at','DESC')
+        // ->offset(0)->limit(10)
+        ->select('notification_messages.id','notification_messages.from','notification_messages.to','notification_messages.title',
+        'notification_messages.body','notification_messages.page','notification_messages.is_read','notification_messages.created_at', 'users.name')
+        ->get();
+
+        return $notifyMsg;
+    } 
 
 
     public static function cartCount() {
