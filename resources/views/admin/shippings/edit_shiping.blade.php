@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
-
+@section('title')
+Edit Shipping | Admin Hsn E-commerce
+@endsection
 @section('content')
 
 <div id="loading"></div>

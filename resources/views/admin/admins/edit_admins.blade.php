@@ -1,4 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
+@section('title')
+Edit Admins | Admin Hsn E-commerce
+@endsection
 
 @section('content')
 
@@ -54,7 +57,7 @@
             <h5>Edit Admins / Roles</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/edit-admins/'.$adminDetails->id)}}" name="edit_admin" id="edit_admin">
+            <form class="form-horizontal" method="post" action="{{url('/admin/edit-admins/'.$adminDetails->id)}}" name="edit_admin" id="edit_admin" enctype="multipart/form-data" novalidate="novalidate">
             {{csrf_field()}}
             <div class="control-group">
                 <label class="control-label">Type</label>
@@ -72,6 +75,20 @@
                 <label class="control-label">Password</label>
                 <div class="controls">
                   <input type="password" name="password" id="password" value="" required>
+                </div>
+              </div>
+            @if(!empty($adminDetails->avatar))
+              <div class="control-group">
+                <label class="control-label">Current Avatar</label>
+                <div class="controls">
+                  <td style="text-align:center;"> <img width ="90" height="90" src="{{ asset('images/backend_images/avatar/'.$adminDetails->avatar ) }}" alt="kosong"></td>
+                </div>
+              </div>
+            @endif
+              <div class="control-group">
+                <label class="control-label">Avatar</label>
+                <div class="controls">
+                  <input type="file" name="avatar" id="avatar">
                 </div>
               </div>
               @if($adminDetails->type == "Sub Admin")

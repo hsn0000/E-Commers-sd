@@ -6,6 +6,7 @@
  @yield('title')
 </title> 
 <meta charset="UTF-8" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap.min.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap-responsive.min.css')}}" />
@@ -34,6 +35,9 @@
   .toggle.ios .toggle-handle { border-radius: 20rem; min-width: 13px; min-height: 11px; }
 </style>
 <!-- end togle switch custome bootsrap -->
+@php
+  $url = url()->current();
+@endphp
 
 @yield('link')
 </head>
@@ -63,7 +67,7 @@
 <script src="{{asset('js/backend_js/jquery.easy-pie-chart.js')}}"></script> 
 <!-- <script src="{{asset('js/backend_js/matrix.calendar.js')}}"></script>  -->
 <!-- <script src="{{asset('js/backend_js/matrix.charts.js')}}"></script>  -->
-<script src="{{asset('js/backend_js/matrix.chat.js')}}"></script> 
+<!-- <script src="{{asset('js/backend_js/matrix.chat.js')}}"></script>  -->
 <!-- <script src="{{asset('js/backend_js/matrix.dashboard.js')}}"></script>  -->
 <!-- <script src="{{asset('js/backend_js/matrix.interface.js')}}"></script>  -->
 <!-- <script src="{{asset('js/backend_js/jquery.wizard.js')}}"></script>  -->
@@ -95,11 +99,12 @@
       });
   });
   /*wysihtml5*/
-  $('.some-textarea').wysihtml5();
+  $('.some-textarea').wysihtml5(); 
   $('.some-textarea1').wysihtml5();
 </script>
 
 @include('layouts.adminLayout.additional.adt_admin_design')
+@include('layouts.adminLayout.additional.adt_adm_message')
 
 </body>
 </html>

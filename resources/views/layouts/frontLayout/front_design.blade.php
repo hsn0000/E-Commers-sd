@@ -44,6 +44,11 @@
         <!-- notify css -->
     <link rel="stylesheet" href="{{asset('css/backend_css/pnotify.css')}}">
     <!-- end not css -->
+    @php
+     $url = url()->current();
+    @endphp
+    
+    @yield('style')
 </head>
 <!--/head-->
 
@@ -81,15 +86,17 @@
     <!-- www.sharethis.com -->
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e858d8c182c2700121b7779&product=sticky-share-buttons&cms=website' async='async'></script>
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e858d8c182c2700121b7779&product=inline-share-buttons&cms=website' async='async'></script>
-
+    <!-- *font awesome* -->
+    <script src="https://kit.fontawesome.com/2af5e43179.js" crossorigin="anonymous"></script>
+    <!-- end fa -->
     <!-- <script src="{{ asset('js/app.js')}}"></script> -->
-    <script>
-
-    </script>
 
     @yield('script')
 
     @include('layouts.frontLayout.additional.adt_front_design')
+
+    <!-- msg -->
+    @include('layouts.frontLayout.additional.adt_front_message')
 
 </body>
 

@@ -1,6 +1,5 @@
 <script>
 $(document).ready(function() {
-
     /*Admin Roles*/ 
     $("#type").change(function() {
         var type = $("#type").val();

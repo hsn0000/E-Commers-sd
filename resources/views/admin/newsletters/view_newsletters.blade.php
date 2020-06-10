@@ -1,7 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title')
-
+View Newsletters | Admin Hsn E-commerce
 @endsection
 
 @section('content')

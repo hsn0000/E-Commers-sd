@@ -22,7 +22,8 @@ class VerifyCsrfToken extends Middleware
         "/check-pincode",
         "/get-product-price",
         "/check-subscriber-email",
-        "/add-subscriber-email"
+        "/add-subscriber-email",
+        "/upload-img-AdmMsg"
     ];
 
 }

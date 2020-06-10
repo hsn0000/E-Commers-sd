@@ -1,7 +1,9 @@
 @extends('layouts.adminLayout.admin_design')
+@section('title')
+Add Coupons | Admin Hsn E-commerce
+@endsection
 
 @section('content')
-
 
 <div id="content">
   <div id="content-header">

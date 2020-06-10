@@ -1,7 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title')
-view order
+View Orders | Admin Hsn E-commerce
 @endsection
 
 @section('content')

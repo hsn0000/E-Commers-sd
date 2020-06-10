@@ -1,11 +1,15 @@
 <?php
 use App\Product; 
 use App\ProductsAttribute; 
+use App\Category;
     $url = "t-shirts";
     $currentUrl = url()->current();
     if(!isset($sizeArray))  { 
         $sizeArray = ProductsAttribute::select('size')->where('size', '!=', '')->where('size', '!=', 'tes')->groupBy('size')->get(); 
         $sizeArray = array_flatten(json_decode(json_encode($sizeArray),true)); 
+    }
+    if(!isset($categories)) {
+        $categories = Category::with('categories')->where(['parent_id' => 0])->get();
     }
     $urlPreg =  preg_match("/product/i",$currentUrl)
 ?>

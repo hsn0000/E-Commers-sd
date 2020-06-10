@@ -1,7 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title')
-profile role
+Profile Role | Admin Hsn E-commerce
 @endsection
 
 @section('link')

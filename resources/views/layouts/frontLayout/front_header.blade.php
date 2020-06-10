@@ -1,10 +1,12 @@
 @php 
  use App\Http\Controllers\Controller;
  use App\Product;
+ use Carbon\Carbon;
     $cartCount = Product::cartCount();
+    $notifycationMsg = Product::notifycationMsg();
+    $notifycationMsgCount = Product::notifycationMsgCount();
     $userWislishCount = Product::userWislishCount();
     $mainCategories = Controller::mainCategories(); 
-    $url = url()->current();
 @endphp 
 
 <header id="header">
@@ -45,7 +47,7 @@
                     <div class="logo pull-left">
                         <a href="{{url('./')}}"><img src="{{asset('images/frontend_images/home/logo2.jpeg') }}"alt="" /></a>
                     </div>
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right"> 
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">@if (Session::get('applocale') == "id") Indonesia @elseif (Session::get('applocale') == "en")  US  @elseif (Session::get('applocale') == "khmer") Kambodia @else Indonesia @endif <span class="caret"></span> </button>
                             <ul class="dropdown-menu">
@@ -63,6 +65,21 @@
                                 <li><a href="#">Real Khmer</a></li>
                             </ul>
                         </div>
+
+                        @if(!empty(Auth::check()))
+                        <div class="btn-group">
+                               <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown" id="{{'ntpCount'.Auth::id() }}" > <i class="fas fa-bell"> @if($notifycationMsgCount != 0)&nbsp; <span style="color:crimson;">( <span class="ntp_count_class"> {{$notifycationMsgCount}} </span> )</span> @endif</i></button>
+                            <ul class="dropdown-menu" id="ntp_header_messsage" style=" overflow-y: scroll; height: 15vw;">
+                            @foreach($notifycationMsg as $key => $notyMsg)
+                                <li class="list_ntp_header_messsage">
+                                @if($notyMsg->is_read == 0) <span class="badge badge-pill" style=" position: absolute; background: indianred; margin-left: 2px;">!</span> @else <span> </span> @endif
+                                  <a href="javascript:" onclick='clickNotMsg({{"' $notyMsg->from.$notyMsg->to '"}})' > <b style="margin-left: 1px;">{{$notyMsg->title}}</b> <span> | {{$notyMsg->name}}</span> | <span style="font-size: small; font-style: italic;">{{Carbon::parse($notyMsg->created_at)->format('j F Y')}}</span></a>
+                                  <hr style="margin: 4px 19px; padding: 0;">
+                                </li>
+                            @endforeach
+                            </ul>
+                        </div> 
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-8">
@@ -78,7 +95,7 @@
                             <li><a href="{{url('/account')}}" <?php  if(preg_match("/account/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-user"></i> {{__('frontend.account')}}</a></li>
                             <li><a href="{{url('/user-logout')}}" <?php  if(preg_match("/user-logout/i", $url)) { ?> class="active" <?php } ?>><i class="fa fa-sign-out"></i> {{__('frontend.logout')}}</a></li>
                             @endif
-                        </ul>
+                        </>
                     </div>
                 </div>
             </div>
@@ -94,7 +111,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse"
                             data-target=".navbar-collapse">
                             <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
+                            <span class="icon-bar">p</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
@@ -117,7 +134,12 @@
                                     <li><a href="#">Blog Single</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{url('/pages/contact')}}" <?php  if(preg_match("/contact/i", $url)) { ?> class="active" <?php } ?>> Contact </a></li>
+                            <li class="dropdown"><a href="#" <?php if(preg_match("/contact/i", $url)) { ?> class="active" <?php } ?> <?php if(preg_match("/front-messages/i", $url)) { ?> class="active" <?php } ?> >Contact<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li><a href="{{url('front-messages')}}" <?php if(preg_match("/front-messages/i", $url)) { ?> class="active" <?php } ?> >Message</a></li>
+                                    <li><a href="{{url('/pages/contact')}}" <?php  if(preg_match("/contact/i", $url)) { ?> class="active" <?php } ?>> Contact Us </a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
