@@ -47,7 +47,48 @@ return [
         'Printed',
         'Self',
         'Solid'
-    ]
+    ],
+
+    'm_list' => [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+     ],
+  
+     'm_abb' => [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Ags',
+        'Sep',
+        'Okt',
+        'Nov',
+        'Dec'
+     ],
+  
+     'day_list' => [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+     ]
+     
 
 ]
 

@@ -1,5 +1,9 @@
 @extends('layouts.adminLayout.admin_design')
 
+@section('title')
+View Banners | Admin Hsn E-commerce
+@endsection
+
 @section('content')
 @php
 use Carbon\Carbon;

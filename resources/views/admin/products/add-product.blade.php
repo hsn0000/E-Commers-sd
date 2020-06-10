@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
-
+@section('title')
+Add Products | Admin Hsn E-commerce
+@endsection
 @section('content')
 
 <div id="content">
@@ -128,9 +130,9 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">{{__('backend.image')}}</label>
+                <label class="control-label">Avatar</label>
                 <div class="controls">
-                  <input type="file" name="image" id="image">
+                  <input type="file" name="avatar" id="avatar">
                 </div>
               </div>
               <div class="control-group">

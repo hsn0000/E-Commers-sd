@@ -1,4 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
+@section('title')
+View Admins | Admin Hsn E-commerce
+@endsection
 
 @section('content')
 
@@ -48,8 +51,9 @@ use Carbon\Carbon;
                             <table class="table table-bordered data-table" id="table_view_admin">
                                 <thead>
                                     <tr>
-                                        <th style="font-size:100%;">ID</th>
+                                        <th style="font-size:100%;">No</th>
                                         <th style="font-size:100%;">Username</th>
+                                        <th style="font-size:100%;">Avatar</th>
                                         <th style="font-size:100%;">Type</th>
                                         <th style="font-size:100%;">Roles</th>
                                         <th style="font-size:100%;">{{__('backend.status')}}</th>
@@ -59,6 +63,7 @@ use Carbon\Carbon;
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @php $no = 1; @endphp
                                     @foreach($admins as $admin)
                                     @php 
                                           if($admin->type == "Admin") {
@@ -81,20 +86,28 @@ use Carbon\Carbon;
                                           }
                                     @endphp
                                     <tr class="">
-                                        <td style="text-align:center;">{{$admin->id}}</td>
+                                        <td style="text-align:center;">{{$no++}}</td>
                                         <td style="text-align:center;">{{$admin->username}}</td>
+                                        @if($admin->avatar == "")
+                                        <td style="text-align:center;"> <img width ="80" height="80" src="{{ asset('images/backend_images/admin.png') }}" alt="kosong"></td>
+                                        @else 
+                                        <td style="text-align:center;"> <img width ="80" height="80" src="{{ asset('images/backend_images/avatar/'.$admin->avatar ) }}" alt="kosong"></td>
+                                        @endif
                                         <td style="text-align:center;">{{$admin->type}}</td>
                                         <td style="">{!! $roles !!}</td>
                                         <td style="text-align:center;">
                                             @if($admin->status==1)
-                                            <span class="badge badge-success">{{__('backend.active')}}</span>
+                                            <a class="badge badge-success" id="{{$admin->id}}" onclick="editStatusAdmin({{$admin->id}})">{{__('backend.active')}}</a>
                                             @else
-                                            <span class="badge badge-danger" style="background-color:Crimson;">{{__('backend.inactive')}}</span>
+                                            <a class="badge badge-danger" id="{{$admin->id}}" style="background-color:Crimson;" onclick="editStatusAdmin({{$admin->id}})">{{__('backend.inactive')}}</a>
                                             @endif
                                         </td>
                                         <td style="text-align:center;">{{Carbon::parse($admin->created_at)->format('l, j F Y | H:i A')}}</td>
                                         <td style="text-align:center;">{{Carbon::parse($admin->updated_at)->format('l, j F Y | H:i A')}}</td>
-                                        <td style="text-align:center;"> <a href="{{url('/admin/edit-admins/'.$admin->id)}} " class="btn btn-warning btn-mini" title="Edit Roles"> <i class="icon-cogs" style="padding:0 4px"></i> {{__('backend.edit')}}</a> </td>
+                                        <td style="text-align:center;">
+                                         <a href="{{url('/admin/edit-admins/'.$admin->id)}} " class="btn btn-warning btn-mini" title="Edit Roles"> <i class="icon-cogs" style="padding:0 4px"></i> {{__('backend.edit')}}</a> 
+                                         <a class="btn btn-danger btn-mini "  data-toggle="modal" data-target="#exampleModal" data-id="{{$admin->id}}" onclick="modalAdmins(this)"><i class="icon-trash" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -107,14 +120,81 @@ use Carbon\Carbon;
     </div>
 </div>
 
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete This Role !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -32px;">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      Are you sure you want to delete this Role ?
+      </div>
+      <div class="modal-footer"> 
+        <input type="hidden" id="id_value" value="">
+        <button type="button" class="btn btn-primary" style="background: black;" data-dismiss="modal"> <i class="icon-arrow-left" style=""></i>&nbsp; Cancel</button>
+        <a hreft="javascript:" class="btn btn-danger" onclick="deleteAdmins()"><i class="icon-trash"></i>&nbsp; {{__('backend.delete')}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('script')
 
 <script>
-  $(document).ready(function() {
-    $("#test").DataTable({ "order": [[6, "desc"]] });
+  function modalAdmins(resp) {
+      var id = $(resp).data("id")
+      $("#id_value").val(id)
+  }   
+
+  function deleteAdmins() {
+      var id = $("#id_value").val()
+      window.location.href ="/admin/delete-admins/"+id;
+  }
+
+
+function editStatusAdmin(id) {
+  /* ajax */ 
+  $.ajax({
+    type: 'get',
+    url: '/admin/edit-status-admins',
+    data: {
+      id:id
+    }, success: function(resp) {
+      if(resp == "success1") {
+        $('#'+id+'').text('In Active')
+        $('#'+id+'').attr('style','background-color:Crimson;')
+        new PNotify({
+            title: 'Success !',
+            text: 'the status is changed to InActive',
+            type: 'error',
+            cornerclass: 'ui-pnotify-sharp'
+                    });
+      } else if (resp == "success0") {
+        $('#'+id+'').text('Active')
+        $('#'+id+'').attr('style','background-color:#468847;')
+        new PNotify({
+            title: 'Success !',
+            text: 'the status is changed to Active',
+            type: 'success',
+            cornerclass: 'ui-pnotify-sharp'
+                   });
+      }
+     
+    }, error: function(err) {
+      console.log("error")
+    }
   })
+}
+
+
 </script>
+
 
 @endsection

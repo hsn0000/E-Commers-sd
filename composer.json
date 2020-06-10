@@ -19,10 +19,11 @@
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.1",
         "maatwebsite/excel": "^3.1",
+        "milon/barcode": "^6.0",
         "nesbot/carbon": "^2.31",
         "overtrue/laravel-emoji": "^1.1",
         "overtrue/laravel-lang": "~3.0",
-        "milon/barcode": "^6.0"
+        "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

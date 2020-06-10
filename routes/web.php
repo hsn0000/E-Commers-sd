@@ -52,7 +52,7 @@ Route::match(['get','post'],'forgot-password','UsersController@forgotPassword');
 // user register form submit
 Route::post('/user-register','UsersController@register');
 //confirm account
-Route::get('/confirm/{code}','UsersController@confirmAccount');
+Route::get('/confirm/{code}','UsersController@confirmAccount'); 
 // users login form submit
 Route::post('/user-login','UsersController@login');
 // users logout
@@ -72,6 +72,14 @@ Route::get('/topageurlnews','NewsInfoController@topageurlNews');
 
 // all route before login
 Route::group(['middleware' => ['frontlogin']], function() {
+      // front messages route
+      Route::match(['get','post'],'front-messages','MessagesController@frontMessages')->name('frontMessages');
+      Route::get('/front-message/{id}','MessagesController@frontGetMessage')->name('message');
+      Route::post('/front-message','MessagesController@frontSendMessage');
+      // ajax upload img
+      Route::post('/upload-img-FronMsg','MessagesController@uploadImgFronMsg')->name('uploadImgFron');
+      // front notification route
+      Route::post('/front-addNotification-message','NotificationMessagesController@addNotificationFrontMessage');
       // user account page
       Route::match(['get','post'],'/account','UsersController@account');
       // check current user password
@@ -101,6 +109,11 @@ Route::group(['middleware' => ['frontlogin']], function() {
       // delete product from wish list
       Route::get('/wish-list/delete-product/{id}','ProductsController@deleteWishlistProduct');
 });
+
+      /*ajax read not*/ 
+      Route::post('read-notif-messages','NotificationMessagesController@readNotificationMsg')->name('read-notification');
+      Route::post('get-notification-data','NotificationMessagesController@getNotificationData')->name('get-notification');
+      /*end*/ 
 
      //payuments
     /*-- skip --*/
@@ -175,10 +188,13 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
       //  Admin User country Chart route 
       Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
-      //  Admin Roles route
+      //  Admins Roles route
       Route::get('/admin/view-admins','AdminController@viewAdmins');
       Route::match(['get', 'post'],'/admin/add-admins','AdminController@addAdmins');
       Route::match(['get', 'post'],'/admin/edit-admins/{id}','AdminController@editAdmins');
+      Route::get('/admin/delete-admins/{id}','AdminController@deleteAdmins');
+      // ajax
+      Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
 
       //  admin cms route edit-cms-page 
       Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage'); 
@@ -215,6 +231,16 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::get('/admin/enquiries-list','EnquiriesUsersController@enquiriesList');
       Route::get('/admin/enquiries-outbox','EnquiriesUsersController@enquiriesOutbox');
       Route::get('/admin/delete-enquiries-users/{id}','EnquiriesUsersController@deleteEnquiriesUsers');
+
+      // admin chat route
+      Route::match(['get','post'],'/admin/messages','MessagesController@messages')->name('adminMessages');
+      Route::get('/admin/message/{id}','MessagesController@getMessage')->name('message');
+      Route::post('/admin/message','MessagesController@sendMessage');
+      // ajax upload img
+      Route::post('/upload-img-AdmMsg','MessagesController@uploadImgAdmMsg')->name('uploadImgAdm');
+      // admin notification route
+      Route::post('/admin/addNotification-message','NotificationMessagesController@addNotificationMessage');
+      
       
 }); 
 

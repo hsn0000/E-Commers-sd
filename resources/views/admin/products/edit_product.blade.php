@@ -7,6 +7,10 @@
 }
 </style>
 @endsection
+@section('title')
+Edit Products | Admin Hsn E-commerce
+@endsection
+
 @section('content')
 
 <div id="content">

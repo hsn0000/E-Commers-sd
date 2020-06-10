@@ -43,7 +43,7 @@ class UsersController extends Controller
             Session::put('currencyLocale',$currencyKHR);
         }
         //  dd( Session::get('currencyIDR')->currency_code );
-        return redirect()->back();
+        return redirect()->back()->with('flash_message_success','the language was changed successfully !');
     }
 
 
@@ -69,6 +69,7 @@ class UsersController extends Controller
             $user->name = $data['name'];
             $user->email = $data['email'];
             $user->password = \bcrypt($data['password']);
+            $user->admin = 0;
             \date_default_timezone_set('asia/jakarta');
             $user->created_at = date('Y-m-d H:i:s');
             $user->updated_at = date('Y-m-d H:i:s');
@@ -283,9 +284,9 @@ class UsersController extends Controller
 
 
     public function viewUsers() {
-        if(Session::get('adminDetails')['users_access'] == 0) {
+        // if(Session::get('adminDetails')['users_access'] == 0) {
             return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
+        //  }
         $users = DB::table('users')->orderBy('created_at','desc')->get();
         return view('admin.users.view_users')->with(\compact('users'));
     }

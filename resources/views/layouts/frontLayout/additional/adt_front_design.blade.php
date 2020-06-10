@@ -1,7 +1,6 @@
 <!-- frontend -->
 <script>
     $(document).ready(function() {
-
         $('#newsTicker15').breakingNews({
 				position : 'fixed-bottom',
 				borderWidth: 1,
@@ -192,7 +191,6 @@
 
    /*link news*/
    function urlNews(url) {
-    console.log(url)
     new PNotify({
         title: 'Error !',
         text: 'sorry, the page will come soon..',

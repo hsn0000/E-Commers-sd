@@ -19,7 +19,7 @@ $dataPoints = array(
 @extends('layouts.adminLayout.admin_design')
 
 @section('title')
-view order reporting
+View Orders Reporting | Admin Hsn E-commerce
 @endsection
 
 @section('content')
