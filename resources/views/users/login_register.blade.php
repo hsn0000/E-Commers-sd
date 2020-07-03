@@ -14,13 +14,13 @@
         </div>
     @endif
     @if(Session::has('flash_message_error'))
-        <div class="alert alert-dark alert-block" style="background-color:red; color:white; width:18%; margin-left:23%;">
+        <div class="alert alert-dark alert-block" style="background-color:red; color:white; width:19%; margin-left:20%;">
             <button type="button" class="close" data-dismiss="alert">x</button>	
             <strong> {{Session::get('flash_message_error')}}</strong>
         </div>
         @endif  
         @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block" style="background-color: cornflowerblue;color: white;width: 19%;margin-left: 51%;">
+        <div class="alert alert-dark alert-block" style="background-color: cornflowerblue;color: white;width: 19%;margin-left: 46%;">
             <button type="button" class="close" data-dismiss="alert">x</button>	
             <strong> {{Session::get('flash_message_success')}}</strong>
         </div>

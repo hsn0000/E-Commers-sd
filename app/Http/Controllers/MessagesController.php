@@ -28,6 +28,7 @@ class MessagesController extends Controller
            ->whereNotIn('users.id', [$admin_id])
            ->whereNotIn('users.status', [0])
            ->whereNotIn('users.admin', [1])
+           ->orderBy('name','asc')
            ->select('users.id','users.name','users.avatar','users.email', 'users.admin','users.status','msg.from','msg.to')
            ->groupBy('users.id','users.name','users.avatar','users.email')
            ->get();

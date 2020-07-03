@@ -230,7 +230,7 @@ img {
                     @endif
                     @if(Session::has('flash_message_drop'))
                     <div class="alert alert-success alert-block"
-                        style="background-color: teal;width: 66%; color: white;">
+                        style="background-color: teal;width: 66%; color: white;"> 
                         <button type="button" class="close" data-dismiss="alert">x</button>
                         <strong> {{Session::get('flash_message_drop')}}</strong>
                     </div>
@@ -257,7 +257,7 @@ img {
                                             @foreach($usersAll as $usr)
                                             <div class="chat_list user" id="{{$usr->id}}">
                                                 <div class="chat_people">
-                                                    <div class="chat_img"> <img src="{{$usr->avatar ?? asset('images/backend_images/userss.png') }}" alt="avatar"></div>
+                                                    <div class="chat_img"> <img style="border-radius: 8px;" src="{{ $usr->avatar != '' ? (asset('/images/photo/profile/'.$usr->avatar)) : (asset('/images/backend_images/admin1.jpg')) }}" alt="avatar"></div>
                                                     <div class="chat_ib">
                                                         <a href="javascript:">
                                                             <h5 id="msg-count-h{{$usr->id}}">{{$usr->name}}

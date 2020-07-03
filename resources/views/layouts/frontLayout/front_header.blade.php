@@ -65,11 +65,11 @@
                                 <li><a href="#">Real Khmer</a></li>
                             </ul>
                         </div>
-
                         @if(!empty(Auth::check()))
                         <div class="btn-group">
                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown" id="{{'ntpCount'.Auth::id() }}" > <i class="fas fa-bell"> @if($notifycationMsgCount != 0)&nbsp; <span style="color:crimson;">( <span class="ntp_count_class"> {{$notifycationMsgCount}} </span> )</span> @endif</i></button>
-                            <ul class="dropdown-menu" id="ntp_header_messsage" style=" overflow-y: scroll; height: 15vw;">
+                            @if(count($notifycationMsg) > 0)
+                            <ul class="dropdown-menu" id="ntp_header_messsage" style="overflow-y: scroll; max-height: 15vw; height: auto;">
                             @foreach($notifycationMsg as $key => $notyMsg)
                                 <li class="list_ntp_header_messsage">
                                 @if($notyMsg->is_read == 0) <span class="badge badge-pill" style=" position: absolute; background: indianred; margin-left: 2px;">!</span> @else <span> </span> @endif
@@ -78,6 +78,7 @@
                                 </li>
                             @endforeach
                             </ul>
+                            @endif
                         </div> 
                         @endif
                     </div>

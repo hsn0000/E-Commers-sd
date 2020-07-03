@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
     @if(($msgUsr->from == $user_id) && ($msgUsr->to == $my_id))
     <div class="incoming_msg">
-        <div class="incoming_msg_img"> <img src="{{ $msgUsr->avatar ?? asset('images/backend_images/userss.png') }}" alt="sunil"> </div>
+        <div class="incoming_msg_img"> <img src="{{ $msgUsr->avatar != '' ? (asset('/images/photo/profile/'.$msgUsr->avatar)) : (asset('/images/backend_images/admin1.jpg')) }}" alt="profile" > </div>
         <div class="received_msg">
             <div class="received_withd_msg">
                 @if($msgUsr->message != "")
