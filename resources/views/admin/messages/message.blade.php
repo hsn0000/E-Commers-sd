@@ -90,7 +90,7 @@ Messages | Admin Hsn E-commerce
                             @foreach($usersAll as $user)
                             <div class="panel-content nopadding">
                                 <ul class="contact-list">
-                                    <li id="{{$user->id}}" class="user"><a href="javascript:"><img alt="" src="{{$user->avatar ?? asset('images/backend_images/userss.png') }}"> <span>{{$user->name}}</span></a>
+                                    <li id="{{$user->id}}" class="user"><a href="javascript:"><img src="{{ $user->avatar != '' ? (asset('/images/photo/profile/'.$user->avatar)) : (asset('/images/backend_images/userss.png')) }}" alt="photo pfrofile"> <span>{{$user->name}}</span></a>
                                     @if($user->unread != 0)<span class="msg-count badge badge-info">{{$user->unread}}</span>@endif</li>
                                 </ul>
                             </div>

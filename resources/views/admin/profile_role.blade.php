@@ -10,7 +10,6 @@ Profile Role | Admin Hsn E-commerce
 
 @section('content')
 
-
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i
@@ -39,7 +38,12 @@ Profile Role | Admin Hsn E-commerce
         @endif
     </div>
     <div id="loading"></div>
+    
     <div class="container-fluid">
+    <form id="from_change_img_profile_adm" method="post" enctype="multipart/form-data" style="display: none;"> {{ csrf_field() }}
+        <input type="file" class="" name="input_image_profile_adm" id="input_image_profile_adm">
+        <input type="text" class="" name="for_who_use" id="for_who_use" value="foradmin" >
+    </form>
         <hr>
         <div class="row-fluid">
             <div class="span12">
@@ -51,22 +55,20 @@ Profile Role | Admin Hsn E-commerce
                         <div class="container bootstrap snippet">
                             <hr>
                             <div class="row">
-                                <div class="col-sm-10">
-                                    <h1 style="margin-left: 3%">{{$adminRole->username}}</h1>
-                                </div>
                                 <div class="col-sm-2">
                                   <!-- <a href="#" style="float:right"> <i class="icon icon-cog" ></i> Settings</a> -->
-                                  <a href="#" style="float: right;margin-bottom: 20%;" id="add-roles"> <i class="icon icon-plus" ></i> Add Role</a>
+                                  <a href="{{url('/admin/settings')}}" style="float: right;" id="add-roles"> <i class="icon icon-lock" ></i> Update Password </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <!--left col-->
                                     <div class="text-center">
-                                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                                            class="avatar img-circle img-thumbnail" alt="avatar">
-                                        <h6>Upload a different photo...</h6>
-                                        <input type="file" class="text-center center-block file-upload">
+                                        <div id="photo-profile-admin">
+                                          <a href="javascript:"> <img width="190" src="{{ $adminRole->avatar != '' ? (asset('/images/photo/profile/'.$adminRole->avatar)) : (asset('/images/backend_images/admin1.jpg')) }}" class="avatar img-circle img-thumbnail" alt="avatar" onclick="popupGambar(this)"> </a>
+                                        </div>
+                                        <h6>Change different photo.</h6>
+                                        <button class="btn btn-dark btn-sm" onclick="changePhotoProfileAdmin()">Change</button>
                                     </div>
                                     </hr><br>
                                 </div>
@@ -74,20 +76,16 @@ Profile Role | Admin Hsn E-commerce
                                 <div class="col-sm-12">
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                                        <li><a data-toggle="tab" href="#messages">Menu 1</a></li>
-                                        <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+                                        <li><a data-toggle="tab" href="#hallo">Hello</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="home">
-                                            <hr>
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="first_name">
                                                             <h4>Username</h4>
                                                         </label>
-                                                        <input type="text" class="form-control" name="username"
-                                                            id="username" placeholder="Username"
-                                                            title="Username.">
+                                                        <input type="text" value="{{$adminRole->name}}" class="form-control" title="Username." readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -95,8 +93,7 @@ Profile Role | Admin Hsn E-commerce
                                                         <label for="email">
                                                             <h4>Email</h4>
                                                         </label>
-                                                        <input type="email" class="form-control" name="email" id="email"
-                                                            placeholder="you@email.com" title="Email.">
+                                                        <input type="text" value="{{$adminRole->email}}" class="form-control" title="Email." readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -104,133 +101,27 @@ Profile Role | Admin Hsn E-commerce
                                                         <label for="phone">
                                                             <h4>Phone</h4>
                                                         </label>
-                                                        <input type="text" class="form-control" name="phone" id="phone"
-                                                            placeholder="enter phone"
-                                                            title="phone number.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="mobile">
-                                                            <h4>Mobile</h4>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="mobile"
-                                                            id="mobile" placeholder="mobile number"
-                                                            title="mobile number.">
+                                                        <input type="text" value="{{$adminRole->phone}}" class="form-control" title="phone number." readonly>
                                                     </div>
                                                 </div>
                                             <hr>
                                         </div>
                                         <!--/tab-pane-->
-                                        <div class="tab-pane" id="messages">
+                                        <div class="tab-pane" id="hallo">
                                             <h2></h2>
-                                            <hr>
-                                            <form class="form" action="##" method="post" id="registrationForm">
+                                            <form class="form" action="##" method="post" id="r">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="first_name">
-                                                            <h4>First name</h4>
+                                                            <h4>Hallo</h4>
                                                         </label>
-                                                        <input type="text" class="form-control" name="first_name"
-                                                            id="first_name" placeholder="first name"
-                                                            title="enter your first name if any.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="last_name">
-                                                            <h4>Last name</h4>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="last_name"
-                                                            id="last_name" placeholder="last name"
-                                                            title="enter your last name if any.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="phone">
-                                                            <h4>Phone</h4>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="phone" id="phone"
-                                                            placeholder="enter phone"
-                                                            title="enter your phone number if any.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="mobile">
-                                                            <h4>Mobile</h4>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="mobile"
-                                                            id="mobile" placeholder="enter mobile number"
-                                                            title="enter your mobile number if any.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="email">
-                                                            <h4>Email</h4>
-                                                        </label>
-                                                        <input type="email" class="form-control" name="email" id="email"
-                                                            placeholder="you@email.com" title="enter your email.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="email">
-                                                            <h4>Location</h4>
-                                                        </label>
-                                                        <input type="email" class="form-control" id="location"
-                                                            placeholder="somewhere" title="enter a location">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="password">
-                                                            <h4>Password</h4>
-                                                        </label>
-                                                        <input type="password" class="form-control" name="password"
-                                                            id="password" placeholder="password"
-                                                            title="enter your password.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="password2">
-                                                            <h4>Verify</h4>
-                                                        </label>
-                                                        <input type="password" class="form-control" name="password2"
-                                                            id="password2" placeholder="password2"
-                                                            title="enter your password2.">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-12">
-                                                        <br>
-                                                        <button class="btn btn-lg btn-success" type="submit"><i
-                                                                class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                                        <button class="btn btn-lg" type="reset"><i
-                                                                class="glyphicon glyphicon-repeat"></i> Reset</button>
+                                                       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat deleniti odio nihil illum soluta rem quisquam, ratione error harum enim, quis ullam voluptates vero quae incidunt maxime? Ipsa, voluptate illo!</p>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                         <!--/tab-pane-->
-                                        <div class="tab-pane" id="settings">
-                                            <hr>
-                                            <form class="form" action="##" method="post" id="registrationForm">
-                                                <div class="form-group">
-                                                    <div class="col-xs-12">
-                                                        <label for="phone">
-                                                            <h4>Phone</h4>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="phone" id="phone"
-                                                            placeholder="enter phone"
-                                                            title="enter your phone number if any.">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+
                                     </div>
                                     <!--/tab-pane-->
                                 </div>
@@ -254,24 +145,68 @@ Profile Role | Admin Hsn E-commerce
 <script>
 $(document).ready(function() {
 
-
-    var readURL = function(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('.avatar').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-
-    $(".file-upload").on('change', function() {
-        readURL(this);
-    });
 });
+
+   /*image change*/ 
+   function changePhotoProfileAdmin() {
+        $('#input_image_profile_adm').click()
+        $('#input_image_profile_adm').bind('change', function(e) {
+            e.preventDefault();
+            var valueImg = $(this).val()
+
+            if (valueImg != '') {
+                /*valid extention*/    
+                var extension = valueImg.split('.').pop().toLowerCase();
+                if(jQuery.inArray(extension, ['png','jpg','jpeg']) == -1)
+                {
+                    new PNotify({
+                        title: 'Invalid',
+                        text: 'invalid image file !',
+                        type: 'error',
+                    });
+                    $('#input_image_profile_adm').val('');
+                    $('#input_image_profile_adm').unbind()
+                    return false;
+                }
+                /*end valid extention*/ 
+
+            var form = document.forms.namedItem("from_change_img_profile_adm"); // high importance!, here you need change "yourformname" with the name of your form
+            var formData = new FormData(form);
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('uploadPhotoProfile')}}",
+                    dataType:'JSON',
+                    data:formData,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        $("#photo-profile-admin").html(" <a href='javascript:' > <img width='190' src='/images/photo/profile/"+data[0].avatar+"' class='avatar img-circle img-thumbnail' alt='photo pfrofile' onclick='popupGambar(this)'> </a> ")
+                        new PNotify({
+                            title: 'Success !',
+                            text: 'profile photo has been changed',
+                            type: 'success',
+                            cornerclass: 'ui-pnotify-sharp'
+                        });
+
+                        $('#input_image_profile_adm').unbind()
+                    },
+                    error: function(jqXHR, status, err) {},
+                    complete: function() {
+                    
+                    }
+                })
+
+            }
+            
+            $('#input_image_profile_adm').unbind()
+        })
+
+    } 
+    /*end imgchange*/ 
+
+
 </script>
 
 @endsection

@@ -5,7 +5,7 @@ use Carbon\Carbon;
     @foreach($messageUsers as $msgUsr)
     @if(($msgUsr->from == $user_id) && ($msgUsr->to == $admin_id))
     <div id="chat-messages-inner">
-        <p id="msg-1" class="" style="display: block;"><span class="msg-block"><img src="@if(file_exists('images/backend_images/avatar/'.$msgUsr->avatar)) @else <?php echo $msgUsr->avatar ?> @endif" alt="avatar">
+        <p id="msg-1" class="" style="display: block;"><span class="msg-block"><img src="{{ $msgUsr->avatar != '' ? (asset('/images/photo/profile/'.$msgUsr->avatar)) : (asset('/images/backend_images/userss.png')) }}" alt="avatar">
         <strong>{{$msgUsr->name}}</strong> <span class="time">{{Carbon::parse($msgUsr->created_at)->format('l, j F Y | H:i A')}}</span>
                 <strong>You</strong> <span class="time">{{Carbon::parse($msgUsr->created_at)->format('l, j F Y | H:i A')}}</span>
         @if($msgUsr->message != "")

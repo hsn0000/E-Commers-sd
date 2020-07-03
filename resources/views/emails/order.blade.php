@@ -51,7 +51,7 @@
                         <td>{{'Rp'.' '.is_number($product['product_price'],2)}}</td>
                     </tr>
                     @endforeach
-                    <tr>
+                    <tr> 
                         <td></td>
                         <td></td>
                         <td></td>
@@ -88,25 +88,25 @@
                                     <td><strong> {{__('frontend.bill_to')}} :- </strong></td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['name']}}</td>
+                                    <td> {{$userDetails->name}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['address']}}</td>
+                                    <td> {{$userDetails->address}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['city']}}</td>
+                                    <td> {{$userDetails->city}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['state']}}</td>
+                                    <td> {{$userDetails->state}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['country']}}</td>
+                                    <td> {{$userDetails->country}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['pincode']}}</td>
+                                    <td> {{$userDetails->pincode}}</td>
                                 </tr>
                                 <tr>
-                                    <td> {{$userDetails['mobile']}}</td>
+                                    <td> {{$userDetails->mobile}}</td>
                                 </tr>
                             </table>
                         </td>
@@ -146,7 +146,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>{{__('frontend.for_any_enquiries')}}<a href="mailto:info@ecom-website.com">info@ecom-husin.com</a>
+            <td>{{__('frontend.for_any_enquiries')}} &nbsp; <a href="mailto:info@ecom-website.com">info@ecom-husin.com</a>
             </td>
         </tr>
         <tr>

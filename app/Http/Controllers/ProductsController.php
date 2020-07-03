@@ -877,29 +877,66 @@ class ProductsController extends Controller
     }
 
 
-    public function updateCartQuantity($id = null, $quantity = null)
+    public function updateCartQuantity(Request $request)
     {
         Session::forget('CouponAmount');
         Session::forget('CouponCode');
-
-        if($quantity == 0 )
+        $data = $request->all();
+        // return $data['upDownData'];
+        if($data['upDownData'] == 0 )
         {
             $down = "1";
-            DB::table('cart')->where('id',$id)->decrement('quantity',$down);
-            return redirect('/cart')->with('flash_message_drop','Product Quantity has been drop successfully !');
-        } else {
+            DB::table('cart')->where('id',$data['idKita'])->decrement('quantity',$down);
 
-            $getCartDetails = DB::table('cart')->where('id',$id)->first();
+            if(Auth::check())
+            {
+                $user_email = Auth::user()->email;
+                $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+            }else{
+                $session_id = Session::get('session_id');
+                $userCart = DB::table('cart')->where('session_id',$session_id)->get();
+            }
+    
+            foreach($userCart as $key => $product)
+            {
+                $productDetails = Product::where('id',$product->product_id)->first();
+                $userCart[$key]->image = "$productDetails->image";
+               
+            }
+
+            return view('products.blade_index_ajax.cartBodyFron', ['userCart' => $userCart]);
+
+        } else if($data['upDownData'] == 1 ) {
+
+            $getCartDetails = DB::table('cart')->where('id',$data['idKita'])->first();
             $getAttributeStock = ProductsAttribute::where('sku',$getCartDetails->product_code)->first();
-            $updated_quantity = $getCartDetails->quantity+$quantity;
+            $updated_quantity = $getCartDetails->quantity+$data['upDownData'];
          
             if($getAttributeStock->stock >= $updated_quantity)
             {
-                DB::table('cart')->where('id',$id)->increment('quantity',$quantity);
-                return redirect('/cart')->with('flash_message_success','Product Quantity has been update successfully !');
+                DB::table('cart')->where('id',$data['idKita'])->increment('quantity',$data['upDownData']);
+
+                if(Auth::check())
+                {
+                    $user_email = Auth::user()->email;
+                    $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+                }else{
+                    $session_id = Session::get('session_id');
+                    $userCart = DB::table('cart')->where('session_id',$session_id)->get();
+                }
+        
+                foreach($userCart as $key => $product)
+                {
+                    $productDetails = Product::where('id',$product->product_id)->first();
+                    $userCart[$key]->image = "$productDetails->image";
+                   
+                }
+    
+                return view('products.blade_index_ajax.cartBodyFron', ['userCart' => $userCart]);
 
             }else{
-                return redirect('/cart')->with('flash_message_error','Required Product Quantity is not available !');      
+
+                return array('notAvailable' => 'notAvailable');    
             }
        
         }
@@ -911,19 +948,44 @@ class ProductsController extends Controller
     {
         Session::forget('CouponAmount');
         Session::forget('CouponCode');
+        //  coupon is valid for discount // get cart total amount
+        $currencyLocale = Session::get('currencyLocale');
+        $session_id = Session::get('session_id');
+        $data = $request->all();
 
-         $data = $request->all();
+        if(Auth::check())
+        {
+            $user_email = Auth::user()->email;
+            $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+        }else{
+            $userCart = DB::table('cart')->where('session_id',$session_id)->get();
+        }
+
+        $total_amount = 0;
+        foreach($userCart as $item)
+        {
+            $total_amount = $total_amount + ($item->price * $item->quantity);
+        }
+
          $couponCount = Coupon::where(['coupon_code' => $data['coupon_code']])->count();
         //  if coupon exist
-         if($couponCount == "0")
+         if($couponCount == 0)
          {
-             return redirect()->back()->with('flash_message_error','This coupon do not exists');
+            $wadukteh = array(
+                'total_amount' => $currencyLocale->currency_simbol.' '.is_number($total_amount,2),
+                'couponNotExists' => 'couponNotExists'
+            );
+             return $wadukteh;
          }else{
              $couponDetails = Coupon::where('coupon_code',$data['coupon_code'])->first();
             //  if coupon active
              if($couponDetails->status == "0")
              {
-                 return redirect()->back()->with('flash_message_error','This coupon is not active !');
+                $wadukteh = array(
+                    'total_amount' => $currencyLocale->currency_simbol.' '.is_number($total_amount,2),
+                    'couponNotActive' => 'couponNotActive'
+                );
+                return $wadukteh;
              }
              
              $expiry_date = $couponDetails->expiry_date;
@@ -931,24 +993,13 @@ class ProductsController extends Controller
             //  if coupon expiry
              if($expiry_date < $current_date)
              {
-                return redirect()->back()->with('flash_message_error','This coupon is expired !');
+                $wadukteh = array(
+                    'total_amount' => $currencyLocale->currency_simbol.' '.is_number($total_amount,2),
+                    'couponExpired' => 'couponExpired'
+                );
+                return $wadukteh;
              }
-            //  coupon is valid for discount // get cart total amount
-            $session_id = Session::get('session_id');
 
-            if(Auth::check())
-            {
-                $user_email = Auth::user()->email;
-                $userCart = DB::table('cart')->where('user_email',$user_email)->get();
-            }else{
-                $userCart = DB::table('cart')->where('session_id',$session_id)->get();
-            }
-
-            $total_amount = 0;
-            foreach($userCart as $item)
-            {
-                $total_amount = $total_amount + ($item->price * $item->quantity);
-            }
             if($couponDetails->amount_type == "Fixed")
             {
                 $couponAmount = $couponDetails->amount;
@@ -956,10 +1007,18 @@ class ProductsController extends Controller
                 $couponAmount = $total_amount * ($couponDetails->amount/100);
             }
             //  add coupon code & amount in session
+
             Session::put('CouponAmount',$couponAmount);
             Session::put('CouponCode',$data['coupon_code']);
 
-            return redirect()->back()->with('flash_message_success','Coupon code successfully applied. You are availing discount !');
+            $wadukteh = array(
+                'subTotal' => $currencyLocale->currency_simbol.' '.is_number($total_amount,2),
+                'couponDiscount' => $currencyLocale->currency_simbol.' '.is_number( Product::currencyRate($couponAmount),2),
+                'grandTotal' => $currencyLocale->currency_simbol.' '.is_number($total_amount - $couponAmount,2),
+                'couponCodeSuccessfullyApplied' => 'couponCodeSuccessfullyApplied'
+            );
+            return $wadukteh;
+            // return redirect()->back()->with('flash_message_success','Coupon code successfully applied. You are availing discount !');
 
          }
     }
@@ -969,9 +1028,13 @@ class ProductsController extends Controller
     {
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
-        $userDetails = User::find($user_id);
+        $userDetails = DB::table('users as u')
+        ->leftJoin('users_biodata as ub', 'u.id', '=', 'ub.user_id')
+        ->where('u.id', $user_id)
+        ->select('u.*', 'ub.user_id', 'ub.address', 'ub.city', 'ub.state', 'ub.country', 'ub.pincode', 'ub.mobile')
+        ->first();
         $countries = Country::get();
-        
+
         // check if shipping exist
         $shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
         $shippingDetails = Array();
@@ -985,7 +1048,7 @@ class ProductsController extends Controller
         DB::table('cart')->where(['session_id' => $session_id])->update(['user_email' => $user_email]);
 
         if($request->isMethod('post'))
-        {
+        { 
             $data = $request->all();
 
             if(empty($data['billing_name']) || 
@@ -1006,14 +1069,26 @@ class ProductsController extends Controller
                 return redirect()->back()->with('flash_message_error','Please fill all field to checkout !');
                }
             //    user update
-            User::where('id',$user_id)->update([
-               'name' => $data['billing_name'],
-               'address' => $data['billing_address'],
-               'city' => $data['billing_city'],
-               'state' => $data['billing_state'],
-               'country' => $data['billing_country'],
-               'pincode' => $data['billing_pincode'],
-               'mobile' => $data['billing_mobile']]);
+            User::where('id',$user_id)->update([ 'name' => $data['billing_name'] ]);
+            $userBioCount = DB::table('users_biodata')->where('user_id', $user_id)->get()->count();
+
+            $dataMereka = [
+                'address' => $data['billing_address'],
+                'city' => $data['billing_city'],
+                'state' => $data['billing_state'],
+                'country' => $data['billing_country'],
+                'pincode' => $data['billing_pincode'],
+                'mobile' => $data['billing_mobile'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            if($userBioCount > 0 ) {
+                DB::table('users_biodata')->where('user_id', $user_id)->update($dataMereka);
+            } else {
+                DB::table('users_biodata')->where('user_id', $user_id)->insert($dataMereka);
+            }
+
             if($shippingCount > 0)
             {
                 // update shipping address
@@ -1058,7 +1133,11 @@ class ProductsController extends Controller
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
         $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
-        $userDetails = User::where('id',$user_id)->first();
+        $userDetails = DB::table('users as u')
+        ->leftJoin('users_biodata as ub', 'u.id', '=', 'ub.user_id')
+        ->where('u.id', $user_id)
+        ->select('u.*', 'ub.user_id', 'ub.address', 'ub.city', 'ub.state', 'ub.country', 'ub.pincode', 'ub.mobile')
+        ->first();
 
         $userCart = DB::table('cart')->where('user_email',$user_email)->get();
         $total_weight = 0;
@@ -1091,6 +1170,7 @@ class ProductsController extends Controller
                 ]);
                 return back()->with('flash_message_error','Please select method payment');
             }
+
             $user_id = Auth::user()->id;
             $user_email = Auth::user()->email;
             // Prevent out of stock produck from ordering
@@ -1136,7 +1216,7 @@ class ProductsController extends Controller
            /*  //  fetch shipping charges
             $shippingCharges = Product::getShippingCharges($shippingDetails->country);  */
             $grandTotal = Product::getGrandTotal();
-            // dd($grandTotal);
+  
             $order = new Order;
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -1190,7 +1270,12 @@ class ProductsController extends Controller
             {
                 $productDetails = Order::with('orders')->where('id', $order_id)->first();
                 // $productDetails = json_decode(json_encode($productDetails));
-                $userDetails = User::where('id', $user_id)->first();
+                $userDetails = DB::table('users as u')
+                ->leftJoin('users_biodata as ub', 'u.id', '=', 'ub.user_id')
+                ->where('u.id', $user_id)
+                ->select('u.*', 'ub.user_id', 'ub.address', 'ub.city', 'ub.state', 'ub.country', 'ub.pincode', 'ub.mobile')
+                ->first();
+                // dd($userDetails);
                 // for order email
                 $email = $user_email;
                 $messageData = [

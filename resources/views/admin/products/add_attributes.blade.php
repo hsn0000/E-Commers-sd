@@ -27,7 +27,7 @@ Add Attribute Products | Admin Hsn E-commerce
             <strong> {{__('backend.'.Session::get('flash_message_success'))}} </strong>
         </div>
     @endif
-  </div>
+  </div> 
   <div id="loading"></div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">

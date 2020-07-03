@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{__('frontend.confirmation_email')}}</title>
-</head>
+</head> 
 <body>
     <table>
        <tr><td>{{__('frontend.dear')}} {{$name}} !</td></tr>

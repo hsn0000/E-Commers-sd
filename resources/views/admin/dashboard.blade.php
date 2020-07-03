@@ -130,10 +130,10 @@
             for (var i = 0; i < dps.length; i++) {
                 deltaY = Math.round(9 + Math.random() * (-9 - 9));
                 yVal = deltaY + dps[i].y > 0 ? dps[i].y + deltaY : 0;
-                boilerColor = yVal > 1000 ? "#1E90FF" : yVal >= 900 ? "#FFD700" : yVal >= 800 ? "#008000" : yVal >=
-                    700 ? "#20B2AA" : yVal >= 600 ? "#FAFAD2" : yVal >= 500 ? "#8A2BE2" : yVal >= 400 ? "#FA8072" :
-                    yVal >= 300 ? "#FFFF00" : yVal >= 200 ? "#FFA500" : yVal >= 100 ? "#FF4500" : yVal <= 100 ?
-                    "#FF0000" : null;
+                boilerColor = yVal > 1000 ? "DodgerBlue" : yVal >= 900 ? "DeepSkyBlue" : yVal >= 800 ? "MediumSpringGreen" : yVal >=
+                    700 ? "MediumAquaMarine" : yVal >= 600 ? "RebeccaPurple" : yVal >= 500 ? "DarkSlateBlue" : yVal >= 400 ? "DarkGoldenRod" :
+                    yVal >= 300 ? "BurlyWood" : yVal >= 200 ? "IndianRed" : yVal >= 100 ? "FireBrick" : yVal <= 100 ?
+                    "Crimson" : null;
                 dps[i] = {
                     label: dataCountry[i],
                     y: yVal,
@@ -147,7 +147,7 @@
 
         setInterval(function() {
             updateChart()
-        }, 400);
+        }, 800);
         /*endchartusers visit*/
 
     }
@@ -230,7 +230,7 @@ Dashboard | Admin Hsn E-commerce
     <div class="container-fluid">
         <div class="quick-actions_homepage">
             <ul class="quick-actions">
-                <li class="bg_lb"> <a href="{{url('/admin/dashboard')}}"> <i class="icon-dashboard"></i> <span class="label label-important">~</span> My Dashboard </a> </li>
+                <li class="bg_lb"> <a href="{{url('/admin/dashboard')}}"> <i class="icon-dashboard"></i> My Dashboard </a> </li>
 
                 {{-- @if(Session::get('adminDetails')['categories_view_access'] == 1) --}}
                 <li class="bg_ly"> <a href="{{url('/admin/view-categories')}}"> <i class="icon icon-th-list"></i><span class="label label-success">{{$categoriesTotal}}</span> Categories </a> </li>
@@ -246,8 +246,8 @@ Dashboard | Admin Hsn E-commerce
                 {{-- @endif --}}
               <!-- <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Charts</a> </li> -->
               <li class="bg_ly"> <a href="#"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
-              <!--
-              <li class="bg_lo"> <a href="#"> <i class="icon-th"></i> Tables</a> </li>
+              
+              <!-- <li class="bg_lo"> <a href="#"> <i class="icon-th"></i> Tables</a> </li>
               <li class="bg_ls"> <a href="#"> <i class="icon-fullscreen"></i> Full width</a> </li>
               <li class="bg_lo span3"> <a href="#"> <i class="icon-th-list"></i> Forms</a> </li>
               <li class="bg_ls"> <a href="#"> <i class="icon-tint"></i> Buttons</a> </li>
@@ -268,7 +268,7 @@ Dashboard | Admin Hsn E-commerce
                 <div class="widget-content">
                     <div class="row-fluid">
                         <div class="span9">
-                            <div id="chartContainerUsers" style="height: 384px; width: 100;"></div>
+                            <!-- <div id="chartContainerUsers" style="height: 384px; width: 100;"></div> -->
                         </div>
                         <div class="span3">
                             <ul class="site-stats">
@@ -302,93 +302,16 @@ Dashboard | Admin Hsn E-commerce
                 <div class="widget-content">
                     <div class="row-fluid">
                         <div class="span12">
-
-                            <div class="span12">
-                                <div class="box columnbox mt-4">
-                                    <div id="columnchart"> </div>
-                                </div>
-                            </div>
-                            <div class="span6" style="margin-top: 24px; margin:18px 0 0 0">
-                                <div class="box  mt-4">
-                                    <div id="linechart"> </div>
-                                </div>
-
-                              <div class="widget-box">
-                                <div class="widget-title"><span class="icon"><i class="icon-user"></i></span>
-                                  <h5>Our Partner (Comming soon)</h5>
-                                </div>
-                                <div class="widget-content nopadding fix_hgt">
-                                  <ul class="recent-posts">
-                                    <li>
-                                      <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{url('images/backend_images/demo/av1.jpg')}}"> </div>
-                                      <div class="article-post"> <span class="user-info">John Deo</span>
-                                        <p>Web Desginer &amp; creative Front end developer</p>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{url('images/backend_images/demo/av2.jpg')}}"> </div>
-                                      <div class="article-post"> <span class="user-info">John Deo</span>
-                                        <p>Web Desginer &amp; creative Front end developer</p>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{url('images/backend_images/demo/av4.jpg')}}"> </div>
-                                      <div class="article-post"> <span class="user-info">John Deo</span>
-                                        <p>Web Desginer &amp; creative Front end developer</p>
-                                      </div>
-                                  </li></ul>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <!-- chat -->
-                            <div class="span6">
-                                <div class="widget-box widget-chat">
-                                    <div class="widget-title bg_lb"> <span class="icon"> <i class="icon-comment"></i>
-                                        </span>
-                                        <h5>Chat Option</h5>
-                                    </div>
-                                    <div class="widget-content nopadding collapse in" id="collapseG4">
-                                        <div class="chat-users panel-right2">
-                                            <div class="panel-title">
-                                                <h5>Online Users</h5>
-                                            </div>
-                                            <div class="panel-content nopadding">
-                                                <ul class="contact-list">
-                                                    <li id="user-Alex" class="online"><a href=""><img alt="" src="{{url('images/backend_images/demo/av1.jpg')}}"> <span>Fajar</span></a></li>
-                                                    <li id="user-John" class="online new"><a href=""><img alt=""src="{{url('images/backend_images/demo/av3.jpg')}}"> <span>Jamaludin</span></a><span class="msg-count badge badge-info">4</span></li>
-                                                    <li id="user-Mark" class="online"><a href=""><img alt="" src="{{url('images/backend_images/demo/av4.jpg')}}"> <span>Herman</span></a></li>
-                                                    <li id="user-Maxi" class="online"><a href=""><img alt="" src="{{url('images/backend_images/demo/av5.jpg')}}"> <span>Ruslan</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="chat-content panel-left2">
-                                            <div class="chat-messages" id="chat-messages">
-                                                <div id="chat-messages-inner">
-                                                    <p id="msg-1" class="user-linda" style="display: block;"><span class="msg-block"><img src="{{url('images/backend_images/demo/av2.jpg')}}" alt=""><strong>Linda</strong> <span class="time">-15:27</span><span class="msg">Hello Every one do u want to freindship with me?</span></span></p>
-                                                    <p id="msg-2" class="user-mark" style="display: block;"><span class="msg-block"><img src="{{url('images/backend_images/demo/av3.jpg')}}" alt=""><strong>Admin</strong> <span class="time">-15:27</span><span class="msg">Yuppi! why not sirji!!.</span></span></p>
-                                                    <p id="msg-3" class="user-linda" style="display: block;"><span class="msg-block"><img src="{{url('images/backend_images/demo/av2.jpg')}}" alt=""><strong>Linda</strong> <span class="time">-15:27</span><span class="msg">Thanks!!! See you soon than</span></span></p>
-                                                    <p id="msg-4" class="user-mark" style="display: block;"><span class="msg-block"><img src="{{url('images/backend_images/demo/av3.jpg')}}" alt=""><strong>Admin</strong> <span class="time">-15:27</span><span class="msg">ok Bye than!!!.</span></span></p>
-                                                    <p class="offline" id="msg-5" style="display: block;"><span>User Linda left the chat</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="chat-message well">
-                                                <button class="btn btn-success">Send</button>
-                                                <span class="input-box">
-                                                    <input type="text" name="msg-box" id="msg-box">
-                                                </span> </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- endchat -->
+<!-- 
+                            <div class="box columnbox mt-4">
+                                <div id="columnchart"> </div>
+                            </div> -->
+                        
                         </div>
                     </div>
                 </div>
             </div>
-             <!-- end site analytics -->
-        </div>
-        <!--End-Chart-box-->
+
         <hr />
     </div>
 </div>

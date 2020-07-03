@@ -14,6 +14,7 @@
         "dompdf/dompdf": "^0.8.5",
         "fideloper/proxy": "^4.0",
         "intervention/image": "dev-master",
+        "jenssegers/date": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^1.0",
@@ -23,7 +24,9 @@
         "nesbot/carbon": "^2.31",
         "overtrue/laravel-emoji": "^1.1",
         "overtrue/laravel-lang": "~3.0",
-        "pusher/pusher-php-server": "^4.1"
+        "pusher/pusher-php-server": "^4.1",
+        "yajra/laravel-datatables": "^1.0",
+        "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

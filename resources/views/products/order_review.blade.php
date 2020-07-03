@@ -56,7 +56,7 @@
                         {{$userDetails->pincode}}
                     </div>
                     <div class="form-group">
-                        {{$userDetails->mobil}}
+                        {{$userDetails->mobile}}
                     </div>
                 </div>
             </div>
