@@ -28,7 +28,7 @@ Setting | Admin Hsn E-commerce
     @endif
     @if(Session::has('flash_message_success'))
     <div class="alert alert-dark alert-block"
-        style="background-color:green; color:white; width:21%; margin-left:20px;">
+        style="background-color:green; color:white; width:21%; margin-left:20px;"> 
         <button type="button" class="close" data-dismiss="alert">x</button>
         <strong> {{__('backend.'.Session::get('flash_message_success'))}}</strong>
     </div>

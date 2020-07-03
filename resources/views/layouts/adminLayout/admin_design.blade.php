@@ -6,7 +6,7 @@
  @yield('title')
 </title> 
 <meta charset="UTF-8" />
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap.min.css')}}" />
 <link rel="stylesheet" href="{{asset('css/backend_css/bootstrap-responsive.min.css')}}" />
@@ -23,18 +23,12 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- custom css -->
 <link rel="stylesheet" href="{{asset('css/backend_css/custom.css')}}">
-<!-- togle switch custome bootsrap -->
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('css/backend_css/print.min.css')}}">
 <!-- notify css -->
 <link rel="stylesheet" href="{{asset('css/backend_css/pnotify.css')}}">
 <!-- end not css -->
-<style>
-  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; min-width: 13px; min-height: 11px;}
-  .toggle.ios .toggle-handle { border-radius: 20rem; min-width: 13px; min-height: 11px; }
-</style>
-<!-- end togle switch custome bootsrap -->
+
 @php
   $url = url()->current();
 @endphp
@@ -51,7 +45,6 @@
 
 @include('layouts.adminLayout.admin_footer ')
 <!--  -->
-
 
 <script src="{{asset('js/backend_js/jquery.min.js')}}"></script> 
 <!-- <script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script> -->
@@ -88,6 +81,7 @@
 <script src="{{asset('js/backend_js/pnotify.js')}}"></script> 
 <script src="{{asset('js/backend_js/notify.custome.js')}}"></script> 
 <!-- endnot -->
+<script src="{{asset('js/backend_js/bostrap-dialog.min.js')}}"></script> 
 @yield('script')
 
 <script>

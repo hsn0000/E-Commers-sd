@@ -35,3 +35,21 @@
     font-family: cursive;
     margin: 17%;
 }
+
+.image-profile-front {
+    border-radius: 14%;
+    border-style: groove;
+    /* box-shadow: -5px -5px 59px -12px; */
+    max-width: 164px;
+}
+
+.list-group-item-kita {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+}

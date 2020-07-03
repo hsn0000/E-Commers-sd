@@ -32,7 +32,7 @@ Route::get('/products/{url}','ProductsController@products');
 /* product filter page */ 
 Route::match(['get','post'],'products/filter','ProductsController@filter');
 // category detail page
-Route::get('/product/{id}','ProductsController@product');
+Route::get('/product/{id}','ProductsController@product'); 
 // get product attribute price
 Route::post('/get-product-price','ProductsController@getProductPrice');
 // add to cart
@@ -42,9 +42,9 @@ Route::match(['get','post'],'/cart','ProductsController@cart');
 // delete product from cart
 Route::get('/cart/delete-product-cart/{id}','ProductsController@deleteCartProduct');
 // update product quantity in cart
-Route::get('/cart/update-quantity/{id}/{quantity}','ProductsController@updateCartQuantity');
+Route::post('/cart/update-quantity','ProductsController@updateCartQuantity')->name('cartUpdateQuantity');
 // apply coupon
-Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
+Route::post('/cart/apply-coupon','ProductsController@applyCoupon')->name('applyCoupons');
 // register/login page /check-email
 Route::get('/login-register','UsersController@userLoginRegister');
 // user forgot-password
@@ -114,16 +114,21 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::post('read-notif-messages','NotificationMessagesController@readNotificationMsg')->name('read-notification');
       Route::post('get-notification-data','NotificationMessagesController@getNotificationData')->name('get-notification');
       /*end*/ 
+      /*upload photo profile*/
+      Route::post('upload-photo-profile','UsersController@uploadPhotoProfile')->name('uploadPhotoProfile');
+      /*end*/
 
      //payuments
     /*-- skip --*/
     
     // paypal IPN
-    Route::post('/paypal/ipn','ProductsController@ipnPaypal');
+Route::post('/paypal/ipn','ProductsController@ipnPaypal'); 
 
 Route::group(['middleware' => ['adminlogin']], function() { 
-      
-      Route::get('/admin/dashboard','AdminController@dashboard');
+      Route::prefix('/')->group(function() {
+            Route::get('/admin/dashboard','DashboardController@index');;
+        });
+
       Route::get('/admin/profile-role','AdminController@profileRole');
       Route::get('/admin/settings','AdminController@settings');
       Route::get('/admin/check-pwd','AdminController@chkPassword'); // matrix from falidate
@@ -181,20 +186,34 @@ Route::group(['middleware' => ['adminlogin']], function() {
       Route::get('/admin/view-pdf-invoice/{id}','ProductsController@viewPDFInvoice');
       // Admin order status
       Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
-      //  Admin user route 
+      //  Admin user route  
       Route::get('admin/view-users','UsersController@viewUsers');
       Route::get('/admin/export-users','UsersController@exportUsers'); 
       //  Admin User Chart route 
       Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
       //  Admin User country Chart route 
       Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
-      //  Admins Roles route
-      Route::get('/admin/view-admins','AdminController@viewAdmins');
-      Route::match(['get', 'post'],'/admin/add-admins','AdminController@addAdmins');
-      Route::match(['get', 'post'],'/admin/edit-admins/{id}','AdminController@editAdmins');
-      Route::get('/admin/delete-admins/{id}','AdminController@deleteAdmins');
-      // ajax
-      Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
+
+      // user-group route
+            Route::prefix('/user')->group(function() {
+
+                  Route::get('/admin','AdminController@indexUserAdmin');
+                  Route::post('/data-table', ['as' => 'userAdmin.dataTable', 'uses' => 'AdminController@dataTable' ]);
+                  Route::get('/admin/add','AdminController@addUserAdmin');
+                  Route::post('/admin/save','AdminController@saveUserAdmin');
+                  Route::match(['get','post'], '/admin/edit','AdminController@editUserAdmin'); 
+                  Route::post('/admin/update','AdminController@updateUserAdmin');
+                  Route::post('/admin/delete','AdminController@deleteUserAdmin');
+                  // ajax
+                  Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
+
+                  Route::get('/group','UserGroupController@indexUserGroup');
+                  Route::get('/group/add','UserGroupController@userGroupAdd');
+                  Route::post('/group/save','UserGroupController@userGroupSave');
+                  Route::match(['get', 'post'],'/group/edit','UserGroupController@userGroupEdit');
+                  Route::post('/group/update','UserGroupController@userGroupUpdate');
+                  Route::post('/group/delete','UserGroupController@userGroupDelete');
+            });
 
       //  admin cms route edit-cms-page 
       Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage'); 

@@ -81,8 +81,8 @@ $currencyLocale = Session::get('currencyLocale');
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href="javascript:" onclick="addToWishlist()"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                    <li><a href="javascript:"><i class="fa fa-plus-square"></i>Add to compare</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -95,5 +95,22 @@ $currencyLocale = Session::get('currencyLocale');
         </div>
     </div>
 </section>
+
+@endsection
+
+@section('script')
+
+<script>
+
+function addToWishlist() {
+
+    
+
+
+
+alert('ok')
+}
+
+</script>
 
 @endsection

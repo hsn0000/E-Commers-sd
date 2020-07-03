@@ -110,6 +110,38 @@ $(document).ready(function() {
         });
 
 
+        // password validate add user admin
+        $("#form-data").validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20
+                },
+                repassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20,
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                password: {
+                    required: "<span class='badge badge' style='background-color: orange; position: absolute;left: 200px;margin-top: 5px;'{{__('validation.please_enter_your_current_password')}}</span>",
+                    minlength: "<span class='badge badge' style='background-color: orangered; position: absolute;left: 200px;margin-top: 5px;'>{{__('validation.your_password_must_be_atleast_6_characters_long')}}</span>",
+                    maxlength: "<span class='badge badge' style='background-color: orangered; position: absolute;left: 200px;margin-top: 5px;'>{{__('validation.your_password_must_be_at_most_20_characters')}}</span>",
+                },
+                repassword: {
+                    required: "<span class='badge badge' style='background-color: orange; position: absolute;left: 200px; margin-top: 3px;'>{{__('validation.please_confirm_your_new_password')}}</span>",
+                    minlength: "<span class='badge badge' style='background-color: orangered; position: absolute;left: 200px; margin-top: 3px;'>{{__('validation.your_password_must_be_atleast_6_characters_long')}}</span>",
+                    maxlength: "<span class='badge badge' style='background-color: orangered; position: absolute;left: 200px; margin-top: 3px;'>{{__('validation.your_password_must_be_at_most_20_characters')}}</span>",
+                    equalTo: "<span class='badge badge' style='background-color: firebrick; position: absolute;left: 200px; margin-top: 3px;'>{{__('validation.your_password_is_not_the_same')}}</span>",
+                }
+            }
+
+        });
+
+
     });
 
     /* overlay zoom image */ 

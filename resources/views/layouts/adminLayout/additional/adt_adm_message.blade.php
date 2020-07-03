@@ -339,7 +339,7 @@
                     data: dataNotificationAdmMessage,
                     cache: false,
                     success: function(data) {
-                        console.log(data)
+                        // console.log(data)
                     },
                     error: function(jqXHR, status, err) {},
                     complete: function() {

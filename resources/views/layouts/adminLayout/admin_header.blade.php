@@ -26,7 +26,8 @@
     </li>
 
     <li class="dropdown" id="menu-notification-admin"><a href="#" data-toggle="dropdown" data-target="#menu-notification-admin" class="dropdown-toggle" id="{{'ntpCount'.Session::get('adminID') }}"><i class="icon icon-bell"></i> <span class="text">Notification</span> <span class="notiheader-admin"> @if($notifycationMsgCountAdm != 0)<span class="label label-important ntp_count_class">{{$notifycationMsgCountAdm}}</span> @endif </span> <b class="caret"></b></a>
-      <ul class="dropdown-menu" id="ntp_header_messsage" style=" overflow-y: scroll; height: 17vw;">
+    @if(count($notifycationMsgAdm) > 0)
+      <ul class="dropdown-menu" id="ntp_header_messsage" style=" overflow-y: scroll; max-height: 17vw; height:auto;">
         @foreach($notifycationMsgAdm as $key => $notyMsg)
             <li class="list_ntp_header_messsage">
             @if($notyMsg->is_read == 0) <span class="badge badge-pill" style=" position: absolute; background: indianred; margin-left: 2px;">!</span> @else <span> </span> @endif
@@ -35,6 +36,7 @@
             </li>
         @endforeach
       </ul>
+    @endif
     </li>
 
     <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text"> {{__('backend.messages')}}</span> <b class="caret"></b></a>

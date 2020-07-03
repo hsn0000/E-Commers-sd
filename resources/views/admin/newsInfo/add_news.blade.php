@@ -2,14 +2,14 @@
 @section('title')
 Add News Information | Admin Hsn E-commerce
 @endsection
-
+ 
 @section('content')
 
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">News Info</a>
      <a href="{{url('/admin/add-category')}}" class="current">Add News</a> </div> 
-    <h1></h1>
+    <h1></h1> 
     @if(Session::has('flash_message_error'))
         <div class="alert alert-dark alert-block" style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
             <button type="button" class="close" data-dismiss="alert">x</button>	
