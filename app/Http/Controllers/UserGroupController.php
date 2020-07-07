@@ -30,6 +30,7 @@ class UserGroupController extends Controller
 
     public function indexUserGroup(Request $request) {
         $this->page->blocked_page($this->mod_alias);
+
         \session::forget(['data_id']);
 
         $get_data = DB::table('user_group');
@@ -45,7 +46,7 @@ class UserGroupController extends Controller
 
 
     public function userGroupAdd() {
-        $this->page->blocked_page($this->mod_alias);
+       $this->page->blocked_page($this->mod_alias, 'create');
 
         $this->viewdata['toolbar_save'] = true;
 
@@ -56,7 +57,7 @@ class UserGroupController extends Controller
 
 
     public function userGroupSave(Request $request) {
-        $this->page->blocked_page($this->mod_alias);
+        $this->page->blocked_page($this->mod_alias, 'create');
 
         $_validates = [
             'group_name' => 'required'

@@ -7,20 +7,6 @@
 
   {!! isset($page) ? $page->module_sidebar(0, isset($module) ? $module : '') : '<div style="padding-left: 10px;">Please load $page on Controller</div>' !!}
 
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>{{__('backend.categories')}}</span></a>
-      <ul <?php if(preg_match("/categories/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-categories'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-categories')}}">{{__('backend.add_category')}}</a></li>
-        <li <?php if(preg_match("/view-categories/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-categories')}}">{{__('backend.view_category')}}</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>{{__('backend.categories')}}</span></a>
-      <ul <?php if(preg_match("/categories/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-categories'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-categories')}}">{{__('backend.add_category')}}</a></li>
-        <li <?php if(preg_match("/view-categories/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-categories')}}">{{__('backend.view_category')}}</a></li>
-      </ul>
-    </li>
-
     <li class="submenu"> <a href="#" id=""><i class="icon icon-book"></i> <span>{{__('backend.products')}}</span> </a>
       <ul <?php if(preg_match("/product/i", $url)) { ?> class="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-product')}}">{{__('backend.add_product')}}</a></li>

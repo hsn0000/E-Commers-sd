@@ -21,6 +21,9 @@ class DashboardController extends Controller
 
         $this->query = new QueryModel();
         $this->viewdata['query'] = $this->query;
+
+        // $this->module = $this->page->get_modid($this->mod_alias);
+        // $this->viewdata['module'] = $this->module;
     }
 
     public function index()

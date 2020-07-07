@@ -118,43 +118,55 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::post('upload-photo-profile','UsersController@uploadPhotoProfile')->name('uploadPhotoProfile');
       /*end*/
 
-     //payuments
+     //payuments 
     /*-- skip --*/
     
     // paypal IPN
 Route::post('/paypal/ipn','ProductsController@ipnPaypal'); 
 
 Route::group(['middleware' => ['adminlogin']], function() { 
+      
       Route::prefix('/')->group(function() {
             Route::get('/admin/dashboard','DashboardController@index');;
-        });
+      });
 
       Route::get('/admin/profile-role','AdminController@profileRole');
       Route::get('/admin/settings','AdminController@settings');
       Route::get('/admin/check-pwd','AdminController@chkPassword'); // matrix from falidate
       Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
 
-      //  Categories Route (Admin)
-      Route::match(['get','post'],'/admin/add-categories','CategoryController@addCategory');
-      Route::match(['get','post'],'/admin/edit-category/{id}','CategoryController@editCategory');
-      Route::match(['get','post'],'/admin/delete-category/{id}','CategoryController@deleteCategory');
-      Route::get('/admin/view-categories','CategoryController@viewCategories');
+      Route::prefix('categori')->group(function() {
+            //  Categories Route (Admin)
+            Route::get('/admin','CategoryController@indexCategories');
+            Route::get('/admin/add','CategoryController@addCategory');
+            Route::post('/admin/save','CategoryController@saveCategory');
+            Route::post('/admin/edit','CategoryController@editCategory');
+            Route::post('/admin/update','CategoryController@updateCategory');
+            Route::post('/admin/delete','CategoryController@deleteCategory');
+      });
+
+      Route::prefix('production')->group(function() {
+            //  Product Route 
+            Route::get('/admin','ProductAdminController@indexProducts');
+            Route::get('/admin/export-products','ProductAdminController@exportProducts'); 
+            Route::match(['get','post'],'/admin/add','ProductAdminController@addProduct');
+
+            // Products Atributes Route
+            Route::match(['get','post'],'/admin/add-images/{id}','ProductAdminController@addImages');
+            Route::get('/admin/delete-alt-image/{id}','ProductAdminController@deleteAltImage');
+            Route::match(['get','post'],'/admin/add-attribute/{id}','ProductAdminController@addAtributes');
+            Route::match(['get','post'],'/admin/edit-attribute/{id}','ProductAdminController@editAtributes');
+            Route::get('/admin/delete-attribute/{id}','ProductAdminController@deleteAttribute');
+      });
 
       //  Product Route 
-      Route::match(['get','post'],'/admin/add-product','ProductsController@addProduct');
+
       Route::match(['get','post'],'/admin/edit-product/{id}','ProductsController@editProduct');
       Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
       Route::get('/admin/delete-product-video/{id}','ProductsController@deleteProductVideo');
       Route::get('/admin/delete-product/{id}','ProductsController@deleteProduct');
       Route::get('/admin/view-product','ProductsController@viewProducts');
-      Route::get('/admin/export-products','ProductsController@exportProducts'); 
 
-      // Products Atributes Route
-      Route::match(['get','post'],'/admin/add-attribute/{id}','ProductsController@addAtributes');
-      Route::match(['get','post'],'/admin/edit-attribute/{id}','ProductsController@editAtributes');
-      Route::get('/admin/delete-attribute/{id}','ProductsController@deleteAttribute');
-      Route::match(['get','post'],'/admin/add-images/{id}','ProductsController@addImages');
-      Route::get('/admin/delete-alt-image/{id}','ProductsController@deleteAltImage');
 
       // coupon route
       Route::match(['get','post'],'/admin/add-coupon','CouponsController@addCoupon');
@@ -187,16 +199,24 @@ Route::group(['middleware' => ['adminlogin']], function() {
       // Admin order status
       Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
       //  Admin user route  
-      Route::get('admin/view-users','UsersController@viewUsers');
-      Route::get('/admin/export-users','UsersController@exportUsers'); 
       //  Admin User Chart route 
       Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
       //  Admin User country Chart route 
       Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
 
-      // user-group route
-            Route::prefix('/user')->group(function() {
+  
+            Route::prefix('/user')->group(function() 
+            {
+                  // user route in admin 
+                  Route::get('/','UsersAdminController@viewUsers');
 
+                  Route::get('/export-users','UsersAdminController@exportUsers'); 
+                  //  Admin User Chart route 
+                  Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
+                  //  Admin User country Chart route 
+                  Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
+
+                  //  admin user route 
                   Route::get('/admin','AdminController@indexUserAdmin');
                   Route::post('/data-table', ['as' => 'userAdmin.dataTable', 'uses' => 'AdminController@dataTable' ]);
                   Route::get('/admin/add','AdminController@addUserAdmin');
@@ -206,7 +226,7 @@ Route::group(['middleware' => ['adminlogin']], function() {
                   Route::post('/admin/delete','AdminController@deleteUserAdmin');
                   // ajax
                   Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
-
+                  // user-group route
                   Route::get('/group','UserGroupController@indexUserGroup');
                   Route::get('/group/add','UserGroupController@userGroupAdd');
                   Route::post('/group/save','UserGroupController@userGroupSave');
