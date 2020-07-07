@@ -5,39 +5,51 @@ Add Categories | Admin Hsn E-commerce
 
 @section('content')
 
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
+
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
 <div id="loading"></div>
 
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">{{__('backend.categories')}}</a>
-     <a href="{{url('/admin/add-category')}}" class="current">{{__('backend.add_category')}}</a> </div>
+     <a href="{{ $module->permalink.'/add' }}" class="current">{{__('backend.add_category')}}</a> </div>
     <h1>{{__('backend.categories')}}</h1>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
+      @include('layouts.adminLayout.actions.action') 
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
             <h5>{{__('backend.add_category')}}</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/add-categories')}}" name="add_category" id="add_category">
+          <form class="form-horizontal" action="{{ $module->permalink.'/save' }}" id="form-table" method="post" autocomplete="off">
+            @csrf
             {{csrf_field()}}
               <div class="control-group">
-                <label class="control-label">{{__('backend.category_name')}}</label>
+                <label class="control-label required">{{__('backend.category_name')}}</label>
                 <div class="controls">
-                  <input type="text" name="category_name" id="category_name" value="{{old('category_name')}}" required>
+                  <input type="text" name="category_name" id="category_name" value="{{old('category_name')}}" style=" @error('category_name') border-style: solid; border-color: orangered; @enderror ">
+                  @error('category_name') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">{{__('backend.category_level')}}</label>
+                <label class="control-label required">{{__('backend.category_level')}}</label>
                 <div class="controls">
-                   <select name="parent_id" id="" style="width:220px;">
+                   <select name="parent_id" id="" style="width:220px;" @error('parent_id') border-style: solid; border-color: orangered; @enderror ">
                        <option value="0">{{__('backend.main_category')}}</option>
                        @foreach($levels as $val)
                           <option value="{{$val->id}}">{{$val->name}}</option>
                        @endforeach
                    </select>
+                   @error('parent_id') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
@@ -47,9 +59,10 @@ Add Categories | Admin Hsn E-commerce
                 </div>
               </div> 
               <div class="control-group">
-                <label class="control-label">{{__('backend.category_url')}}</label>
+                <label class="control-label required">{{__('backend.category_url')}}</label>
                 <div class="controls">
-                  <input type="text" name="url" id="url" value="{{old('url')}}" required>
+                  <input type="text" name="url" id="url" value="{{old('url')}}" style=" @error('url') border-style: solid; border-color: orangered; @enderror ">
+                  @error('url') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
@@ -70,15 +83,19 @@ Add Categories | Admin Hsn E-commerce
                   <input type="text" name="meta_keywords" id="meta_keywords"  value="{{old('meta_keywords')}}">
                 </div>
               </div>
+
               <div class="control-group">
-                <label class="control-label">{{__('backend.enable')}}</label>
                 <div class="controls">
-                  <input type="checkbox" name="status" id="status" value="1">
+                  <label class="control-input-content"> {{__('backend.enable')}} 
+                      <div class="switch">
+                          <input type="checkbox" name="status" id="status" value="1" class="toggle-switch-checkbox toggle-switch-primary">
+                          <span class="slider round"></span>
+                      </div>
+                  </label>
                 </div>
               </div>
-              <div class="form-actions">
-                <input type="submit" value="{{__('backend.add_category')}}" class="btn btn-success">
-              </div>
+
+              <br>
             </form>
           </div>
         </div>

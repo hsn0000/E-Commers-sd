@@ -23,14 +23,14 @@ use Carbon\Carbon;
    @include('layouts.adminLayout.alert.msg_error')
 @endif
 
+
+<div id="loading"></div>
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>{{__('backend.home')}}</a> <a href="{{ $module->permalink }}">User Admin</a>
             <a href="{{ $module->permalink }}" class="current">View User Admin</a> </div>
         <h1>User Admin</h1>
     </div>
-
-    <div id="loading"></div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
@@ -62,7 +62,6 @@ use Carbon\Carbon;
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @php $no = 1; @endphp  
                                     @foreach($data_table as $key => $val)
                                         <tr class="">
                                             <th scope="row" style="text-align:center;">

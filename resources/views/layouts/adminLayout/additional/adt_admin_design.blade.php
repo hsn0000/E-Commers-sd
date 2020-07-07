@@ -1,5 +1,10 @@
 <script>
 $(document).ready(function() {
+    /*
+        select
+    */ 
+    $('.DataTables_sort_icon, .css_right ui-icon, .ui-icon-triangle-1-n').remove()
+
     /*Admin Roles*/ 
     $("#type").change(function() {
         var type = $("#type").val();
@@ -309,8 +314,7 @@ $(document).ready(function() {
     // delete Alternate Images
     function deleteAltImg(event) {
 
-    var id = $(event).attr('rel');
-    var deleteFunction = $(event).attr('rel1');
+    var id = $(event).attr('rel'),link=$(event).attr('link'),deleteFunction = $(event).attr('rel1');
 
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -336,7 +340,7 @@ $(document).ready(function() {
                 "{{__('validation.success')}}",
             )
 
-            window.location.href = "/admin/" + deleteFunction + "/" + id;
+            window.location.href = link+deleteFunction+id;
 
         } else if (
             /* Read more about handling dismissals below */
@@ -362,6 +366,20 @@ $(document).ready(function() {
       var id = $("#idnewsleter").val()
       window.location.href ="/admin/delete-newslatter-emai/"+id;
   }   
+
+    /*
+        select
+    */   
+    function checkInputValue(e) {
+        id = e.id
+        $(".check_usergroup").prop('checked', false)
+        $("#"+id).prop('checked', true)
+    }
+
+
+    function radioNetral() {
+        $(".check_usergroup").prop('checked', false);
+    }
 
 
 </script>

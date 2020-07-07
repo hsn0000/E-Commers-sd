@@ -48,7 +48,7 @@ class PageModel extends Model
         }
 
         $query->where(['mod.published' => 'y']);
-    
+
         return $query;
     }
 

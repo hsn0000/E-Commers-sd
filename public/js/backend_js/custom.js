@@ -85,7 +85,7 @@ $(function(){
 
 
     $('.actions > .btn-save').click(function(){
-        var $this=$(this),form=$('#form-data');
+        var $this=$(this),form=$('#form-table');
         form.submit();
     });
 
@@ -170,6 +170,63 @@ $(function(){
     });
 
 
+    $('.action > .btn-view').click(function() {
+        var id = $('.child-check:checked').attr('id')
+        if($('.child-check:checked').length == 0) {
+            if($('.child-check:checked').length == 0){
+                new PNotify({
+                    title: ' Caution !',
+                    text: 'Please select at least one data for process',
+                    type: 'warning',
+                    icon: 'icon icon-exclamation-sign'
+                });
+                return
+            } 
+        }
+        var ids = id.split("-")
+        $('.action > .btn-view').attr('href','#myModal'+ids[1])
+        return
+    })
+
+
+    $('.action > .btn-add-image').click(function() {
+        var id = $('.child-check:checked').attr('id'),$this=$(this),link=$this.data('link');
+        if($('.child-check:checked').length == 0) {
+            if($('.child-check:checked').length == 0){
+                new PNotify({
+                    title: ' Caution !',
+                    text: 'Please select at least one data for process',
+                    type: 'warning',
+                    icon: 'icon icon-exclamation-sign'
+                });
+                return
+            } 
+        }
+        var ids = id.split("-")
+        window.location.href = link+ids[1]
+        return
+    })
+
+
+    $('.action > .btn-add-attribute').click(function() {
+        var id = $('.child-check:checked').attr('id'),$this=$(this),link=$this.data('link');
+        if($('.child-check:checked').length == 0) {
+            if($('.child-check:checked').length == 0){
+                new PNotify({
+                    title: ' Caution !',
+                    text: 'Please select at least one data for process',
+                    type: 'warning',
+                    icon: 'icon icon-exclamation-sign'
+                });
+                return
+            } 
+        }
+        var ids = id.split("-")
+        window.location.href = link+ids[1]
+        return
+    })
+
+
     $('.input-daterange').datepicker({
         format: "mm-yyyy",
         startDate: "-1m",
@@ -250,4 +307,39 @@ $(function(){
             $('.main-check').prop('checked',false);
         }
     });
+
+
+    /*
+        Add atribute multiple upload
+    */ 
+	var maxField = 10; //Input fields increment limitation
+	var addButton = $('.add_button'); //Add button selector
+	var wrapper = $('.field_wrapper'); //Input field wrapper
+	var fieldHTML = '<div><div class="control-group"><label class="control-label"></label><input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width:130px; margin:7px 0;" required/><input type="text" name="size[]" id="size" value="" placeholder="Size" style="width:130px; margin:7px 3px;" required/><input type="text" class="price-input-Rp" name="price[]" id="price" value="" placeholder="Price" style="width:130px; margin:7px 0;" required/><input type="text" class="numeric" name="stock[]" id="stock" value="" placeholder="Stock" style="width:130px; margin:7px 3px;" required/><a href="javascript:void(0);" class="remove_button"><i class="icon-minus" style="margin: 0 0 0 10px;"></i></a></div></div></div>'; //New input field html 
+	var x = 1; //Initial field counter is 1
+	
+	//Once add button is clicked
+	$(addButton).click(function()
+	{
+		//Check maximum number of input fields
+		if(x < maxField){ 
+			x++; //Increment field counter
+			$(wrapper).append(fieldHTML); //Add field html
+		}
+	});	
+	//Once remove button is clicked
+	$(wrapper).on('click', '.remove_button', function(e){
+		e.preventDefault();
+		$(this).parent('div').remove(); //Remove field html
+		x--; //Decrement field counter
+    });
+    
+    /*
+        end
+    */ 
+
+
+
 });
+
+

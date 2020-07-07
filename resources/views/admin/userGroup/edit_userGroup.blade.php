@@ -36,7 +36,7 @@ Edit User Group | Admin Hsn E-commerce
           </div>
           <div class="widget-content nopadding">
 
-          <form class="form-horizontal" action="{{ $module->permalink.'/update' }}" id="form-data" method="post" autocomplete="off">
+          <form class="form-horizontal" action="{{ $module->permalink.'/update' }}" id="form-table" method="post" autocomplete="off">
             @csrf
             <div class="control-group">
                 <label for="" class="control-label required">Group Name</label>

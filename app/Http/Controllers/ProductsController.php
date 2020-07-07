@@ -37,87 +37,6 @@ class ProductsController extends Controller
         // sas
     }
 
-    public function addProduct(Request $request) 
-    {
-        if(Session::get('adminDetails')['products_access'] == 0) {
-            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
-        if($request->isMethod('post')) 
-        {
-            $data = $request->all();
-            $price = str_replace(["Rp",","],"",$data['price']);
-
-            if(empty($data['category_id'])) 
-            {
-                return \redirect()->back()->with('flash_message_error','under_category_is_missing'); 
-            }
-
-            $product = new Product;
-            $product->category_id = $data['category_id'];
-            $product->product_name = $data['product_name'];
-            $product->product_code = $data['product_code'];
-            $product->product_color = $data['product_color'];
-            $product->description = $data['description'] ?? "";
-            $product->sleeve = $data['sleeve'] ?? "";
-            $product->pattern = $data['pattern'] ?? "";
-            $product->care = $data['care'] ?? "";
-            $product->price = $price;
-            $product->weight = $data['weight'] ?? "";
-         /* upload image */
-         if($request->hasFile('image'))
-         {
-             $image_tmp = $data['image'];
-         
-             if($image_tmp->isValid()) 
-             {
-                $extension = $image_tmp->getClientOriginalExtension();
-                $filename = rand(111,99999).'.'.$extension;
-                $large_image_path = 'images/backend_images/products/large/'.$filename;
-                $medium_image_path = 'images/backend_images/products/medium/'.$filename;
-                $small_image_path = 'images/backend_images/products/small/'.$filename;
-                // resize image
-                Image::make($image_tmp)->save($large_image_path);
-                Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                Image::make($image_tmp)->resize(300,300)->save($small_image_path);
-                // storage image name in product table
-                $product->image = $filename;
-             }
-            
-         }
-
-        /* upload vidio */  
-        if($request->hasFile('video')) {
-            $video_tmp = $data['video'];
-            $video_name = $video_tmp->getClientOriginalName();
-            $video_patch = 'videos/';
-            $video_tmp->move($video_patch,$video_name);
-            $product->video = $video_name;
-        }
-
-         $product->status = $data['status']  ?? 0;
-         $product->feature_item = $data['feature_item'] ?? 0;
-         $product->save();
-         //  return \redirect()->back()->with('flash_message_success','Product has been added successfully'); 
-        return \redirect('/admin/view-product')->with('flash_message_success','product_has_been_added_successfully'); 
-
-        }
-      // Categories dropdown star 
-        $categories = Category::where(['parent_id' => 0])->get();
-        $categories_dropdown = "<option selected disabled>Select</option>"; 
-        foreach($categories as $cat) 
-        {
-            $categories_dropdown .= "<option value='".$cat->id."'>".$cat->name."</option>";
-            $sub_categories = Category::where(['parent_id'=>$cat->id])->get();
-            foreach($sub_categories as $sub_cat) 
-            {
-                $categories_dropdown .= "<option value='".$sub_cat->id."'>&nbsp;--&nbsp;".$sub_cat->name."</option>";
-            }
-        }
-
-             return view('admin.products.add-product')->with(compact('categories_dropdown'));
-    }
-
-   
     public function editProduct(Request $request, $id=null)
     {   
         if(Session::get('adminDetails')['products_access'] == 0) {
@@ -321,156 +240,6 @@ class ProductsController extends Controller
         return view('admin.products.view_products')->with(\compact('products'));
     }
 
-
-    public function addAtributes(Request $request, $id=null)
-    {
-        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
-        // $productDetails = \json_decode(\json_encode($productDetails));
-        if($request->isMethod('post'))
-        {
-              $data = $request->all();
-         
-           foreach($data['sku'] as $key => $val)
-           {
-               if(!empty($val))
-               {
-                //    SKU Check 
-                $attrCountSKU = ProductsAttribute::where('sku',$val)->count();
-                if($attrCountSKU > 0 )
-                {
-                    return redirect('/admin/add-attribute/'.$id)->with('flash_message_error','sku_already_exists');
-                }
-                // Size Check
-                $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
-                if($attrCountSize > 0)
-                {
-                    return redirect('/admin/add-attribute/'.$id)->with('flash_message_error','"'.$data['size'][$key].'" SIZE Already Exists For This Product, Please Add Another SIZE. !');
-                }
-
-                   $attribute = new ProductsAttribute;
-                   $attribute->sku = $val;
-                   $attribute->product_id = $id;
-                   $attribute->size = $data['size'][$key];
-                   $attribute->price = $data['price'][$key];
-                   $attribute->stock = $data['stock'][$key];
-                   $attribute->save();
-               }
-           }
-
-           return redirect('/admin/add-attribute/'.$id)->with('flash_message_success','product_attributes_has_been_added');
-        }
-        // dd($productDetails);
-        return view('admin.products.add_attributes')->with(\compact('productDetails'));
-
-    }
-
-
-    public function editAtributes(Request $request, $id = null)
-    {
-        if(Session::get('adminDetails')['products_access'] == 0) {
-            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
-      if($request->isMethod('post'))
-      {
-         $data = $request->all();
-         foreach($data['idAttr'] as $key => $attr )
-         {
-             ProductsAttribute::where(['id'=>$data['idAttr'][$key]])->update([
-                 'price' => $data['price'][$key],
-                 'stock' => $data['stock'][$key]
-             ]);
-         }
-         return redirect()->back()->with('flash_message_success','product_attribute_has_been_update');
-      }
-
-    }
-
-
-    public function deleteAttribute($id=null)
-    {
-        if(Session::get('adminDetails')['products_access'] == 0) {
-            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
-        ProductsAttribute::where(['id' => $id])->delete();
-        return redirect()->back()->with('flash_message_success','attribute_has_been_deleted');
-    }
-
-
-    public function addImages(Request $request, $id=null)
-    {
-        if(Session::get('adminDetails')['products_access'] == 0) {
-            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
-        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
-        // $productDetails = \json_decode(\json_encode($productDetails));
-        if($request->isMethod('post'))
-        {
-           // add images
-           $data = $request->all();
-
-          if($request->hasFile('image'))
-          {
-             $files = $request->file('image');
-            //  dd($request->file('image'));
-              foreach($files as $file)
-              {
-                    // upload image after resize 
-                  $pimage = new ProductsImage;
-                  $extension = $file->getClientOriginalExtension();
-                  $filename = rand(111,99999).'.'.$extension;
-                  $large_image_patch = 'images/backend_images/products/large/'.$filename;
-                  $medium_image_patch = 'images/backend_images/products/medium/'.$filename;
-                  $small_image_patch = 'images/backend_images/products/small/'.$filename;
-                  Image::make($file)->save($large_image_patch);
-                  Image::make($file)->resize(600,600)->save($medium_image_patch);
-                  Image::make($file)->resize(300,300)->save($small_image_patch);
-                // storage image name in product table
-                  $pimage->image = $filename;
-                  $pimage->product_id = $data['product_id'];
-                  $pimage->save();
-              }
-          }
-          return redirect('/admin/add-images/'.$id)->with('flash_message_success','product_image_has_ben_added');
-        }
-        $productsImages = ProductsImage::where(['product_id' => $id])->get();
-        // dd($productDetails);
-        return view('admin.products.add_images')->with(\compact('productDetails','productsImages'));
-
-    }
-
-    
-    public function deleteAltImage($id=null)
-    {
-        if(Session::get('adminDetails')['products_access'] == 0) {
-            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module !');
-         }
-        // get product image nama
-        $productImage = ProductsImage::where(['id' => $id])->first();
-        // get product image patch
-        $large_image_patch = 'images/backend_images/products/large/';
-        $medium_image_patch = 'images/backend_images/products/medium/';
-        $small_image_patch = 'images/backend_images/products/small/';
-        // Delete large image if not exist folder
-        if(\file_exists($large_image_patch.$productImage->image))
-        {
-            \unlink($large_image_patch.$productImage->image);
-        }
-         // Delete medium image if not exist folder
-         if(\file_exists($medium_image_patch.$productImage->image))
-         {
-             \unlink($medium_image_patch.$productImage->image);
-         }
-          // Delete small image if not exist folder
-        if(\file_exists($small_image_patch.$productImage->image))
-        {
-            \unlink($small_image_patch.$productImage->image);
-        }
-        // delete image from product table
-        ProductsImage::where(['id' => $id])->delete();
-
-        return \redirect()->back()->with('flash_message_success','product_image_has_been_deleted');
-    }
-    
 
     public function products($url=null)
     {
@@ -723,7 +492,7 @@ class ProductsController extends Controller
             $product_price = $proPrice->price;
             // get user email
             $user_email = Auth::user()->email;
-            // sert quantity as 1
+            // sert quantity as 1 
             $quantity = 1;
             // get current date
             $created_at = Carbon::now();
@@ -1472,11 +1241,6 @@ class ProductsController extends Controller
         }
         // $data = $request->all();
         // echo "<pre>"; print_r($data); die;
-    }
-
-
-    public  function exportProducts() {
-        return Excel::download(new productsExport,'products.xlsx');
     }
 
 

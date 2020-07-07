@@ -4,77 +4,54 @@ Add Products | Admin Hsn E-commerce
 @endsection
 @section('content')
 
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
+
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
+<div id="loading"></div>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">{{__('backend.products')}}</a>
-     <a href="{{url('/admin/add-category')}}" class="current">{{__('backend.add_product')}}</a> </div>
+     <a href="{{url($module->permalink.'/add')}}" class="current">{{__('backend.add_product')}}</a> </div>
     <h1>{{__('backend.products')}}</h1>
-@if(Session::has('flash_message_success')) 
-  <div id="gritter-item-1" class="gritter-item-wrapper" style="position: fixed;z-index: 500;float: right; right: 14px; top: 55px;">
-     <a href="javascript:" class="closeToast"> <span style="background-color: black; float: right; width: 23px; text-align: center; color: white;"> x </span> </a>
-  <div class="gritter-top">
+
   </div>
-      <div class="gritter-item" style="background: lightseagreen;">
-        <div class="gritter-close" style="display: none;">
-          </div><img src="{{url('images/done.png')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
-            <div class="gritter-with-image">
-              <span class="gritter-title"> <b>Successfully ! </b></span>
-             <p><b> {{__('backend.'.Session::get('flash_message_success'))}} </b></p>
-           </div ><div style="clear:both">
-          </div>
-         </div>
-       <div class="gritter-bottom">
-     </div>
-  </div>
-@endif
-@if(Session::has('flash_message_error')) 
- <div id="gritter-item-1" class="gritter-item-wrapper" style="position: fixed;z-index: 500;float: right; right: 14px; top: 55px;">
-     <a href="javascript:" class="closeToast"> <span style="background-color: black; float: right; width: 23px; text-align: center; color: white;"> x </span> </a>
-  <div class="gritter-top">
-  </div>
-      <div class="gritter-item" style="background: red;">
-        <div class="gritter-close" style="display: none;">
-          </div><img src="{{url('images/fail.jpg')}}" class="gritter-image" style="width: 52px; height: 50px; padding-right: 9px;">
-            <div class="gritter-with-image">
-              <span class="gritter-title"> <b>Failed ! </b></span>
-             <p><b> {{__('backend.'.Session::get('flash_message_error'))}} </b></p>
-           </div ><div style="clear:both">
-          </div>
-         </div>
-       <div class="gritter-bottom">
-     </div>
-  </div>
-@endif
-  </div>
-  <div id="loading"></div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
+      @include('layouts.adminLayout.actions.action')
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
             <h5>{{__('backend.add_product')}}</h5>
           </div>
           <div class="widget-content nopadding">
-            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{url('/admin/add-product')}}" name="add_product" id="add_product" novalidate="novalidate">
-            {{csrf_field()}}
+          <form class="form-horizontal" action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off" novalidate="novalidate" enctype="multipart/form-data" >
+            @csrf
             <div class="control-group">
-                <label class="control-label">{{__('backend.under_category')}} </label>
+                <label class="control-label required">{{__('backend.under_category')}} </label>
                 <div class="controls">
-                   <select name="category_id" id="category_id" style="width:220px;">
-                  <?php echo $categories_dropdown ?>
+                   <select name="category_id" id="category_id" style="width:220px; @error('category_id') border-style: solid; border-color: orangered; @enderror ">
+                    <?php echo $categories_dropdown ?>
                    </select> 
+                   @error('category_id') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">{{__('backend.product_name')}}</label>
+                <label class="control-label required">{{__('backend.product_name')}}</label>
                 <div class="controls">
-                  <input type="text" name="product_name" id="product_name">
+                  <input type="text" name="product_name" id="product_name" style=" @error('product_name') border-style: solid; border-color: orangered; @enderror ">
+                  @error('product_name') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">{{__('backend.product_code')}}</label>
+                <label class="control-label required">{{__('backend.product_code')}}</label>
                 <div class="controls">
-                  <input type="text" name="product_code" id="product_code">
+                  <input type="text" name="product_code" id="product_code" style=" @error('product_code') border-style: solid; border-color: orangered; @enderror ">
+                  @error('product_code') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
@@ -84,15 +61,17 @@ Add Products | Admin Hsn E-commerce
                 </div>
               </div> 
               <div class="control-group">
-                <label class="control-label">{{__('backend.description')}}</label> 
+                <label class="control-label required">{{__('backend.description')}}</label> 
                 <div class="controls">
-                 <textarea name="description" id="description" class="some-textarea span5"  rows="10"></textarea>
+                 <textarea name="description" id="description" class="some-textarea span5"  rows="10" style=" @error('description') border-style: solid; border-color: orangered; @enderror "></textarea>
+                 @error('description') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">{{__('backend.material_care')}}</label> 
+                <label class="control-label required ">{{__('backend.material_care')}}</label> 
                 <div class="controls">
-                 <textarea name="care" id="care" class="some-textarea1 span5"  rows="10"></textarea>
+                 <textarea name="care" id="care" class="some-textarea1 span5"  rows="10" style=" @error('care') border-style: solid; border-color: orangered; @enderror "></textarea>
+                 @error('care') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
@@ -118,21 +97,23 @@ Add Products | Admin Hsn E-commerce
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label ">{{__('backend.price')}}</label>
+                <label class="control-label required ">{{__('backend.price')}}</label>
                 <div class="controls">
-                  <input class="price-input-Rp" type="text" name="price" id="price" placeholder="Rp 0">
+                  <input class="price-input-Rp" type="text" name="price" id="price" placeholder="Rp 0" style=" @error('price') border-style: solid; border-color: orangered; @enderror ">
+                  @error('price') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label ">Weight (g)</label>
                 <div class="controls">
-                  <input class="" type="number" name="weight" id="weight" placeholder="">
+                  <input class="numeric" type="text" name="weight" id="weight" placeholder="">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Avatar</label>
+                <label class="control-label required">Image</label>
                 <div class="controls">
-                  <input type="file" name="avatar" id="avatar">
+                  <input type="file" name="image" id="image" style=" @error('image') border-style: solid; border-color: orangered; @enderror ">
+                  @error('image') {!! required_field($message) !!} @enderror
                 </div>
               </div>
               <div class="control-group">
@@ -153,9 +134,7 @@ Add Products | Admin Hsn E-commerce
                   <input type="checkbox" name="status" id="status" value="1">
                 </div>
               </div>
-              <div class="form-actions">
-                <input type="submit" value="{{__('backend.add_product')}}" class="btn btn-success">
-              </div>
+              <hr>
             </form>
           </div>
         </div>
