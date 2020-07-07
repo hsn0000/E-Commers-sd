@@ -50,7 +50,7 @@
         @endif
         <form id="loginform" class="form-vertical" method="post" action="{{url('admin')}}" style="height: 448px"> {{csrf_field()}}
             <div class="control-group normal_text">
-                <h3 style="color: aqua;">Husin E-comerce Admin</h3>
+                <h3 style="color: aqua;">HSN e-comerce admin</h3>
             </div>
             <div class="control-group">
                 <div class="controls">

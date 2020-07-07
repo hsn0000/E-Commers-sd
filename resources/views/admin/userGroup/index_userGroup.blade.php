@@ -23,16 +23,14 @@ use Carbon\Carbon;
    @include('layouts.adminLayout.alert.msg_error')
 @endif
 
+<div id="loading"></div>
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>{{__('backend.home')}}</a> <a href="{{ $module->permalink }}">User Group</a>
             <a href="{{ $module->permalink }}" class="current">View User Group</a> </div>
         <h1>User Group</h1>
     </div>
-
     @if($get_data->count() > 0)
-
-    <div id="loading"></div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
@@ -46,7 +44,7 @@ use Carbon\Carbon;
                         @csrf
                         <div class="widget-content nopadding">
                             <div class="table-responsive">
-                                <table class="table table-bordered " >
+                                <table class="table table-bordered data-table" >
                                     <thead class="thead-dark">
                                         <tr>
                                             <th rowspan="2" style="vertical-align: middle">
@@ -92,8 +90,8 @@ use Carbon\Carbon;
                                             <td style="text-align:center;">{{ $_roles != null && isset($_roles->alter ) ? count(explode(',', $_roles->alter)) : 0 }}</td>
                                             <td style="text-align:center;">{{ $_roles != null && isset($_roles->drop ) ? count(explode(',', $_roles->drop)) : 0 }}</td>
                                         </tr>
-                                    </tbody>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -110,26 +108,6 @@ use Carbon\Carbon;
 @endsection
 
 @section('script')
-
-<script>
-
-$(document).ready(function() {
-    $('.DataTables_sort_icon, .css_right ui-icon, .ui-icon-triangle-1-n').remove()
-})
-
-
-function checkInputValue(e) {
-    id = e.id
-    $(".check_usergroup").prop('checked', false)
-    $("#"+id).prop('checked', true)
-}
-
-
-function radioNetral() {
-    $(".check_usergroup").prop('checked', false);
-}
-
-</script>
 
 
 @endsection

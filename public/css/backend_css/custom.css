@@ -222,3 +222,23 @@ input:checked + .slider:before {
     background-color: #27a9e3;
     color: #fff;
 } */
+
+.export_ex {
+    float: right;
+    margin-right: 9px;
+    margin-top: 8px;
+}
+
+.center {
+    text-align:center;
+}
+
+.lable-categori {
+    padding: 4px;
+    font-style: oblique;
+    font-size: x-small;
+}
+
+.rounded {
+    border-radius: 55px;
+}

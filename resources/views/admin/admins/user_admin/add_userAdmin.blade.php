@@ -32,7 +32,7 @@ Add User Admin | Admin Hsn E-commerce
           </div>
           <div class="widget-content nopadding">
 
-          <form class="form-horizontal" action="{{ $module->permalink.'/save' }}" id="form-data" method="post" autocomplete="off">
+          <form class="form-horizontal" action="{{ $module->permalink.'/save' }}" id="form-table" method="post" autocomplete="off">
             @csrf
                 <div class="control-group">
                     <label for="" class="control-label required">User Name</label>
