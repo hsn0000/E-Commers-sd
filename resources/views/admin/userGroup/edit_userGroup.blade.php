@@ -31,23 +31,24 @@ Edit User Group | Admin Hsn E-commerce
       <div class="span12">
       @include('layouts.adminLayout.actions.action')
         <div class="widget-box"> 
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>{{ $page_title }}</h5>
-          </div>
-          <div class="widget-content nopadding">
-
-          <form class="form-horizontal" action="{{ $module->permalink.'/update' }}" id="form-table" method="post" autocomplete="off">
-            @csrf
-            <div class="control-group">
-                <label for="" class="control-label required">Group Name</label>
-                    <div class="controls">
-                        <input type="text" name="group_name" class="form-control" value="{{ old('group_name') ?: $data_edit->gname }}" style=" @error('group_name') border-style: solid; border-color: orangered; @enderror ">
-                        @error('group_name') {!! required_field($message) !!} @enderror
+          <div class="responsif-costume">
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+              <h5>{{ $page_title }}</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <form class="form-horizontal" action="{{ $module->permalink.'/update' }}" id="form-table" method="post" autocomplete="off">
+                @csrf
+                <div class="control-group">
+                    <label for="" class="control-label required">Group Name</label>
+                        <div class="controls">
+                            <input type="text" name="group_name" class="form-control" value="{{ old('group_name') ?: $data_edit->gname }}" style=" @error('group_name') border-style: solid; border-color: orangered; @enderror ">
+                            @error('group_name') {!! required_field($message) !!} @enderror
+                        </div>
                     </div>
-                </div>
-                {!! $page->module_list(0, '', $data_edit->roles ? json_decode($data_edit->roles) : null ) !!}
-                <br>
-            </form>
+                    {!! $page->module_list(0, '', $data_edit->roles ? json_decode($data_edit->roles) : null ) !!}
+                    <br>
+              </form>
+            </div>
           </div>
         </div>
       </div>

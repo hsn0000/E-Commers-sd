@@ -29,6 +29,7 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
             // console.log(JSON.stringify(data))
+
             /*popup notification*/ 
             if(data.to == my_id) {
             PNotify.desktop.permission(); 
@@ -81,7 +82,7 @@
                                     },
                                     cache:false,
                                     success: function(resp) {
-                                        console.log(resp)
+                                        // console.log(resp)
                                     }, error: function(err) {
                                         console.log("error")
                                     }
@@ -259,7 +260,7 @@
                 data: dataNotificationAdmMessage,
                 cache: false,
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                 },
                 error: function(jqXHR, status, err) {},
                 complete: function() {
@@ -316,7 +317,7 @@
                     cache: false,
                     processData: false,
                     success: function(data) {
-                        console.log(data)
+                        // console.log(data)
                     },
                     error: function(jqXHR, status, err) {},
                     complete: function() {
@@ -362,7 +363,7 @@
         var to = parseInt(data[1])
 
         sessionStorage.setItem("fromNotmsgAdm",from);
-        window.location.href = "/admin/messages"
+        window.location.href = "/messages/admin/messages"
     }
 
     </script>

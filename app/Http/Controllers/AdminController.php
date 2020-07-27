@@ -53,7 +53,7 @@ class AdminController extends Controller
     public function login(Request $request) {
         if($request->isMethod('post')) {
             $data = $request->input();
-            $adminCount = User::where('name', $data['username'])->where('password',md5($data['password']), ['status'=>1])->where(['admin' => 1])->count();
+            $adminCount = User::where('name', $data['username'])->where('password',md5($data['password']))->where(['status'=>1])->where(['admin' => 1])->count();
 
             if($adminCount > 0) {
 
@@ -83,47 +83,6 @@ class AdminController extends Controller
         return view('admin.admin_login'); 
     }
 
-
-    public function profileRole()
-    {
-        $adminRole = User::where('name', Session::get('adminSession'))->where('admin', 1)->where('status', 1)->first();
-        return view('admin.profile_role')->with(\compact('adminRole'));
-    }
-
-    
-    public function settings() 
-    {
-        $adminDetails = Admin::where('username', Session::get('adminSession'))->first();
-        return view('admin.settings')->with(\compact('adminDetails'));
-    }
-
-    public function chkPassword(Request $request) {
-         $data = $request->all();
-         $current_password = $data['current_pwd'];
-         $adminCount = Admin::where(['username' => Session::get('adminSession'), 'password' =>\md5( $current_password)])->count();
-         if($adminCount == 1) {
-             echo "true"; die;
-         }else{
-             echo "false"; die;
-         }
-    }
-
-    public function updatePassword(Request $request) {
-
-        if($request->isMethod('post')) {
-            $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
-            $current_password = $data['current_pwd'];
-            $adminCount = Admin::where(['username' => Session::get('adminSession'), 'password' => \md5($current_password)])->count();
-            if($adminCount == 1) {
-                $password = md5($data['new_pwd']);
-                Admin::where('username', Session::get('adminSession'))->update(['password'=>$password]);
-                return redirect('/admin/settings')->with('flash_message_success','password_update_successfully');
-            }else{
-                return redirect('/admin/settings')->with('flash_message_error','incorrect_current_password');
-            }
-        }
-    }
 
     public function logout() {
       
@@ -156,35 +115,6 @@ class AdminController extends Controller
 
     public function indexUserAdmin(Builder $builder) {
         $this->page->blocked_page($this->mod_alias);
-
-        // $builder->ajax([
-        //     'url' => route('userAdmin.dataTable'),
-        //     'type' => 'post',
-        //     'autowidth' => true,
-        //     'data' => ['_token' => csrf_token()]
-        // ]);
-
-        // if($this->page->fetch_role('alter', $this->module) == true || $this->page->fetch_role('drop', $this->module) == true)
-        // {
-        //     $colomns = [
-        //         ['data' => 'checkbox', 'render' => "'<div class=\"checkbox\"><input type=\"checkbox\" class=\"checkbox__input child-check\" id=\"child-'+full.id+'\" name=\"data_id['+full.id+']\"><label class=\"checkbox__label\" for=\"child-'+full.id+'\">&nbsp;</label></div>'",'title' => '<div class="checkbox"><input type="checkbox" class="checkbox__input main-check" id="main-check-top"><label class="checkbox__label" for="main-check-top">&nbsp;</label></div>', 'footer' => '<div class="checkbox"><input type="checkbox" class="checkbox__input main-check" id="main-check-bottom"><label class="checkbox__label" for="main-check-bottom">&nbsp;</label></div>', 'style' => 'width:5%', 'orderable' => FALSE, 'searchable' => FALSE]
-        //     ];
-        // }
-        // else 
-        // {
-        //     $colomns = [
-        //         ['data' => 'no', 'title' => '#', 'footer' => '#']
-        //     ];
-        // }
-
-        // $colomns = array_push_multidimension($colomns, [
-        //     ['data' => 'name', 'title' => 'Name', 'footer' => 'Name', 'render' => "data+(full.email?'<small class=\"form-text text-muted\">'+full.email+'</small>':'')" ],
-        //     ['data' => 'gname', 'title' => 'Group', 'footer' => 'Group'],
-        //     ['default_content' => NULL, 'title' => 'Status', 'footer' => 'Status', 'render' => "$('<span/>').html(full.active).text()"],
-        //     ['data' => 'join_date', 'title' => 'Created', 'footer' => 'Created', 'render' => "data+(full.updated?'<small class=\"form-text text-muted\">Updated : '+full.updated+'</small>':'')"]
-        // ]);
-
-        // $html = $builder->columns($colomns);
 
         $get_table = $this->query->get_user(session('session_guid') > 1 ? ['u.guid' => session('session_guid')] : "");
 

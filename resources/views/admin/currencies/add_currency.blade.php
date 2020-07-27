@@ -5,77 +5,74 @@ Add Currencies | Admin Hsn E-commerce
 
 @section('content')
 
-<div id="loading"></div>
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
 
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
+<div id="loading"></div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="#">Currencies</a>
-     <a href="{{url('/admin/add-category')}}" class="current">Add Currency</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{__('backend.home')}}</a> <a href="{{$module->permalink}}">Currencies</a>
+     <a href="#" class="current">Add Currency</a> </div>
     <h1>Currencies</h1>
-    @if(Session::has('flash_message_error'))
-    <div class="alert alert-dark alert-block"
-        style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong> {{__('backend.'.Session::get('flash_message_error'))}}</strong>
-    </div>
-    @endif
-    @if(Session::has('flash_message_drop'))
-    <div class="alert alert-success alert-block"
-        style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong> {{__('backend.'.Session::get('flash_message_drop'))}}</strong>
-    </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-    <div class="alert alert-dark alert-block"
-        style="background-color:forestgreen; color:white; width:21%; margin-left:20px;">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong>{{__('backend.'.Session::get('flash_message_success'))}}</strong>
-    </div>
-    @endif
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
+      @include('layouts.adminLayout.actions.action') 
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Add Currency</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{url('/admin/add-currencies')}}" name="add_currencies" id="add_currencies">
-            {{csrf_field()}}
-            <div class="control-group">
-                <label class="control-label">Currency Name</label>
-                <div class="controls">
-                  <input type="text" name="currency_name" id="currency_name" value="{{old('currency_name')}}" required>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Currency Simbol</label>
-                <div class="controls">
-                  <input type="text" name="currency_simbol" id="currency_simbol" value="{{old('currency_simbol')}}" required>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Currency Code</label>
-                <div class="controls">
-                  <input type="text" name="currency_code" id="currency_code" value="{{old('currency_code')}}" required>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Exchange Rate</label>
-                <div class="controls">
-                  <input type="text" class="price-input" name="exchange_rate" id="exchange_rate" value="{{old('exchange_rate')}}" required>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.enable')}}</label>
-                <div class="controls">
-                  <input type="checkbox" name="status" id="status" value="1">
-                </div>
-              </div>
-              <div class="form-actions">
-                <input type="submit" value="Add Currency" class="btn btn-success">
+          <div class="responsif-costume">
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+              <h5>Add Currency</h5>
+            </div>
+            <form class="form-horizontal" action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off" novalidate="novalidate" enctype="multipart/form-data" >
+              @csrf
+              <div class="widget-content nopadding">
+                <div class="control-group">
+                    <label class="control-label required">Currency Name</label>
+                    <div class="controls">
+                      <input type="text" name="currency_name" id="currency_name" value="{{old('currency_name')}}"  style=" @error('currency_name') border-style: solid; border-color: orangered; @enderror ">
+                      @error('currency_name') {!! required_field($message) !!} @enderror
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label required">Currency Simbol</label>
+                    <div class="controls">
+                      <input type="text" name="currency_simbol" id="currency_simbol" value="{{old('currency_simbol')}}"  style=" @error('currency_simbol') border-style: solid; border-color: orangered; @enderror ">
+                      @error('currency_simbol') {!! required_field($message) !!} @enderror
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label required">Currency Code</label>
+                    <div class="controls">
+                      <input type="text" name="currency_code" id="currency_code" value="{{old('currency_code')}}"  style=" @error('currency_code') border-style: solid; border-color: orangered; @enderror ">
+                      @error('currency_code') {!! required_field($message) !!} @enderror
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label required">Exchange Rate</label>
+                    <div class="controls">
+                      <input type="text" class="price-input-Rp" name="exchange_rate" id="exchange_rate" value="{{old('exchange_rate')}}"  style=" @error('exchange_rate') border-style: solid; border-color: orangered; @enderror ">
+                      @error('exchange_rate') {!! required_field($message) !!} @enderror
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="controls">
+                      <label class="control-input-content"> {{__('backend.enable')}} 
+                          <div class="switch">
+                              <input type="checkbox" name="status" id="status" value="1" class="toggle-switch-checkbox toggle-switch-primary">
+                              <span class="slider round"></span>
+                          </div>
+                      </label>
+                    </div>
+                  </div>
+                  <hr>
+            
               </div>
             </form>
           </div>

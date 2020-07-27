@@ -29,6 +29,7 @@ $(document).ready(function() {
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) { 
         // console.log(JSON.stringify(data))
+
         /*popup notification*/ 
         if(data.to == my_id_admin) {
             PNotify.desktop.permission();
@@ -40,7 +41,7 @@ $(document).ready(function() {
                         desktop: true
                     }
                 })).get().click(function() {
-                    window.location.href = "{{URL::to('/admin/messages')}}"
+                    window.location.href = "{{URL::to('/messages/admin/messages')}}"
                 });
         }
         /*end popup notification*/     
@@ -81,7 +82,7 @@ $(document).ready(function() {
                                 },
                                 cache:false,
                                 success: function(resp) {
-                                    console.log(resp)
+                                    // console.log(resp)
                                 }, error: function(err) {
                                     console.log("error")
                                 }
@@ -202,7 +203,7 @@ $(document).ready(function() {
                 data: dataNotificationAdmMessage,
                 cache: false,
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                 },
                 error: function(jqXHR, status, err) {},
                 complete: function() {
@@ -316,7 +317,7 @@ function imageMessage() {
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                 },
                 error: function(jqXHR, status, err) {},
                 complete: function() {
@@ -339,7 +340,7 @@ function imageMessage() {
                 data: dataNotificationAdmMessage,
                 cache: false,
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                 },
                 error: function(jqXHR, status, err) {},
                 complete: function() {

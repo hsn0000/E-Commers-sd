@@ -37,13 +37,13 @@ use Carbon\Carbon;
             <div class="span12">
             @include('layouts.adminLayout.actions.action') 
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                        <h5>View User Group</h5>
-                    </div>
-                    <form action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off">
-                        @csrf
-                        <div class="widget-content nopadding">
-                            <div class="table-responsive">
+                    <div class="responsif-costume">
+                        <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                            <h5>View User Group</h5>
+                        </div>
+                        <form action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off">
+                            @csrf
+                            <div class="widget-content nopadding">
                                 <table class="table table-bordered data-table" >
                                     <thead class="thead-dark">
                                         <tr>
@@ -73,7 +73,7 @@ use Carbon\Carbon;
                                         $_roles = $val->roles ? json_decode($val->roles) : null;
                                     @endphp         
                                         <tr class="">
-                                            <th scope="row" style="text-align:center;">
+                                            <th scope="row" class="center">
                                             @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input check_usergroup child-check" id="{{ 'child-'.$val->guid }}" name="data_id[{{ $val->guid }}]" onclick="checkInputValue(this)">
@@ -83,19 +83,19 @@ use Carbon\Carbon;
                                                 {{ ++$key }}
                                             @endif
                                             </th>
-                                            <td style="text-align:center;">{{$val->gname}}</td>
-                                            <td style="text-align:center;">{{ $query->get_total_user_group($val->guid) }}</td>
-                                            <td style="text-align:center;">{{ $_roles != null && isset($_roles->view) ? count(explode(',', $_roles->view)) : 0 }}</td>
-                                            <td style="text-align:center;">{{ $_roles != null && isset($_roles->create ) ? count(explode(',', $_roles->create)) : 0 }}</td>
-                                            <td style="text-align:center;">{{ $_roles != null && isset($_roles->alter ) ? count(explode(',', $_roles->alter)) : 0 }}</td>
-                                            <td style="text-align:center;">{{ $_roles != null && isset($_roles->drop ) ? count(explode(',', $_roles->drop)) : 0 }}</td>
+                                            <td class="center">{{$val->gname}}</td>
+                                            <td class="center">{{ $query->get_total_user_group($val->guid) }}</td>
+                                            <td class="center">{{ $_roles != null && isset($_roles->view) ? count(explode(',', $_roles->view)) : 0 }}</td>
+                                            <td class="center">{{ $_roles != null && isset($_roles->create ) ? count(explode(',', $_roles->create)) : 0 }}</td>
+                                            <td class="center">{{ $_roles != null && isset($_roles->alter ) ? count(explode(',', $_roles->alter)) : 0 }}</td>
+                                            <td class="center">{{ $_roles != null && isset($_roles->drop ) ? count(explode(',', $_roles->drop)) : 0 }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

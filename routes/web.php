@@ -118,11 +118,11 @@ Route::group(['middleware' => ['frontlogin']], function() {
       Route::post('upload-photo-profile','UsersController@uploadPhotoProfile')->name('uploadPhotoProfile');
       /*end*/
 
-     //payuments 
-    /*-- skip --*/
-    
-    // paypal IPN
-Route::post('/paypal/ipn','ProductsController@ipnPaypal'); 
+      //payuments 
+      /*-- skip --*/
+      
+      // paypal IPN
+      Route::post('/paypal/ipn','ProductsController@ipnPaypal'); 
 
 Route::group(['middleware' => ['adminlogin']], function() { 
       
@@ -130,10 +130,14 @@ Route::group(['middleware' => ['adminlogin']], function() {
             Route::get('/admin/dashboard','DashboardController@index');;
       });
 
-      Route::get('/admin/profile-role','AdminController@profileRole');
-      Route::get('/admin/settings','AdminController@settings');
-      Route::get('/admin/check-pwd','AdminController@chkPassword'); // matrix from falidate
-      Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
+      Route::prefix('profile-usr')->group(function() {
+            // profile route 
+            Route::get('/admin','ProfileUserAdminController@profileRole');
+            Route::get('/admin/settings','ProfileUserAdminController@settings');
+
+            Route::get('/admin/check-pwd','ProfileUserAdminController@chkPassword'); // matrix from falidate
+            Route::match(['get','post'],'/admin/update-pwd','ProfileUserAdminController@updatePassword');
+      });
 
       Route::prefix('categori')->group(function() {
             //  Categories Route (Admin)
@@ -145,11 +149,16 @@ Route::group(['middleware' => ['adminlogin']], function() {
             Route::post('/admin/delete','CategoryController@deleteCategory');
       });
 
-      Route::prefix('production')->group(function() {
+      Route::prefix('production')->group(function() { 
             //  Product Route 
             Route::get('/admin','ProductAdminController@indexProducts');
-            Route::get('/admin/export-products','ProductAdminController@exportProducts'); 
             Route::match(['get','post'],'/admin/add','ProductAdminController@addProduct');
+            Route::match(['get','post'],'/admin/edit','ProductAdminController@editProduct');
+            Route::post('/admin/update','ProductAdminController@updateProduct');
+            Route::get('/admin/delete-product-image/{id}','ProductAdminController@deleteProductImage');
+            Route::get('/admin/delete-product-video/{id}','ProductAdminController@deleteProductVideo');
+            Route::post('/admin/delete','ProductAdminController@deleteProduct');
+            Route::get('/admin/export-products','ProductAdminController@exportProducts'); 
 
             // Products Atributes Route
             Route::match(['get','post'],'/admin/add-images/{id}','ProductAdminController@addImages');
@@ -159,120 +168,146 @@ Route::group(['middleware' => ['adminlogin']], function() {
             Route::get('/admin/delete-attribute/{id}','ProductAdminController@deleteAttribute');
       });
 
-      //  Product Route 
+      Route::prefix('coupons')->group(function() {
+            // coupon route
+            Route::get('/admin','CouponsController@indexCoupons');
+            Route::match(['get','post'],'/admin/add','CouponsController@addCoupon');
+            // ajax 
+            Route::post('/admin/generate-coupons','CouponsController@generateCoupons');
+            
+            Route::match(['get','post'],'/admin/edit','CouponsController@editCoupon');
+            Route::post('/admin/update','CouponsController@updateCoupons');
+            Route::post('/admin/delete','CouponsController@deleteCoupons');   
+      });
 
-      Route::match(['get','post'],'/admin/edit-product/{id}','ProductsController@editProduct');
-      Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
-      Route::get('/admin/delete-product-video/{id}','ProductsController@deleteProductVideo');
-      Route::get('/admin/delete-product/{id}','ProductsController@deleteProduct');
-      Route::get('/admin/view-product','ProductsController@viewProducts');
-
-
-      // coupon route
-      Route::match(['get','post'],'/admin/add-coupon','CouponsController@addCoupon');
-      Route::match(['get','post'],'/admin/edit-coupon/{id}','CouponsController@editCoupon');
-      Route::get('/admin/delete-coupon/{id}','CouponsController@deleteCoupons');
-      Route::get('/admin/view-coupon','CouponsController@viewCoupons');
-
-      // admin banner route
-      Route::match(['get','post'],'/admin/add-banner','BannersController@addBanner');
-      Route::match(['get','post'],'/admin/edit-banner/{id}','BannersController@editBanner');
-      Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner');
-      Route::get('/admin/view-banner','BannersController@viewBanners');
+      Route::prefix('banner')->group(function() {
+            // admin banner route
+            Route::get('/admin','BannersController@indexBanners');
+            Route::match(['get','post'],'/admin/add','BannersController@addBanner');
+            Route::match(['get','post'],'/admin/edit','BannersController@editBanner');
+            Route::post('/admin/update','BannersController@updateBanner');
+            Route::post('/admin/delete','BannersController@deleteBanner');
+      });
       
-      //Admin shipping route
-      Route::match(['get', 'post'],'/admin/add-billboard','BillboardsController@addBillboard');
-      Route::get('/admin/view-billboard','BillboardsController@viewBillboard');
-      Route::match(['get','post'],'/admin/edit-billboard/{id}','BillboardsController@editBillboard');
-      Route::get('/admin/delete-billboard/{id}','BillboardsController@deleteBillboard');
+      Route::prefix('billboard')->group(function() {
+            //Admin billboard route
+            Route::get('/admin','BillboardsController@indexBillboard');
+            Route::match(['get', 'post'],'/admin/add','BillboardsController@addBillboard');
+            Route::match(['get','post'],'/admin/edit','BillboardsController@editBillboard');
+            Route::post('/admin/update','BillboardsController@updateBillboard');
+            Route::post('/admin/delete','BillboardsController@deleteBillboard');
+      });
 
-      // Admin order view route
-      Route::get('admin/view-orders','ProductsController@viewOrders');
-      //  Admin order chart route 
-      Route::get('admin/view-orders-charts','ProductsController@viewOrdersCharts');
-      // Admin order detail route
-      Route::get('admin/view-order/{id}','ProductsController@viewOrderDetails');
-      //     Admin order invoice
-      Route::get('/admin/view-order-invoice/{id}','ProductsController@viewOrderInvoice');
-      //     Admin order pdf invoice
-      Route::get('/admin/view-pdf-invoice/{id}','ProductsController@viewPDFInvoice');
-      // Admin order status
-      Route::post('admin/update-order-status','ProductsController@updateOrderStatus');
-      //  Admin user route  
-      //  Admin User Chart route 
-      Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
-      //  Admin User country Chart route 
-      Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
+      Route::prefix('orders-admin')->group(function() {
+            // Admin order view route
+            Route::get('/admin','OrderController@indexOrders');     
+            // Admin order detail route
+            Route::get('/admin/view-order/{id}','OrderController@viewOrderDetails'); 
+            // Admin order status
+            Route::post('/admin/update-order-status','OrderController@updateOrderStatus');  
+            // Admin order invoice
+            Route::get('/admin/view-order-invoice/{id}','OrderController@viewOrderInvoice'); 
+            // Admin order pdf invoice
+            Route::get('/admin/view-pdf-invoice/{id}','OrderController@viewPDFInvoice');  
+            //  Admin order chart route 
+            Route::get('/admin/view-orders-charts','OrderController@viewOrdersCharts'); 
+      });
 
-  
-            Route::prefix('/user')->group(function() 
-            {
-                  // user route in admin 
-                  Route::get('/','UsersAdminController@viewUsers');
+      Route::prefix('/user')->group(function() 
+      {
+            // user route in admin 
+            Route::get('/','UsersAdminController@viewUsers');
+            //  Admin User Chart & export route 
+            Route::get('/export-users','UsersAdminController@exportUsers'); 
+            Route::get('/view-users-charts','UsersAdminController@viewUsersCharts');
+            Route::get('/view-users-countries-charts','UsersAdminController@viewUsersCountriesCharts');
 
-                  Route::get('/export-users','UsersAdminController@exportUsers'); 
-                  //  Admin User Chart route 
-                  Route::get('admin/view-users-charts','UsersController@viewUsersCharts');
-                  //  Admin User country Chart route 
-                  Route::get('admin/view-users-countries-charts','UsersController@viewUsersCountriesCharts');
+            //  admin user route 
+            Route::get('/admin','AdminController@indexUserAdmin');
+            Route::post('/data-table', ['as' => 'userAdmin.dataTable', 'uses' => 'AdminController@dataTable' ]);
+            Route::get('/admin/add','AdminController@addUserAdmin');
+            Route::post('/admin/save','AdminController@saveUserAdmin');
+            Route::match(['get','post'], '/admin/edit','AdminController@editUserAdmin'); 
+            Route::post('/admin/update','AdminController@updateUserAdmin');
+            Route::post('/admin/delete','AdminController@deleteUserAdmin');
+            // ajax
+            Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
+            // user-group route
+            Route::get('/group','UserGroupController@indexUserGroup');
+            Route::get('/group/add','UserGroupController@userGroupAdd');
+            Route::post('/group/save','UserGroupController@userGroupSave');
+            Route::match(['get', 'post'],'/group/edit','UserGroupController@userGroupEdit');
+            Route::post('/group/update','UserGroupController@userGroupUpdate');
+            Route::post('/group/delete','UserGroupController@userGroupDelete');
+      });
 
-                  //  admin user route 
-                  Route::get('/admin','AdminController@indexUserAdmin');
-                  Route::post('/data-table', ['as' => 'userAdmin.dataTable', 'uses' => 'AdminController@dataTable' ]);
-                  Route::get('/admin/add','AdminController@addUserAdmin');
-                  Route::post('/admin/save','AdminController@saveUserAdmin');
-                  Route::match(['get','post'], '/admin/edit','AdminController@editUserAdmin'); 
-                  Route::post('/admin/update','AdminController@updateUserAdmin');
-                  Route::post('/admin/delete','AdminController@deleteUserAdmin');
-                  // ajax
-                  Route::get('/admin/edit-status-admins','AdminController@editStatusAdmins');
-                  // user-group route
-                  Route::get('/group','UserGroupController@indexUserGroup');
-                  Route::get('/group/add','UserGroupController@userGroupAdd');
-                  Route::post('/group/save','UserGroupController@userGroupSave');
-                  Route::match(['get', 'post'],'/group/edit','UserGroupController@userGroupEdit');
-                  Route::post('/group/update','UserGroupController@userGroupUpdate');
-                  Route::post('/group/delete','UserGroupController@userGroupDelete');
-            });
+      Route::prefix('cms-page')->group(function() {
+            //  admin cms route edit-cms-page 
+            Route::get('/admin','CmsController@indexCmsPage');
+            Route::match(['get','post'],'/admin/add','CmsController@addCmsPage'); 
+            Route::match(['get','post'],'/admin/edit','CmsController@editCmsPage'); 
+            Route::match(['get','post'],'/admin/update','CmsController@updateCmsPage'); 
+            Route::POST('/admin/delete','CmsController@deleteCmsPage');
+      });
 
-      //  admin cms route edit-cms-page 
-      Route::match(['get','post'],'/admin/add-cms-page','CmsController@addCmsPage'); 
-      Route::get('/admin/view-cms-page','CmsController@viewCmsPage');
-      Route::match(['get','post'],'/admin/edit-cms-page/{id}','CmsController@editCmsPage'); 
-      Route::get('/admin/delete-cms-page/{id}','CmsController@deleteCmsPage');
-
-      // admin currency route
-      Route::match(['get','post'],'/admin/add-currencies','CurrencyController@addCurrency'); 
-      Route::match(['get','post'],'/admin/edit-currencies/{id}','CurrencyController@editCurrency'); 
-      Route::get('/admin/view-currencies','CurrencyController@viewCurrency');
-      Route::get('/admin/delete-currencies/{id}','CurrencyController@deleteCurrency');
+      Route::prefix('currencies')->group(function() {
+            // admin currency route
+            Route::get('/admin','CurrencyController@indexCurrency');
+            Route::match(['get','post'],'/admin/add','CurrencyController@addCurrency'); 
+            Route::match(['get','post'],'/admin/edit','CurrencyController@editCurrency'); 
+            Route::match(['get','post'],'/admin/update','CurrencyController@updateCurrencies'); 
+            Route::post('/admin/delete','CurrencyController@deleteCurrency');
+      });
       
-      //  admin shipping charges
-      Route::get('/admin/view-shipping','ShippingController@viewShipping');   
-      Route::match(['get','post'],'/admin/edit-shipping/{id}','ShippingController@editShipping'); 
+      Route::prefix('shipping')->group(function() {
+            //  admin shipping charges
+            Route::get('/admin','ShippingController@indexShipping');  
+            Route::match(['get','post'],'/admin/add','ShippingController@addShipping');  
+            Route::match(['get','post'],'/admin/edit','ShippingController@editShipping'); 
+            Route::post('/admin/update','ShippingController@updateShipping');
+            Route::post('/admin/delete','ShippingController@deleteShipping'); 
+      });
 
-      //  admin newslatter subscriber
-      Route::get('/admin/view-newsletter-subscribers','NewsletterController@viewNewsletterSubscribers');   
-      Route::get('/admin/update-newsletter-status/{id}/{status}','NewsletterController@updateNewsletterStatus');   
-      Route::get('/admin/delete-newslatter-emai/{id}','NewsletterController@deleteNewsletterEmail');
-      /*export*/
-      Route::get(' /admin/export-newsletter-emails','NewsletterController@exportNewsletterEmail');
+      Route::prefix('newsletter-subscribtion')->group(function() {
+            //  admin newslatter subscriber
+            Route::get('/admin','NewsletterController@indexNewsletterSubscribers');
+            // ajax   
+            Route::get('/admin/edit-status-newsletter','NewsletterController@editStatusNewsletter')->name('edit-status-newsletter'); 
+            // end 
+            Route::post('/admin/delete','NewsletterController@deleteNewsletterEmail');
+            /*export*/
+            Route::get('/admin/export-newsletter-emails','NewsletterController@exportNewsletterEmail');
+      });
+ 
+      Route::prefix('news-information')->group(function() {
+            // admin news info
+            Route::get('/admin','NewsInfoController@indexNews')->name('view-news-info');
+            Route::match(['get','post'],'/admin/add','NewsInfoController@addNews');
+            Route::match(['get','post'],'/admin/edit','NewsInfoController@editNews');
+            Route::match(['get','post'],'/admin/update','NewsInfoController@updateNews');
+            Route::post('/admin/delete','NewsInfoController@deleteNews');
+            /*ajax*/ 
+            Route::get('/admin/edit-status-newsinfo','NewsInfoController@editStatusNews');
+            /*end*/
+      }); 
 
-      // admin news info
-      Route::match(['get','post'],'/admin/add-news','NewsInfoController@addNews');
-      Route::match(['get','post'],'/admin/edit-news/{id}','NewsInfoController@editNews');
-      Route::get('/admin/view-news','NewsInfoController@viewNews')->name('view-news-info');
-      Route::get('/admin/delete-news-info/{id}','NewsInfoController@deleteNews');
-      /*ajax*/ 
-      Route::get('/admin/edit-status-newsinfo','NewsInfoController@editStatusNews');
-      /*end*/
-      // admin inquiries users
-      Route::get('/admin/enquiries-list','EnquiriesUsersController@enquiriesList');
-      Route::get('/admin/enquiries-outbox','EnquiriesUsersController@enquiriesOutbox');
-      Route::get('/admin/delete-enquiries-users/{id}','EnquiriesUsersController@deleteEnquiriesUsers');
+      Route::prefix('inquiries')->group(function() {
+            // admin inquiries users
+            Route::get('/admin','EnquiriesUsersController@indexInquiries');
+            Route::get('/admin/delete','EnquiriesUsersController@deleteEnquiriesUsers');
+            Route::get('/admin/enquiries-outbox','EnquiriesUsersController@enquiriesOutbox');
+      });
+
+      Route::prefix('messages')->group(function() {
+            // admin chat route
+            Route::match(['get','post'],'/admin/messages','MessagesController@messages')->name('adminMessages');
+      });
+
+      Route::prefix('summary-order')->group(function() {
+            Route::match(['get','post'],'/admin','SummaryOrderController@index');
+      });
 
       // admin chat route
-      Route::match(['get','post'],'/admin/messages','MessagesController@messages')->name('adminMessages');
       Route::get('/admin/message/{id}','MessagesController@getMessage')->name('message');
       Route::post('/admin/message','MessagesController@sendMessage');
       // ajax upload img

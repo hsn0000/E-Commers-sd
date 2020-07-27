@@ -48,12 +48,14 @@
     @php
     use Carbon\Carbon;
     @endphp
+
+    <div id="loading"></div>
     <div class="container" id="con">
         <div class="row">
             @if(empty($hello))
             <div class="col-xs-12" style=" background: currentColor; padding-bottom: 19px;">
                 <div class="headajah" style=" float: right;">
-                    <a href="{{ url('admin/view-pdf-invoice/'.$orderDetails->id) }}" class="btn btn-danger btn-mini" style="margin-top: 5%;">
+                    <a href="{{ url($module->permalink.'/view-pdf-invoice/'.$orderDetails->id) }}" class="btn btn-danger btn-mini" style="margin-top: 5%;">
                         <i class="icon-eye-open" style=""></i>Export PDF Invoice</a>
                 </div>
             </div>
