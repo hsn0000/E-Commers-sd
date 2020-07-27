@@ -1,89 +1,10 @@
 <?php $url = url()->current(); ?>
 
-
 <!--sidebar-menu-->
 <div id="sidebar"><a href="{{url('/admin/dashboard')}}" class="visible-phone"><i class="icon icon-home"></i>{{__('backend.dashboard')}}</a>
   <ul>
 
   {!! isset($page) ? $page->module_sidebar(0, isset($module) ? $module : '') : '<div style="padding-left: 10px;">Please load $page on Controller</div>' !!}
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-book"></i> <span>{{__('backend.products')}}</span> </a>
-      <ul <?php if(preg_match("/product/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-product')}}">{{__('backend.add_product')}}</a></li>
-        <li <?php if(preg_match("/view-product'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-product')}}">{{__('backend.view_product')}}</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-qrcode"></i> <span>{{__('backend.coupons')}}</span> </a>
-      <ul <?php if(preg_match("/coupon/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-coupon')}}">{{__('backend.add_coupon')}}</a></li>
-        <li <?php if(preg_match("/view-coupon'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-coupon')}}">{{__('backend.view_coupon')}}</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-shopping-cart"></i> <span>{{__('backend.orders')}}</span> </a>
-      <ul <?php if(preg_match("/orders/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/view-orders'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-orders')}}">{{__('backend.view_orders')}}</a></li>
-        <li <?php if(preg_match("/charts'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-orders-charts')}}">view orders charts</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-picture"></i> <span>{{__('backend.banners')}}</span> </a>
-      <ul <?php if(preg_match("/banner/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-banner')}}">{{__('backend.add_banner')}}</a></li>
-        <li <?php if(preg_match("/view-banner'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-banner')}}">{{__('backend.view_banner')}}</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-film"></i> <span>{{__('backend.billboards')}}</span> </a>
-      <ul <?php if(preg_match("/billboard/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-billboard'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-billboard')}}">{{__('backend.add_billboard')}}</a></li>
-      <li <?php if(preg_match("/view-billboard'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-billboard')}}">{{__('backend.view_billboard')}}</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-user"></i> <span>{{__('backend.users')}}</span> </a>
-      <ul <?php if(preg_match("/users/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/view-users'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users')}}">{{__('backend.view_users')}}</a></li>
-        <li <?php if(preg_match("/charts'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users-charts')}}">view users charts</a></li>
-        <li <?php if(preg_match("/counties'/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users-countries-charts')}}">view users counties charts</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-list-alt"></i> <span>{{__('backend.cms_pages')}}</span> </a>
-      <ul <?php if(preg_match("/cms-page/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-cms-page'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-cms-page')}}">{{__('backend.add_cms_page')}}</a></li>
-        <li <?php if(preg_match("/view-cms-page'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-cms-page')}}">{{__('backend.view_cms_page')}}</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-certificate"></i> <span>Currencies</span> </a>
-      <ul <?php if(preg_match("/currencies/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-currencies'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-currencies')}}">Add Currencies</a></li>
-        <li <?php if(preg_match("/view-currencies'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-currencies')}}">View Currencies</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-truck"></i> <span>Shipping</span> </a>
-      <ul <?php if(preg_match("/shipping/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/view-shipping'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-shipping')}}">Shipping Charges</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-info-sign"></i> <span>News Info</span> </a>
-      <ul <?php if(preg_match("/news/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/add-news')}}">Add News</a></li>
-        <li <?php if(preg_match("/view-news'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/view-news')}}">View News</a></li>
-      </ul>
-    </li>
-
-    <li class="submenu"> <a href="#" id=""><i class="icon icon-envelope"></i> <span>Inquiries Users</span> <span class="label label-important">{{rand(10,100)}}</span></a>
-      <ul <?php if(preg_match("/enquiries/i", $url)) { ?> class="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/enquiries-list'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/enquiries-list')}}">Inquiries List</a></li>
-        <li <?php if(preg_match("/enquiries-outbox'/i", $url)) { ?> class="active" <?php } ?>> <a href="{{url('/admin/enquiries-outbox')}}">Inquiries Outbox</a></li>
-      </ul>
-    </li>
-
-    <li><a href="{{url('/admin/view-newsletter-subscribers')}}"><i class="icon icon-rss"></i> <span>Newsletter Subscribers</span></a></li>
-
-    <li><a href="javascript:"><i class="icon icon-th"></i> <span>Tables</span></a></li>
     
     <li class="content"> <span>{{__('backend.monthly_bandwidth_transfer')}}</span>
       <div class="progress progress-mini progress-danger active progress-striped">

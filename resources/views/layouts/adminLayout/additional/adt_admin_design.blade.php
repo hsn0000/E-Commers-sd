@@ -55,12 +55,11 @@ $(document).ready(function() {
             var current_pwd = $("#current_pwd").val();
             $.ajax({
                 type: 'get',
-                url: '/admin/check-pwd',
+                url: '/profile-usr/admin/check-pwd',
                 data: {
                     current_pwd: current_pwd
                 },
                 success: function(resp) {
-                    //  alert(resp);
                     if (resp == "false") {
                         $("#chkPwd").html(inCorect);
                     } else if (resp == "true") {
@@ -267,6 +266,7 @@ $(document).ready(function() {
 
     var id = $(event).attr('rel');
     var name = $(event).attr('rel2');
+    var link = $(event).attr('link');
     var deleteFunction = $(event).attr('rel1');
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -294,7 +294,7 @@ $(document).ready(function() {
                 '{{__("validation.success")}} '
             )
 
-            window.location.href = "/admin/" + deleteFunction + "/" + id;
+            window.location.href = link + deleteFunction + id;
 
         } else if (
             /* Read more about handling dismissals below */

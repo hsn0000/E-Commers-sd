@@ -101,7 +101,6 @@ $(function(){
             });
             return
         } 
-
         form.attr('action', $this.data('link')).submit();
     });
 
@@ -168,25 +167,6 @@ $(function(){
             return
         }
     });
-
-
-    $('.action > .btn-view').click(function() {
-        var id = $('.child-check:checked').attr('id')
-        if($('.child-check:checked').length == 0) {
-            if($('.child-check:checked').length == 0){
-                new PNotify({
-                    title: ' Caution !',
-                    text: 'Please select at least one data for process',
-                    type: 'warning',
-                    icon: 'icon icon-exclamation-sign'
-                });
-                return
-            } 
-        }
-        var ids = id.split("-")
-        $('.action > .btn-view').attr('href','#myModal'+ids[1])
-        return
-    })
 
 
     $('.action > .btn-add-image').click(function() {

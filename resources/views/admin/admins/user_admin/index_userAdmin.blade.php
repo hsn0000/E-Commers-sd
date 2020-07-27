@@ -37,60 +37,62 @@ use Carbon\Carbon;
             <div class="span12">
                 @include('layouts.adminLayout.actions.action')
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                        <h5>View User Group</h5>
-                    </div>
-                    <form action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off">
-                        @csrf
-                        <div class="widget-content nopadding">
-                            <div class="table-responsive">
-                                <table class="table table-bordered data-table" >
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>
-                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
-                                                <a href="javascript:" class="radio-netral-thead" onclick="radioNetral()"> <i class="icon icon-minus" style="color: cornflowerblue;"></i>
-                                                </a>
-                                            @else
-                                                #
-                                            @endif
-                                            </th> 
-                                            <th style="font-size:100%;"> Name</th>
-                                            <th style="font-size:100%;"> Group </th>
-                                            <th style="font-size:100%;"> Status </th>                                 
-                                            <th style="font-size:100%;"> Created </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($data_table as $key => $val)
-                                        <tr class="">
-                                            <th scope="row" style="text-align:center;">
-                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input check_usergroup child-check" id="{{ 'child-'.$val['id'] }}" name="data_id[{{ $val['id'] }}]" onclick="checkInputValue(this)">
-                                                    <label class="custom-control-label" for="{{ 'child-'.$val['id'] }}" ></label>
-                                                </div>
-                                            @else
-                                                {{ ++$key }}
-                                            @endif
-                                            </th>
-                                            <td style="text-align:center;"> {{ $val['name'] }} <br> <span class="span-bottom"> {{ $val['email'] }}</span> </td>
-                                            <td style="text-align:center;"> {{ $val['gname'] }} </td>
-                                            <td style="text-align:center;">
-                                            @if($page->fetch_role('alter', $module) == TRUE)
-                                                <a href="javascript:void(0)" onclick="editStatusAdmin({{$val['id']}})" id="{{'status'.$val['id']}}"> {!! $val['status'] !!} </a>
-                                            @else
-                                                {!! $val['status'] !!}
-                                            @endif
-                                            </td>
-                                            <td style="text-align:center;"> {{ $val['join_date'] }} </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="responsif-costume">
+                        <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                            <h5>View User Group</h5>
                         </div>
-                    </form>
+                        <form action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off">
+                            @csrf
+                            <div class="widget-content nopadding">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered data-table" >
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>
+                                                @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                    <a href="javascript:" class="radio-netral-thead" onclick="radioNetral()"> <i class="icon icon-minus" style="color: cornflowerblue;"></i>
+                                                    </a>
+                                                @else
+                                                    #
+                                                @endif
+                                                </th> 
+                                                <th style="font-size:100%;"> Name</th>
+                                                <th style="font-size:100%;"> Group </th>
+                                                <th style="font-size:100%;"> Status </th>                                 
+                                                <th style="font-size:100%;"> Created </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($data_table as $key => $val)
+                                            <tr class="">
+                                                <th scope="row" style="text-align:center;">
+                                                @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input check_usergroup child-check" id="{{ 'child-'.$val['id'] }}" name="data_id[{{ $val['id'] }}]" onclick="checkInputValue(this)">
+                                                        <label class="custom-control-label" for="{{ 'child-'.$val['id'] }}" ></label>
+                                                    </div>
+                                                @else
+                                                    {{ ++$key }}
+                                                @endif
+                                                </th>
+                                                <td style="text-align:center;"> {{ $val['name'] }} <br> <span class="span-bottom"> {{ $val['email'] }}</span> </td>
+                                                <td style="text-align:center;"> {{ $val['gname'] }} </td>
+                                                <td style="text-align:center;">
+                                                @if($page->fetch_role('alter', $module) == TRUE)
+                                                    <a href="javascript:void(0)" onclick="editStatusAdmin({{$val['id']}})" id="{{'status'.$val['id']}}"> {!! $val['status'] !!} </a>
+                                                @else
+                                                    {!! $val['status'] !!}
+                                                @endif
+                                                </td>
+                                                <td style="text-align:center;"> {{ $val['join_date'] }} </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

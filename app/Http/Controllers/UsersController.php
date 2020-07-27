@@ -305,31 +305,6 @@ class UsersController extends Controller
     }
 
 
-    public function viewUsersCharts() {
-        $current_mount_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
-        $last_mount_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1)->month)->count();
-        $last_to_last_mount_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
-        $thre_month_back_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3)->month)->count();
-        return view('admin.users.view_users_charts')->with(compact('current_mount_users','last_mount_users','last_to_last_mount_users','thre_month_back_users'));
-    }
-
-
-    public function viewUsersCountriesCharts() {
-        $getUserCounties = User::select('country',DB::raw('count(country) as count'))->where('country','!=','')->groupBy('country')->get();
-        $getUserCounties = json_decode(json_encode($getUserCounties));
-
-        $getUserCountiesCollecArray = collect();
-        foreach($getUserCounties as $countries) {
-            $data['y'] = $countries->count;
-            $data['name'] = $countries->country;
-            $data['exploded'] = true;
-            $getUserCountiesCollecArray->push($data);
-        }
-        // dd($getUserCountiesCollecArray);
-        return view('admin.users.view_users_countries_charts')->with(compact('getUserCountiesCollecArray'));
-    }
-
-
     public function uploadPhotoProfile(Request $request) {
 
         if($request->for_who_use == "forusers") {

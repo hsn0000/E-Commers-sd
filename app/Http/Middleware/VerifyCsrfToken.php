@@ -24,7 +24,8 @@ class VerifyCsrfToken extends Middleware
         "/check-subscriber-email",
         "/add-subscriber-email",
         "/upload-img-AdmMsg",
-        "/upload-photo-profile"
+        "/upload-photo-profile",
+      
     ];
 
 }

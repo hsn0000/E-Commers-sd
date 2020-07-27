@@ -19,7 +19,17 @@ class QueryModel extends Model
     protected $tbl_products = 'products';
     protected $tbl_products_atrtribute = 'products_attributes';
     protected $tbl_products_images = 'products_images';
+    protected $tbl_coupons = 'coupons';
+    protected $tbl_banners = 'banners';
+    protected $tbl_billboards = 'billboards';
+    protected $tbl_shipping_charges = 'shipping_charges';
+    protected $tbl_currencies = 'currencies';
+    protected $tbl_news_info = 'news_info';
+    protected $tbl_newsletter_subscribers = 'newsletter_subscribers';
+    protected $tbl_cms_page = 'cms_pages';
+    protected $tbl_enquiries = 'enquiries';
 
+    protected $tbl_orders = 'orders';
 
 
     public function __construct() { 
@@ -59,12 +69,12 @@ class QueryModel extends Model
     }
 
 
-    public function get_data_users_front($where = '')
+    public function get_data_users_front($where = '') 
     {
         $query = DB::table($this->tbl_user.' AS u');
 
         $query->leftJoin($this->tbl_users_biodata.' AS ub', 'u.id', '=', 'ub.user_id');
-        $query->selectRaw('u.id, u.avatar, u.name, u.email, u.admin, u.status, u.created_at, u.updated_at, ub.address, ub.city, ub.state, ub.country, ub.pincode, ub.mobile');
+        $query->selectRaw('u.*, ub.address, ub.city, ub.state, ub.country, ub.pincode, ub.mobile');
 
         \is_array($where) ? $query->where($where) : null;
 
@@ -108,7 +118,7 @@ class QueryModel extends Model
         \is_array($where) ? $query->where($where) : null;
 
         return $query;
-    }
+    } 
 
 
     public function get_product_image($where = '')
@@ -136,6 +146,133 @@ class QueryModel extends Model
         return $query;
     }
 
+
+    public function get_coupons($where = '')
+    {
+        $query = DB::table($this->tbl_coupons.' AS cp');
+
+        \is_array($where) ? $query->where($where) : null;
+
+        return $query;
+    }
+
+
+    public function get_banners($where = '') 
+    {
+        $query = DB::table($this->tbl_banners);
+
+        \is_array($where) ? $query->where($where) : null;
+
+        return $query;
+    }
+
+
+    public function get_billboards($where = '')
+     {
+        $query = DB::table($this->tbl_billboards);
+
+        \is_array($where) ? $query->where($where) : null;
+
+        return $query;
+    }
+
+
+    public function get_shipping_charges($where = '')
+    {
+       $query = DB::table($this->tbl_shipping_charges);
+
+       \is_array($where) ? $query->where($where) : null;
+
+       return $query;
+   }
+
+
+   public function get_currencies($where = '')
+   {
+      $query = DB::table($this->tbl_currencies);
+
+      \is_array($where) ? $query->where($where) : null;
+
+      return $query;
+    }
+
+
+    public function get_news_info($where = '')
+    {
+       $query = DB::table($this->tbl_news_info);
+ 
+       \is_array($where) ? $query->where($where) : null;
+ 
+       return $query;
+     }
+
+
+     public function get_newsletter_subscribers($where = '')
+     {
+        $query = DB::table($this->tbl_newsletter_subscribers);
+  
+        \is_array($where) ? $query->where($where) : null;
+  
+        return $query;
+      }
+
+
+      public function get_cms_page($where = '')
+      {
+         $query = DB::table($this->tbl_cms_page);
+   
+         \is_array($where) ? $query->where($where) : null;
+   
+         return $query;
+       }
+ 
+
+       public function get_enquiries($where = '')
+       {
+          $query = DB::table($this->tbl_enquiries);
+    
+          \is_array($where) ? $query->where($where) : null;
+    
+          return $query;
+        }
+
+
+        public function get_orders($where = '')
+        {
+           $query = DB::table($this->tbl_orders);
+
+           \is_array($where) ? $query->where($where) : null;
+     
+           return $query;
+         }
+
+
+         public function search_orders($where = '', $orWhere = '')
+         {
+            $query = DB::table($this->tbl_orders);
+     
+            if(!empty($orWhere['created_at']))
+            {
+                $_orWhere =  explode('/', $orWhere['created_at']);
+
+                $_month = $_orWhere[0];
+                $_date = $_orWhere[1];
+                $_year = $_orWhere[2];
+            }
+
+            if(!empty($where['order_status']))
+            {
+                if($where['order_status'] == 'all')
+                {
+                    $where = null;            
+                }
+            }
+
+            \is_array($where) ? $query->where($where) : null;
+            !empty($orWhere['created_at']) ? $query->whereYear('created_at', $_year)->whereMonth('created_at', $_month) : null;
+
+            return $query;
+          }
 
 
 

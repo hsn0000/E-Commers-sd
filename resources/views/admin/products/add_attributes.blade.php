@@ -29,45 +29,47 @@ Add Attribute Products | Admin Hsn E-commerce
       <div class="span12">
       @include('layouts.adminLayout.actions.action')
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>{{__('backend.add_product_attributes')}}</h5>
-          </div>
-          <div class="widget-content nopadding">
-          <form action="{{ $module->permalink.'/add-attribute/'.$productDetails->id }}" id="form-table" method="post" autocomplete="off" enctype="multipart/form-data" class="form-horizontal">
-            {{csrf_field()}}
-            <div class="control-group">
-              <input type="hidden" value="{{$productDetails->id}}">
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.product_name')}} :</label>
-                <label for="" class="control-label"><b>{{$productDetails->product_name}}</b></label>
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.product_code')}} :</label>
-                <label for="" class="control-label"><b>{{$productDetails->product_code}}</b></label>
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.product_color')}} :</label>
-                <label for="" class="control-label"><b>{{$productDetails->product_color}}</b></label>
-              </div>        
-              <div class="control-group">
-                <label class="control-label">{{__('backend.price')}} :</label>
-                <label for="" class="control-label"><b> {{$currencyLocale->currency_simbol.' '.is_number($productDetails->price,2)}} </b></label>
-              </div>               
-            <div class="control-group">
-              <label class="control-label"></label>
-                <div class="field_wrapper">
-                    <div>
-                        <input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width:130px;" />
-                        <input type="text" class="numeric" name="size[]" id="size" value="" placeholder="Size" style="width:130px;" />
-                        <input type="text" class="price-input-Rp" name="price[]" id="price" value="" placeholder="Price" style="width:130px;" />
-                        <input type="text" class="numeric" name="stock[]" id="stock" value="" placeholder="Stock" style="width:130px;" />
-                        <a href="javascript:void(0);" class="add_button" title="Add field"><i class="icon-plus" style="margin: 0 0 0 10px;"></i></a>
+          <div class="responsif-costume">
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+              <h5>{{__('backend.add_product_attributes')}}</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <form action="{{ $module->permalink.'/add-attribute/'.$productDetails->id }}" id="form-table" method="post" autocomplete="off" enctype="multipart/form-data" class="form-horizontal">
+                {{csrf_field()}}
+                <div class="control-group">
+                  <input type="hidden" value="{{$productDetails->id}}">
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.product_name')}} :</label>
+                    <label for="" class="control-label"><b>{{$productDetails->product_name}}</b></label>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.product_code')}} :</label>
+                    <label for="" class="control-label"><b>{{$productDetails->product_code}}</b></label>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.product_color')}} :</label>
+                    <label for="" class="control-label"><b>{{$productDetails->product_color}}</b></label>
+                  </div>        
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.price')}} :</label>
+                    <label for="" class="control-label"><b> {{$currencyLocale->currency_simbol.' '.is_number($productDetails->price,2)}} </b></label>
+                  </div>               
+                <div class="control-group">
+                  <label class="control-label"></label>
+                    <div class="field_wrapper">
+                        <div>
+                            <input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width:130px;" />
+                            <input type="text" class="numeric" name="size[]" id="size" value="" placeholder="Size" style="width:130px;" />
+                            <input type="text" class="price-input-Rp" name="price[]" id="price" value="" placeholder="Price" style="width:130px;" />
+                            <input type="text" class="numeric" name="stock[]" id="stock" value="" placeholder="Stock" style="width:130px;" />
+                            <a href="javascript:void(0);" class="add_button" title="Add field"><i class="icon-plus" style="margin: 0 0 0 10px;"></i></a>
+                        </div>
                     </div>
-                </div>
-            </div>           
-              <hr>
-            </form>
+                </div>           
+                  <hr>
+              </form>
+            </div>
           </div>
         </div>
       </div>

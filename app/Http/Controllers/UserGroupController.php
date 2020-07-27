@@ -14,6 +14,7 @@ use DB;
 class UserGroupController extends Controller
 {
     public $viewdata = [];
+    
     protected $mod_alias = 'user-group';
 
     public function __construct() {

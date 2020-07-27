@@ -2,84 +2,207 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+
+use App\Model\PageModel;
+use App\Model\QueryModel;
+
 use App\CmsPage;
 use App\Category;
 use DB;
 use Date;
 use Illuminate\Support\Facades\Mail;
-use Validator;
+
 
 class CmsController extends Controller
 {
 
+    public $viewdata = [];
+      
+    protected $mod_alias = 'cms-page';
+
+    public function __construct() {
+        $this->page = new PageModel();
+        $this->viewdata = $this->page->viewdata();
+        $this->viewdata['page'] = $this->page;
+        
+        $this->query = new QueryModel();
+        $this->viewdata['query'] = $this->query;
+    
+        $this->module = $this->page->get_modid($this->mod_alias);
+        $this->viewdata['module'] = $this->module;
+    }
+
+
+    public function indexCmsPage() {
+        
+        $this->page->blocked_page($this->mod_alias);
+
+        \session::forget(['data_id']);
+  
+        $cmsPages = $this->query->get_cms_page()->orderByRaw('created_at DESC')->get();
+
+        $this->viewdata['cmsPages'] = $cmsPages;
+          
+        $this->viewdata['toolbar'] = true;
+  
+        $this->viewdata['page_title'] = __('page.CMS-page');
+
+        return view('admin.pages.view_cms_page', $this->viewdata);
+    }
+
+
     public function addCmsPage(Request $request) {
 
         if($request->isMethod('post')) {
+
+            $this->page->blocked_page($this->mod_alias, 'create');
+
             $data = $request->all();
-            // dd($data);
+           
             $request->validate([
                 'title' => 'required',
                 'url' => 'required',
+                'description' => 'required'
             ]);
+
+            if($this->query->get_cms_page(['title' => $data['title']])->count() > 0)
+            {
+              return \redirect($this->module->permalink.'/add')->with('msg_error','Title '.$data['title'].' has ben already exists');
+            }
+            elseif($this->query->get_cms_page(['url' => $data['url']])->count() > 0)
+            {
+              return \redirect($this->module->permalink.'/add')->with('msg_error','url '.$data['url'].' has ben already exists');
+            }
 
             $cmspage = New CmsPage;
             $cmspage->title = $data['title'];
-            $cmspage->description = $data['description'] ?: "";
             $cmspage->url = $data['url'];
+            $cmspage->description = $data['description'];
             $cmspage->meta_title = $data['meta_title'] ?: "";
             $cmspage->meta_description = $data['meta_description'] ?: "";
             $cmspage->meta_keywords = $data['meta_keywords'] ?? "";
             $cmspage->status = $data['status'] ?? "0";
             $cmspage->save();
 
-            return redirect()->back()->with('flash_message_success','CMS Page has been added successfully !');
+            return redirect($this->module->permalink)->with('msg_success','Data CMS Page has ben success save to storage');
         }
-        return view('admin.pages.add_cms_page');
+
+        $this->page->blocked_page($this->mod_alias, 'create');
+
+        $this->viewdata['toolbar_save'] = true;
+
+        $this->viewdata['page_title'] = __('page.add_cms_page');
+
+        return view('admin.pages.add_cms_page', $this->viewdata);
     }
 
 
-    public function editCmsPage(Request $request, $id = null) {
+    public function editCmsPage(Request $request) {
 
-        $cmsPage = DB::table('cms_pages')->where('id',$id)->first();
-        if($request->isMethod('post')) {
-            $data = $request->all();
+        $this->page->blocked_page($this->mod_alias, 'alter');
 
-            $request->validate([
-                'title' => 'required',
-                'url' => 'required',
-            ]);
-
-            DB::table('cms_pages')->where('id',$id)->update([
-                'title' => $data['title'],
-                'url' => $data['url'],
-                'description' => $data['description'],
-                'meta_title' => $data['meta_title'],
-                'meta_description' => $data['meta_description'],
-                'meta_keywords' => $data['meta_keywords'],
-                'status' => $data['status'] ?? 0
-            ]);
-         
-            return redirect()->back()->with('flash_message_success','CMS Page has been updated successfully !');
-
+        if(!$request->filled('data_id') && !session('data_id'))
+        {
+            return redirect($this->module->permalink)->with('msg_error','Data id not found');
         }
 
-        return view('admin.pages.edit_cms_page')->with(\compact('cmsPage'));
+        if(!session('data_id'))
+        {
+            $data_id = array_keys($request->input('data_id'));
+            $data_id = $data_id[0];
+            session(['data_id' => $data_id]);
+        } 
+        else
+        {
+            $data_id = \session('data_id');
+        } 
+
+        $cmsPage = $this->query->get_cms_page(['id' => $data_id])->first();
+
+        $this->viewdata['cmsPage'] = $cmsPage;
+
+        $this->viewdata['toolbar_save'] = true;
+
+        $this->viewdata['page_title'] = __('page.edit_banner');
+
+        return view('admin.pages.edit_cms_page', $this->viewdata);
     }
 
 
-    public function viewCmsPage() {
+    public function updateCmsPage(Request $request) 
+    {
+        $this->page->blocked_page($this->mod_alias, 'alter');
+
+        $data = $request->all();
+
+        $request->validate([
+            'title' => 'required',
+            'url' => 'required',
+            'description' => 'required'
+        ]);
+    
+        $data_id = session('data_id');
+
+        if(!$data_id)
+        {
+            return redirect($this->module->permalink.'/edit')->with('msg_error', 'Data id not found');
+        }
+
+        if(DB::table('cms_pages')->where('title', ucwords($request->input('title')))->where('id', '!=', $data_id)->count() > 0)
+        {
+          return \redirect($this->module->permalink.'/edit')->with('msg_error','Title '.$data['title'].' has ben already exists');
+        }
+        elseif(DB::table('cms_pages')->where('url', ucwords($request->input('url')))->where('id', '!=', $data_id)->count() > 0)
+        {
+          return \redirect($this->module->permalink.'/edit')->with('msg_error','Url '.$data['url'].' has ben already exists');
+        }
+
+        $update = DB::table('cms_pages')->where('id',$id)->update([
+            'title' => $data['title'],
+            'url' => $data['url'],
+            'description' => $data['description'],
+            'meta_title' => $data['meta_title'] ?? '',
+            'meta_description' => $data['meta_description'] ?? '',
+            'meta_keywords' => $data['meta_keywords'] ?? '',
+            'status' => $data['status'] ?? 0
+        ]);
+
+        if(!$update)
+        {
+            return redirect($this->module->permalink.'/edit')->with('msg_error', 'Failed to update data to Storage')->withInput();
+        }
+  
+        return redirect($this->module->permalink)->with('msg_success', 'Data Cms Page '.ucwords($request->input('title')).' has been updated');
+  
+    }
+
+
+    public function deleteCmsPage(Request $request) {
+
+        $this->page->blocked_page($this->mod_alias,'drop');
+
+        if(!$request->filled('data_id'))
+        {
+            return redirect($this->module->permalink)->with('msg_error', 'Data id not found');
+        }
+  
+        $data_id = array_keys($request->input('data_id'));
+  
+        $CMSpage = DB::table('cms_pages')->where('id',$data_id)->first();
+
+        $delete = DB::table('cms_pages')->where('id',$data_id)->delete();
         
-        $cmsPages = DB::table('cms_pages')->orderBy('created_at','DESC')->get();
-
-        return view('admin.pages.view_cms_page')->with(\compact('cmsPages'));
-    }
-
-
-    public function deleteCmsPage($id=null) {
-
-        DB::table('cms_pages')->where('id',$id)->delete();
-        return redirect('/admin/view-cms-page')->with('flash_message_success','CMS Page has been deleted successfully !');
+        if(!$delete)
+        {
+            return redirect($this->module->permalink)->with('msg_error', 'Failed to delete data to Storage')->withInput();
+        }
+ 
+        return redirect($this->module->permalink)->with('msg_success', 'Cms Page '.$CMSpage->title.' has been deleted');
+        
     }
 
 
