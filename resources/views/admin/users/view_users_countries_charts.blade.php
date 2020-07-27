@@ -14,7 +14,7 @@ users reporting countries
         exportEnabled: true,
         animationEnabled: true,
         title:{
-            text: "Register User Country Count"
+            text: "user list by country"
             },
             legend:{
                 cursor: "pointer",
@@ -42,35 +42,21 @@ users reporting countries
     }
 </script>
 
-<div id="content">
-  <div id="loading"></div>
-    <div id="content-header">
-        <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><iclass="icon-home"></iclass=>{{__('backend.home')}}</a> <a href="#">users countries</a>
-            <a href="{{url('/admin/view-categories')}}" class="current">users reporting countries</a> </div>
-        <h1>users countries</h1>
-        @if(Session::has('flash_message_error'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_error')}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_drop'))
-        <div class="alert alert-success alert-block"
-            style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_drop')}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:green; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{Session::get('flash_message_success')}}</strong>
-        </div>
-        @endif
-    </div>
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
 
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
+<div id="loading"></div>
+<div id="content">
+    <div id="content-header">
+        <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><iclass="icon-home"></iclass=>{{__('backend.home')}}</a> <a href="{{ $module->permalink }}">{{__('backend.users')}}</a>
+            <a href="#" class="current">users reporting countries</a> </div>
+        <h1>users countries</h1>
+    </div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
@@ -89,10 +75,6 @@ users reporting countries
         </div>
     </div>
 </div>
-
-
-
-
 
 @endsection
 

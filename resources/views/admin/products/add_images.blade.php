@@ -30,32 +30,34 @@ Add Images Products | Admin Hsn E-commerce
       <div class="span12">
       @include('layouts.adminLayout.actions.action')
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>{{__('backend.add_product_mages')}}</h5>
-          </div>
-          <div class="widget-content nopadding">
-          <form action="{{ $module->permalink.'/add-images/'.$productDetails->id }}" id="form-table" method="post" autocomplete="off" enctype="multipart/form-data" class="form-horizontal">
-            {{csrf_field()}}
-            <div class="control-group">
-              <input type="hidden" name="product_id" value="{{$productDetails->id}}">
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.product_name')}} :</label>
-                <label for="" class="control-label"><b>{{$productDetails->product_name}}</b></label>
-              </div>
-              <div class="control-group">
-                <label class="control-label">{{__('backend.product_code')}} :</label>
-                <label for="" class="control-label"><b>{{$productDetails->product_code}}</b></label>
-              </div>
-              <div class="control-group">
-                <label class="control-label required">{{__('backend.alternate_image')}} :</label>
-                <div class="controls">
-                  <input type="file" name="image[]" id="image" multiple="multiple" value="{{ old('username') ?: '' }}" >
-                  @error('image') {!! required_field($message) !!} @enderror
-                </div>
-              </div>  
-              <hr>            
-            </form>
+          <div class="responsif-costume">
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+              <h5>{{__('backend.add_product_mages')}}</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <form action="{{ $module->permalink.'/add-images/'.$productDetails->id }}" id="form-table" method="post" autocomplete="off" enctype="multipart/form-data" class="form-horizontal">
+                {{csrf_field()}}
+                <div class="control-group">
+                  <input type="hidden" name="product_id" value="{{$productDetails->id}}">
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.product_name')}} :</label>
+                    <label for="" class="control-label"><b>{{$productDetails->product_name}}</b></label>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">{{__('backend.product_code')}} :</label>
+                    <label for="" class="control-label"><b>{{$productDetails->product_code}}</b></label>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label required">{{__('backend.alternate_image')}} :</label>
+                    <div class="controls">
+                      <input type="file" name="image[]" id="image" multiple="multiple" value="{{ old('username') ?: '' }}" >
+                      @error('image') {!! required_field($message) !!} @enderror
+                    </div>
+                  </div>  
+                  <hr>            
+              </form>
+            </div>
           </div>
         </div>
       </div>

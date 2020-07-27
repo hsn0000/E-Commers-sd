@@ -8,91 +8,92 @@ View Banners | Admin Hsn E-commerce
 @php
 use Carbon\Carbon;
 @endphp
+
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
+
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
+<div id="loading"></div>
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i
-                    class="icon-home"></i>{{__('backend.home')}}</a> <a href="#">{{__('backend.banners')}}</a>
-            <a href="{{url('/admin/view-categories')}}" class="current">{{__('backend.view_banner')}}</a> </div>
+                    class="icon-home"></i>{{__('backend.home')}}</a> <a href="{{$module->permalink}}">{{__('backend.banners')}}</a>
+            <a href="#" class="current">{{__('backend.view_banner')}}</a> </div>
         <h1>{{__('backend.banners')}}</h1>
-        @if(Session::has('flash_message_error'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{__('backend.'.Session::get('flash_message_error'))}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_drop'))
-        <div class="alert alert-success alert-block"
-            style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{__('backend.'.Session::get('flash_message_drop'))}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:green; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>{{__('backend.'.Session::get('flash_message_success'))}}</strong>
-        </div>
-        @endif
+
     </div>
-    <div id="loading"></div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
             <div class="span12">
+            @include('layouts.adminLayout.actions.action') 
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                        <h5>{{__('backend.view_banner')}}</h5>
-                    </div>
-                    <div class="widget-content nopadding">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped no-footer data-table">
-                                <thead>
-                                    <tr>
-                                        <th style="font-size:100%;">{{__('backend.no')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.banner_id')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.title')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.link')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.status')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.created_at')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.image')}}</th>
-                                        <th style="font-size:100%;">{{__('backend.actions')}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                    $no = 0;
-                                    @endphp
-                                    @foreach($banners as $banner)
-                                    <tr class="gradeX">
-                                        <td style="text-align:center;">{{++$no}}</td>
-                                        <td style="text-align:center; width:9%">{{$banner->id}}</td>
-                                        <td style="text-align:center;">{{$banner->title}}</td>
-                                        <td style="text-align:center;">{{$banner->link}}</td>
-                                        <td style="text-align:center;"> @if($banner->status==1)<span class="badge badge-success">{{__('backend.active')}}</span>@else <span class="badge badge-danger" style="background-color:Crimson;">{{__('backend.inactive')}}</span>@endif</td>
-                                        <td style="text-align:center;">{{Carbon::parse($banner->created_at)->format('l, j F Y | H:i')}}</td>
-                                        <td style="text-align:center;" width="25%">
-                                            @if(!empty($banner->image))
-                                           <a href="javascript:"> <img src="{{ asset('images/backend_images/banners/'.$banner->image )}}" alt="image product" onclick="popupGambar(this)"> </a>
-                                            @endif
-                                        </td>
-                                        <td class="center" style="text-align:center;" width="14%;">
-                                            <a href="{{url('/admin/edit-banner/'.$banner->id)}} "
-                                                class="btn btn-warning btn-mini" style="margin:35px 0 0 10px;"
-                                                title="Edit Banner"> <i class="icon-cogs" style="padding:0 4px"></i>
-                                                {{__('backend.edit')}}</a>
-                                            <a rel="{{$banner->id}}" rel1="delete-banner" rel2="{{$banner->title}}"
-                                                href="javascript:" class="btn btn-danger btn-mini" onclick="deleteProdt(this)"
-                                                data-del-id="{{$banner->id}}" style="margin:35px 0 0 10px;"
-                                                title="{{__('backend.delete')}}">
-                                                <i class="icon-trash" style="padding: 0 5px"></i> {{__('backend.delete')}}</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <div class="responsif-costume">
+                        <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                            <h5>{{__('backend.view_banner')}}</h5>
                         </div>
+                        <form action="{{ $module->permalink.'/add' }}" id="form-table" method="post" autocomplete="off">
+                            @csrf
+                            <div class="widget-content nopadding">
+                                <table class="table table-bordered table-striped no-footer data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                <a href="javascript:" class="radio-netral-thead" onclick="radioNetral()"> <i class="icon icon-minus" style="color: cornflowerblue;"></i>
+                                                </a>
+                                            @else
+                                                #
+                                            @endif
+                                            </th>
+                                            <th style="font-size:100%;">{{__('backend.title')}}</th>
+                                            <th style="font-size:100%;">{{__('backend.link')}}</th>
+                                            <th style="font-size:100%;">{{__('backend.status')}}</th>
+                                            <th style="font-size:100%;">{{__('backend.image')}}</th>
+                                            <th style="font-size:100%;">{{__('backend.created_at')}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 0;
+                                        @endphp
+                                        @foreach($banners as $banner)
+                                        <tr class="gradeX">
+                                            <th scope="row" class="center">
+                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input check_usergroup child-check" id="{{ 'child-'.$banner->id }}" name="data_id[{{ $banner->id }}]" onclick="checkInputValue(this)">
+                                                    <label class="custom-control-label" for="{{ 'child-'.$banner->id }} "></label>
+                                                </div>
+                                            @else
+                                                {{ ++$no }}
+                                            @endif
+                                            </th>
+                                            <td class="center">{{$banner->title}}</td>
+                                            <td class="center" >{{$banner->link}}</td>
+                                            <td class="center" >
+                                            @if($banner->status==1)
+                                                <span class="badge badge-info" style="margin-right: 10px;"><i class="icon icon-ok"></i> Yes </span>
+                                            @else
+                                                <span class="badge badge-important" style="margin-right: 10px;"><i class="icon icon-ban-circle"></i> No </span>
+                                            @endif
+                                            </td>
+                                            <td class="center"  width="25%">
+                                                @if(!empty($banner->image))
+                                            <a href="javascript:"> <img src="{{ file_exists('images/backend_images/banners/'.$banner->image) ? asset('images/backend_images/banners/'.$banner->image ) : $url_amazon.'banners/images/'.$banner->image }}" alt="image product" onclick="popupGambar(this)" width="300"> </a>
+                                                @endif
+                                            </td>
+                                            <td class="center" >{{Carbon::parse($banner->created_at)->format('l, j F Y | H:i')}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -226,7 +226,7 @@ input:checked + .slider:before {
 .export_ex {
     float: right;
     margin-right: 9px;
-    margin-top: 8px;
+    /* margin-top: 8px; */
 }
 
 .center {
@@ -241,4 +241,65 @@ input:checked + .slider:before {
 
 .rounded {
     border-radius: 55px;
+}
+
+.order_status {
+    width: 107px;
+    margin-top: 5px;
+    margin-left: 13px;
+}
+
+#picked_date {
+    width: 198px;
+    margin-top: 4px;
+    margin-left: 30px;
+}
+
+.btn-search-periode {
+    margin-bottom: 6px;
+    margin-left: 14px;
+}
+
+.label-dangers {
+    color: red;
+}
+
+.responsif-costume {
+    position: inherit;
+    overflow-x: auto;
+    max-height: none;
+}
+
+.fg-toolbar {
+    min-width: 1219px;
+}
+
+.widget-title, .dataTables_paginate, .nopadding {
+    min-width: 1219px;
+}
+
+/* .responsif-costume-spn6 {
+    position: inherit;
+    overflow-x: auto;
+    max-height: none;
+} */
+
+.min-width-cstm {
+    min-width: 488px;
+}
+
+.banner-image-old {
+    width: 408px;
+    height: 121px;
+    border: solid;
+    border-style: double;
+}
+
+.actions-prod {
+    float: left;
+    margin-bottom: 6px;
+}
+
+.video-prod {
+    border-style: solid;border-color: darkred; width:217px; height:185px;
 }

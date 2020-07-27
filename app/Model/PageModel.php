@@ -177,30 +177,6 @@ class PageModel extends Model
         $freg = preg_match("/".$prefix."/i", $urlside);
 
         $active = 'null';
-   
-        // dd($module);
-
-        // if($parent_id == 0 ) 
-        // {
-        //     $active = null;
-        //     if(!$prefix)
-        //     {
-        //         $active = 'active';
-        //     }
-        //     $template .= '<li class="'.$active.'" > <a href="'.url('').'"> <i class="icon icon-home"> <span> Dashboard </span></a> </li>';
-
-		// 	// $template .= '<a href="'.url('').'"> <i class="icon icon-home"></i> <span >Dashboard</span></a>';
-        // } 
-        // // else 
-        // // {
-        // //     $template .= '<li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span> hallo </span></a>';
-        // //     $template .= ' <ul class="display: block;" >';
-        // // }
-
-            //         if(!$prefix)
-            // {
-            //     $active = 'active';
-            // }
 
         !$prefix ? $active = 'active' : $active = null;
 
@@ -224,24 +200,33 @@ class PageModel extends Model
                         $active = null;
 
                         $module && $val->modid == $module->parent ? $active = 'active' : $active = null;
+                        $val->mod_alias == 'Equipment' ? $inquiries = '<span class="label label-important">'.rand(10,100).'</span>' : $inquiries = null;
 
-                        $template .= ' <li class="submenu '.$active.'"> <a href="#" class=""> '.($val->mod_icon ? '<i class=" '.$val->mod_icon.' "></i>':'<i class="icon icon-dot"></i>').' <span> '.$val->mod_name.' </span></a>';
+                        $template .= ' <li class="submenu '.$active.'"> <a href="#" class=""> '.($val->mod_icon ? '<i class=" '.$val->mod_icon.' "></i>':'<i class="icon icon-dot"></i>').' <span> '.$val->mod_name.' </span> '.$inquiries.'</a>';
                         $template .= ' <ul class="display: block;" >';
                     }
 
                     if($val->total_sub > 0 )
                     {
+                       
                         foreach($get_mdl->get() as $value)
                         {
-                            if($val->modid == $value->parent_id)
-                            {  
-                                $module && $value->modid == $module->modid ? $active = 'active' : $active = null;
-                              
-                                $template .= ' <li class="'.$active.'" > <a href="'.($value->mod_permalink).'">'.$value->mod_name.'</a></li> ';
+                            if($this->fetch_role('view', (object) ['modid' => $value->modid]) == true) 
+                            {
+
+                                if($val->modid == $value->parent_id)
+                                {  
+                                    $module && $value->modid == $module->modid ? $active = 'active' : $active = null;
+                                    $value->mod_alias === 'inquiries' ? $inquiries = '<span class="label label-important" style="margin-left: 42px;">'.rand(10,100).'</span></a>' : $inquiries = null;
+                            
+                                    $template .= ' <li class="'.$active.'" > <a href="'.($value->mod_permalink).'">'.$value->mod_name.' '.$inquiries.'</a></li> ';
+                                
+                                }
+
                             }
                             
                         }
-
+                        
                     }
 
                     $template .= '</ul>';
@@ -251,18 +236,10 @@ class PageModel extends Model
             }
         }
     
-
         return $template;
 
     }
 
-
-//     $template .= '<li class="submenu"> <a href="#" id=""><i class="icon icon-picture"></i> <span>{{__("backend.banners")}}</span> </a>
-//     <ul class="display: block;">
-//       <li class="active" > <a href="">{{__("backend.add_banner")}}</a></li>
-//       <li class="active" > <a href="">{{__("backend.view_banner")}}</a></li>
-//     </ul>
-//   </li>';
 
 
 

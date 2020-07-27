@@ -19,7 +19,8 @@ class CreateCouponsTable extends Migration
             $table->decimal('amount',8,2)->nullable()->default(0);
             $table->string('amount_type');
             $table->date('expiry_date');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('in_use')->default(0);
             $table->timestamps();
         });
     }

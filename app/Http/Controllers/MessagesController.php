@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+
+use App\Model\PageModel;
+use App\Model\QueryModel;
+
 use DB; 
 use Auth;
 use App\Message;
@@ -14,13 +21,27 @@ use Pusher\Pusher;
 
 class MessagesController extends Controller
 {
+    public $viewdata = [];
+      
+    protected $mod_alias = 'messages';
+
+    public function __construct() {
+        $this->page = new PageModel();
+        $this->viewdata = $this->page->viewdata();
+        $this->viewdata['page'] = $this->page;
+        
+        $this->query = new QueryModel();
+        $this->viewdata['query'] = $this->query;
+    
+        $this->module = $this->page->get_modid($this->mod_alias);
+        $this->viewdata['module'] = $this->module;
+    }
+
     /*admin*/ 
     public function messages(Request $request, $id = null) {
-        // $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread 
-        // from users LEFT JOIN messages ON users.id = messages.from and is_read = 0 and messages.to = ". Auth::id() ." where users.id != ". Auth::id() ." 
-        // group by users.id, users.name users.avatar, users.email");
 
-        // $usersAll1 = DB::table('users')->where('id', '!=',$admin_id->id,)->where('admin',0)->get();
+        $this->page->blocked_page($this->mod_alias);
+
         $admin_id = Session::get('adminID');
 
         $usersAll = DB::table('users')
@@ -42,11 +63,20 @@ class MessagesController extends Controller
         DB::table('notification_messages')->where(['to' => $admin_id])->update(['is_read' => 1]);
         /*end not db*/  
 
-        return view('admin.messages.message')->with(\compact('usersAll','admin_id'));
+        $this->viewdata['admin_id'] = $admin_id;
+
+        $this->viewdata['usersAll'] = $usersAll;
+  
+        $this->viewdata['page_title'] = __('page.CMS-page');
+
+        return view('admin.messages.message',$this->viewdata);
     }
 
 
     public function getMessage($user_id) {
+
+        $this->page->blocked_page($this->mod_alias);
+
         $admin_id = Session::get('adminID');
 
         Message::where(['from' => $user_id, 'to' => $admin_id])->update(['is_read' => 1]);
@@ -61,11 +91,20 @@ class MessagesController extends Controller
             })
             ->select('messages.id', 'messages.from', 'messages.to', 'messages.message', 'messages.images','messages.is_read','messages.updated_at','messages.created_at','userfrom.avatar','userfrom.name','userfrom.email')
             ->get();
+
+        $this->viewdata['messageUsers'] = $messageUsers;
+
+        $this->viewdata['user_id'] = $user_id;
+
+        $this->viewdata['admin_id'] = $admin_id;
     
-        return view('admin.messages.index_message', ['messageUsers' => $messageUsers, 'user_id' => $user_id, 'admin_id' => $admin_id]);
+        return view('admin.messages.index_message',$this->viewdata);
     }
 
     public function sendMessage(Request $request) {
+
+        $this->page->blocked_page($this->mod_alias);
+
         // $from = Auth::id(); 
         $from = Session::get('adminID');
         $to = $request->receiver_id;

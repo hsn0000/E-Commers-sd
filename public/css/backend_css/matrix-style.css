@@ -538,6 +538,7 @@ hr{ border-top-color:#dadada;}
 	 background:#efefef;
 	border-bottom: 1px solid #CDCDCD;
 	height: 36px;  
+	/* test */
 }
 .widget-title .nav-tabs {
 	border-bottom: 0 none; 
@@ -1586,11 +1587,14 @@ body {
 div.dataTables_wrapper .ui-widget-header {
 	height: 68px;
 }
-.dataTables_filter{ position:relative; top:0px;}
-.dataTables_length{ width:100%; text-align:center;}
-.dataTables_filter, .dataTables_paginate {
+
+/* test bro */
+
+.dataTables_filter{ top:18px; left: 989px;}
+/* .dataTables_length{ width:100%; text-align:center;} */
+/* .dataTables_filter, .dataTables_paginate {
 	text-align: center;
-}
+} */
 #sidebar .content{ display:none;}
 }
 

@@ -268,7 +268,7 @@ Dashboard | Admin Hsn E-commerce
                 <div class="widget-content">
                     <div class="row-fluid">
                         <div class="span9">
-                            <!-- <div id="chartContainerUsers" style="height: 384px; width: 100;"></div> -->
+                            <div id="chartContainerUsers" style="height: 384px; width: 100;"></div>
                         </div>
                         <div class="span3">
                             <ul class="site-stats">
@@ -302,11 +302,11 @@ Dashboard | Admin Hsn E-commerce
                 <div class="widget-content">
                     <div class="row-fluid">
                         <div class="span12">
-<!-- 
-                            <div class="box columnbox mt-4">
+
+                            <!-- <div class="box columnbox mt-4">
                                 <div id="columnchart"> </div>
-                            </div> -->
-                        
+                            </div>
+                         -->
                         </div>
                     </div>
                 </div>

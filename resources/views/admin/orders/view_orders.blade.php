@@ -1,6 +1,6 @@
 @extends('layouts.adminLayout.admin_design')
 
-@section('title')
+@section('title') 
 View Orders | Admin Hsn E-commerce
 @endsection
 
@@ -10,48 +10,39 @@ View Orders | Admin Hsn E-commerce
 use Carbon\Carbon;
 @endphp
 
+@if(Session::has('msg_success'))
+    @include('layouts.adminLayout.alert.msg_success')
+@endif
+
+@if(Session::has('msg_error'))
+   @include('layouts.adminLayout.alert.msg_error')
+@endif
+
+<div id="loading"></div>
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="{{url('/admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i
-                    class="icon-home"></i>{{__('backend.home')}}</a> <a href="#">{{__('backend.orders')}}</a>
-            <a href="{{url('/admin/view-orders')}}" class="current">{{__('backend.view_orders')}}</a> </div>
+                    class="icon-home"></i>{{__('backend.home')}}</a> <a href="{{$module->permalink}}">{{__('backend.orders')}}</a>
+            <a href="#" class="current">{{__('backend.view_orders')}}</a> </div>
         <h1>{{__('backend.orders')}}</h1>
-        @if(Session::has('flash_message_error'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:Tomato; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>  {{__('backend.'.Session::get('flash_message_error'))}} </strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_drop'))
-        <div class="alert alert-success alert-block"
-            style="background-color:#F08080; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{__('backend.'.Session::get('flash_message_drop'))}}</strong>
-        </div>
-        @endif
-        @if(Session::has('flash_message_success'))
-        <div class="alert alert-dark alert-block"
-            style="background-color:green; color:white; width:21%; margin-left:20px;">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> {{__('backend.'.Session::get('flash_message_success'))}}</strong>
-        </div>
-        @endif
+
     </div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
             <div class="span12">
+            @include('layouts.adminLayout.actions.action') 
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                        <h5>{{__('backend.view_orders')}}</h5>
-                    </div>
-                    <div class="widget-content nopadding">
-                        <div class="table-responsive">
+                    <div class="responsif-costume">
+                        <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                            <h5>{{__('backend.view_orders')}}</h5>
+                            <a href="{{url($module->permalink.'/view-orders-charts')}}" class="badge badge-fill btn-mini export_ex" > <i class=" icon-screenshot" style="margin-right: 7px;"></i> order chart </a>
+                        </div>
+                        <div class="widget-content nopadding">
                             <table class="table table-bordered data-table">
                                 <thead>
                                     <tr>
-                                        <th style="font-size:100%;">{{__('backend.no')}}</th>
+                                        <th>#</th>
                                         <th style="font-size:100%;">{{__('backend.order_id')}}</th>
                                         <th style="font-size:100%;">{{__('backend.order_date')}}</th>
                                         <th style="font-size:100%;">{{__('backend.customer_name')}}</th>
@@ -69,26 +60,29 @@ use Carbon\Carbon;
                                     @endphp
                                     @foreach($orders as $order)
                                     <tr class="gradeX">
-                                        <td style="text-align:center;">{{++$no}}</td>
-                                        <td>{{$order->id}}</td>
-                                        <td>{{Carbon::parse($order->created_at)->format('l, j F Y | H:i A')}}</td>
-                                        <td>{{$order->name}}</td>
-                                        <td>{{$order->user_email}}</td>
-                                        <td>
+                                        <th scope="row" class="center"> {{ ++$no }} </th>
+                                        <td class="center">{{$order->id}}</td>
+                                        <td class="center">{{Carbon::parse($order->created_at)->format('l, j F Y | H:i A')}}</td>
+                                        <td class="center">{{$order->name}}</td>
+                                        <td class="center">{{$order->user_email}}</td>
+                                        <td class="center">
                                             @foreach($order->orders as $pro)
-                                            <li>{{$pro->product_code}} ({{$pro->product_qty}})<br>
+                                            <li>
+                                                {{$pro->product_code}} ({{$pro->product_qty}})<br>
                                             </li>
                                             @endforeach
                                         </td>
-                                        <td>Rp {{is_number($order->grant_total,2)}}</td>
-                                        <td>{{$order->order_status}}</td>
-                                        <td>{{$order->payment_method}}</td>
+                                        <td class="center">Rp {{is_number($order->grant_total,2)}}</td>
+                                        <td class="center">{{$order->order_status}}</td>
+                                        <td class="center">{{$order->payment_method}}</td>
+                                
                                         <td class="center" style="text-align:center;" width="">
-                                            <a target="_blank" href="{{url('admin/view-order/'.$order->id)}}" class="btn btn-primary btn-mini"> <i class="icon-eye-open" style=""></i>{{__('backend.view_order_details')}}</a> <br>
+                                            <a target="_blank" href="{{url($module->permalink.'/view-order/'.$order->id)}}" class="label  label-info btn-mini"> <i class="icon-eye-open" style="margin-right: 6px;" ></i>order detail</a> <br>
                                             @if($order->order_status == "Shipped" || $order->order_status == "Delivered" || $order->order_status == "Paid") 
-                                            <a target="_blank" href="{{url('admin/view-order-invoice/'.$order->id)}}" class="btn btn-info btn-mini" style="margin-top: 5%;"> <i class="icon-book" style=""></i>{{__('backend.view_order_invoice')}}</a>
+                                            <a target="_blank" href="{{url($module->permalink.'/view-order-invoice/'.$order->id)}}" class="label  label-inverse btn-mini" style="margin-top: 5%;"> <i class="icon-book" style="margin-right: 6px;"></i>order invoice</a>
                                             @endif
                                         </td>
+
                                     </tr>
                                     @endforeach
                                 </tbody>

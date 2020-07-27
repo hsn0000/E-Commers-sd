@@ -17,7 +17,7 @@
   <ul class="nav">
     <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">{{__('backend.welcome')}} </span> <span style="color:white;">{{ (Session::get('adminSession')) }}</span><b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a href="{{url('/admin/profile-role')}}"><i class="icon-user"></i> {{__('backend.my_profile')}}</a></li>
+        <li><a href="{{url('/profile-usr/admin/')}}"><i class="icon-user"></i> {{__('backend.my_profile')}}</a></li>
         <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> {{__('backend.my_tasks')}}</a></li>
         <li class="divider"></li>
@@ -41,7 +41,7 @@
 
     <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text"> {{__('backend.messages')}}</span> <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="{{url('/admin/messages')}}"><i class="icon-plus"></i>  {{__('backend.new_message')}}</a></li>
+        <li><a class="sAdd" title="" href="{{url('/messages/admin/messages')}}"><i class="icon-plus"></i>  {{__('backend.new_message')}}</a></li>
         <li class="divider"></li>
         <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> {{__('backend.inbox')}}</a></li> 
         <li class="divider"></li>
@@ -53,7 +53,7 @@
 
     <li class="dropdown" id="menu-settings"><a href="#" data-toggle="dropdown" data-target="#menu-settings" class="dropdown-toggle"><i class="icon icon-cog"></i> <span class="text"> {{__('backend.settings')}}</span> <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="{{url('/admin/settings')}}"><i class="icon icon-lock"></i>  {{__('backend.update_password')}}</a></li>
+        <li><a class="sAdd" title="" href="{{url('/profile-usr/admin/settings')}}"><i class="icon icon-lock"></i>  {{__('backend.update_password')}}</a></li>
         <li class="divider"></li>
       </ul>
     </li>
