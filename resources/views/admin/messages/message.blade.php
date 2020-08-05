@@ -40,7 +40,7 @@ Messages | Admin Hsn E-commerce
             <div class="span12">
                 <div class="widget-box widget-chat">
                     <div class="responsif-costume">
-                        <div class="widget-title"> <span class="icon"> <i class="icon-comment"></i> </span>
+                        <div class="widget-title" style="min-height: 58px;"> <span class="icon"> <i class="icon-comment"></i> </span>
                             <h5>p</h5>
                         </div>
                         <div class="widget-content nopadding">
@@ -58,6 +58,7 @@ Messages | Admin Hsn E-commerce
                                 @endforeach
                             </div>
                             <div class="chat-content panel-left2" id="messages">
+                            <p class="empty-conten-message badge">Please Select a contact to start messaging</p>
                             <!-- html -->
                             </div>
                         </div>

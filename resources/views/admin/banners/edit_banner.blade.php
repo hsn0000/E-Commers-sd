@@ -49,7 +49,7 @@ Edit Banners | Admin Hsn E-commerce
                     <label class="control-label">{{__('backend.old_image')}}</label>
                     <div class="controls">
                       @if(!empty($bannerDetails->image))
-                        <img class="banner-image-old" src="{{ file_exists('images/backend_images/banners/'.$bannerDetails->image) ? asset('images/backend_images/banners/'.$bannerDetails->image ) : $url_amazon.'banners/images/'.$bannerDetails->image }}" alt="{{__('backend.old_image')}}" >
+                        <img class="banner-image-old lazy" data-src="{{ file_exists('images/backend_images/banners/'.$bannerDetails->image) ? asset('images/backend_images/banners/'.$bannerDetails->image ) : $url_amazon.'banners/images/'.$bannerDetails->image }}" alt="{{__('backend.old_image')}}" >
                         <input type="hidden" name="current_image" value="{{$bannerDetails->image}}">
                       @endif
                     </div>
@@ -90,5 +90,17 @@ Edit Banners | Admin Hsn E-commerce
     </div>
   </div>
 </div>
+
+@endsection
+
+@section('script')
+
+<script>
+    window.addEventListener("scroll", function() { onScrollDiv() });
+    window.document.getElementById('form-table').addEventListener("load", function() { onScrollDiv() });
+
+    window.addEventListener("scroll", function() { onLoadDiv() });
+    window.addEventListener("load", function() { onLoadDiv() });
+</script>
 
 @endsection

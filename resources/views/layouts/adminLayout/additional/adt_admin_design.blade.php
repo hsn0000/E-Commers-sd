@@ -145,29 +145,71 @@ $(document).ready(function() {
 
         });
 
+        // load image function
+        onLoadDiv()
+
+        setTimeout(() => {
+            onScrollDiv()
+        }, 1700);
+        // end load
+
+        // tema 
+        if(sessionStorage.getItem("tema_template") == "maronTema")
+        {
+            maronTema()
+        }
 
     });
 
-    /* overlay zoom image */ 
-    var $overlay = $('<div id="overlay"></div>');
-    var $image = $("<img>");
-    var $caption = $("<p></p>");
+    /* overlay */ 
+    var $overlay = $("<div id='overlay' class='tumb-image'> </div>");
+    var $image = $("<img class='lazy'>");
+    var $caption = $('<p></p>');
     //add the elements onto each other
     $overlay.append($image);
-    $overlay.append($caption);
+
     $("body").append($overlay);
     //click event
-    function popupGambar(event) {
+    function popupGambar(event) { 
+
         var imageLocation = event["src"];
-        $image.attr("src", imageLocation);
+        $image.attr("src", '/images/gif/loading_card5.gif');
+        
+        setTimeout(()=>{
+            $image.attr("src", imageLocation);
+
+        }, 800)
         var captionText = event["alt"];
-        $caption.text(captionText);
-        $overlay.show(); 
+        // $caption.text(captionText);
+        $overlay.show();
+
     };
     //click event
     $overlay.click(function() {
         $overlay.hide();
-    }); 
+    });
+
+
+    // /* overlay zoom image */ 
+    // var $overlay = $('<div id="overlay"></div>');
+    // var $image = $("<img>");
+    // var $caption = $("<p></p>");
+    // //add the elements onto each other
+    // $overlay.append($image);
+    // $overlay.append($caption);
+    // $("body").append($overlay);
+    // //click event 
+    // function popupGambar(event) {
+    //     var imageLocation = event["src"];
+    //     $image.attr("src", imageLocation);
+    //     var captionText = event["alt"];
+    //     $caption.text(captionText);
+    //     $overlay.show(); 
+    // };
+    // //click event
+    // $overlay.click(function() {
+    //     $overlay.hide();
+    // }); 
 
    //   delete category
    function deleteThis(even) {
@@ -381,6 +423,78 @@ $(document).ready(function() {
         $(".check_usergroup").prop('checked', false);
     }
 
+    /* 
+        load image function
+    */ 
+    function onLoadDiv() {
+        var images = document.querySelectorAll('.lazy');
+
+        for (var i = 0, nb = images.length; i < nb; i++) {
+            var img = images[i]
+            var rect = img.getBoundingClientRect();
+            var isVisible = ((rect.top - window.innerHeight) < 500 && (rect.bottom) > -50) ? true : false;
+
+            if (isVisible) {
+                if (!img.termuat) {
+                    img.src = '/images/gif/loading_card5.gif';
+                }
+            }
+        }
+    } 
+
+    function onScrollDiv() {
+        var images = document.querySelectorAll('.lazy');
+        setTimeout(() => {
+            for (var i = 0, nb = images.length; i < nb; i++) {
+                var img = images[i]
+                // console.log(images);
+                var rect = img.getBoundingClientRect();
+                var isVisible = ((rect.top - window.innerHeight) < 500 && (rect.bottom) > -50) ? true : false;
+
+                if (isVisible) {
+                    if (!img.termuat) {
+
+                        img.src = img.dataset.src;
+                        img.alt = img.dataset.alt;
+                        img.termuat = true;
+
+                    }
+                }
+            }
+        }, 1700);
+    } 
+
+    /*
+        end load
+    */ 
+    
+    // tema
+    function maronTema() {
+        $(function() {
+            $('body').attr('style','background: #7b0000; color: grey; font-family: Montserrat, Arial, sans-serif;')
+            $('#header').attr('style','background-color: #7b0000; margin-top: 10px; height: 77px; position: relative; width: 100%; z-index: -9;')
+            $('#sidebar > ul li ul').attr('style','background-color: firebrick')
+            $('#sidebar > ul > li').attr('style','border-top: 1px solid #27a9e3; border-bottom: 1px solid #27a9e3;')
+            $('#sidebar > ul > li > a').attr('style','padding: 10px 0 10px 15px; display: block; color: #ffffff;')
+            $('.navbar-inverse .nav>li>a').attr('style','color: #fff; text-shadow: 0 -1px 0 rgba(0,0,0,0.25);')
+            $('#user-nav > ul > li').attr('style','float: left; list-style-type: none; margin: 0; position: relative; padding: 0; border-left: 1px solid #27a9e3; border-right: 1px solid #27a9e3;')
+            sessionStorage.setItem("tema_template", "maronTema");
+        })
+    }
+
+    function defaultTema()
+    {
+        $(function() {
+            $('body').attr('style','background: #2E363F; color: 666; font-family: Montserrat, Arial, sans-serif;')
+            $('#header').attr('style','background-color: #1f262d; margin-top: 10px; height: 77px; position: relative; width: 100%; z-index: -9;')
+            $('#sidebar > ul li ul').attr('style','background-color: #1e242b')
+            $('#sidebar > ul > li').attr('style','border-top: 1px solid #37414b; border-bottom: 1px solid #1f262d;')
+            $('#sidebar > ul > li > a').attr('style','padding: 10px 0 10px 15px; display: block; color: #939da8;')
+            $('.navbar-inverse .nav>li>a').attr('style','color: #999; text-shadow: 0 -1px 0 rgba(0,0,0,0.25);')
+            $('#user-nav > ul > li').attr('style','float: left; list-style-type: none; margin: 0; position: relative; padding: 0; border-left: 1px solid #2e363f; border-right: 1px solid #000;')
+            sessionStorage.removeItem("tema_template");
+        })
+    }
 
 </script>
 

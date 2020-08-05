@@ -34,7 +34,7 @@
 @endphp
 
 @yield('link')
-</head>
+</head> 
 <body>
 
 @include('layouts.adminLayout.admin_header')

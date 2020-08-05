@@ -45,7 +45,7 @@ Edit Billboard | Admin Hsn E-commerce
                     <label class="control-label">{{__('backend.old_image')}}</label>
                     <div class="controls">
                       @if(!empty($billboard->image))
-                        <img src="{{ file_exists('images/backend_images/banners/'.$billboard->image) ? asset('images/backend_images/banners/'.$billboard->image ) : $url_amazon.'billboard/images/'.$billboard->image }}" alt="{{__('backend.old_image')}}" style="width: 214px; height: 200px; border: solid;border-style: double;">
+                        <img class="lazy" data-src="{{ file_exists('images/backend_images/banners/'.$billboard->image) ? asset('images/backend_images/banners/'.$billboard->image ) : $url_amazon.'billboard/images/'.$billboard->image }}" alt="{{__('backend.old_image')}}" style="width: 214px; height: 200px; border: solid;border-style: double;">
                         <input type="hidden" name="current_image" value="{{$billboard->image}}">
                       @endif
                     </div>
@@ -86,5 +86,17 @@ Edit Billboard | Admin Hsn E-commerce
     </div>
   </div>
 </div>
+
+@endsection
+
+@section('script')
+
+<script>
+    window.addEventListener("scroll", function() { onScrollDiv() });
+    window.document.getElementById('form-table').addEventListener("load", function() { onScrollDiv() });
+
+    window.addEventListener("scroll", function() { onLoadDiv() });
+    window.addEventListener("load", function() { onLoadDiv() });
+</script>
 
 @endsection

@@ -51,27 +51,6 @@ class OrderController extends Controller
     }
 
 
-    public function viewOrderDetails($order_id)
-    {
-        $this->page->blocked_page($this->mod_alias);
-
-        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
-        $orderDetails = json_decode(\json_encode($orderDetails));
-
-        $user_id = $orderDetails->user_id;
-
-        $userDetails = $this->query->get_data_users_front('id', $user_id)->first();
-
-        $this->viewdata['orderDetails'] = $orderDetails;
-
-        $this->viewdata['userDetails'] = $userDetails;
-
-        $this->viewdata['page_title'] = __('page.view-orders-detail');
-
-        return view('admin.orders.order_details', $this->viewdata);
-    }
-
-
     public function updateOrderStatus(Request $request) 
     {
         $this->page->blocked_page($this->mod_alias);
@@ -86,27 +65,6 @@ class OrderController extends Controller
 
             return redirect()->back()->with('msg_success','Order Status Has been Update Successfully');
         }
-    }
-
-    
-    public function viewOrderInvoice($order_id)
-    {
-        $this->page->blocked_page($this->mod_alias);
-
-        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
-        $orderDetails = json_decode(\json_encode($orderDetails));
-
-        $user_id = $orderDetails->user_id;
-
-        $userDetails = $this->query->get_data_users_front('id', $user_id)->first();
-
-        $this->viewdata['orderDetails'] = $orderDetails;
-
-        $this->viewdata['userDetails'] = $userDetails;
-
-        $this->viewdata['page_title'] = __('page.view-orders-invoice');
-
-        return view('admin.orders.order_invoice',$this->viewdata);
     }
 
     
