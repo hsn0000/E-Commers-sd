@@ -65,7 +65,7 @@ Add Images Products | Admin Hsn E-commerce
   <!-- end attr -->
   
   <div class="row-fluid">
-      <div class="span12">
+      <div class="span12"> 
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>{{__('backend.view_images')}}</h5>
@@ -89,7 +89,7 @@ Add Images Products | Admin Hsn E-commerce
                 @foreach($productsImages as $pimage)
                   <tr>
                      <td class="center" >{{++$no}}</td>
-                     <td class="center" > <a href="javascript:"> <img class="rounded" src="/images/backend_images/products/small/{{$pimage->image}}" width="135" alt="Alternate Images" onclick="popupGambar(this)"></a></td>
+                     <td class="center" > <a href="javascript:"> <img class="rounded" src="{{ file_exists('images/backend_images/products/small/'.$pimage->image) ? asset('images/backend_images/products/small/'.$pimage->image ) : $url_amazon.'product/alternate/images/small/'.$pimage->image }}" width="135" alt="Alternate Images" onclick="popupGambar(this)"></a></td>
                      <td class="center" >{{Carbon::parse($pimage->created_at)->format('l, j F Y | H:i')}}</td>
                      @if($page->fetch_role('drop', $module) == true )
                      <td class="center" ><a link="{{$module->permalink}}" rel="{{$pimage->id}}" rel1="/delete-alt-image/" href="javascript:" onclick="deleteAltImg(this)" class="btn btn-danger btn-mini" style="margin:50px; padding: 3px; width: 64px; " Title="{{__('backend.delete_product_image')}}">

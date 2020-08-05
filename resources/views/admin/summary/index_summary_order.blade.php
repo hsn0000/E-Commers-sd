@@ -1,7 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 @section('title') 
 Summary order | Admin Hsn E-commerce
-@endsection
+@endsection  
  
 @section('link')
 <style>
@@ -23,7 +23,6 @@ Summary order | Admin Hsn E-commerce
    @include('layouts.adminLayout.alert.msg_error')
 @endif
 
-
 <div id="loading"></div>
 <div id="content">
     <div id="content-header">
@@ -35,6 +34,14 @@ Summary order | Admin Hsn E-commerce
         <hr>
         <div class="row-fluid">
             <div class="span12 ">
+                <div class="action actions-prod">
+                    @if($page->fetch_role('create', $module) == true )
+                        <a href="javascript:" data-link="{{url($module->permalink.'/view-order-detail')}}" class="btn  btn-info btn export_ex btn-order-details"> <i class="icon-eye-open" style="margin-right: 6px;" ></i>order detail</a> <br>
+                {{-- @if($order->order_status == "Shipped" || $order->order_status == "Delivered" || $order->order_status == "Paid") --}}
+                        <a href="javascript:" data-link="{{url($module->permalink.'/view-order-invoice')}}" class="btn  btn-success btn export_ex btn-order-invoice" > <i class="icon-book" style="margin-right: 6px;"></i>order invoice</a>
+                {{-- @endif --}}
+                    @endif
+                </div>
                 @include('layouts.adminLayout.actions.action')
                 <div class="widget-box">
                     <div class="responsif-costume">
@@ -60,7 +67,13 @@ Summary order | Admin Hsn E-commerce
                                 <table class="table table-bordered data-table" >
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th> # </th> 
+                                        <th>
+                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                <a href="javascript:" class="radio-netral-thead" onclick="radioNetral()"> <i class="icon icon-minus" style="color: cornflowerblue;"></i> </a>
+                                            @else
+                                                #
+                                            @endif
+                                            </th> 
                                             <th style="font-size:100%;"> Name</th>
                                             <th style="font-size:100%;"> address </th>   
                                             <th style="font-size:100%;"> city </th>                                 
@@ -89,7 +102,16 @@ Summary order | Admin Hsn E-commerce
                                         @endphp
 
                                         <tr class="">
-                                            <th scope="row" class="center"> {{ ++$key }} </th>
+                                            <th scope="row" class="center">
+                                            @if($page->fetch_role('alter', $module) == TRUE || $page->fetch_role('drop', $module) == TRUE)
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input check_usergroup child-check" id="{{ 'child-'.$val->id }}" name="data_id[{{ $val->id }}]" onclick="checkInputValue(this)">
+                                                    <label class="custom-control-label" for="{{ 'child-'.$val->id }}" ></label>
+                                                </div>
+                                            @else
+                                                {{ ++$key }}
+                                            @endif
+                                            </th>
                                             <td class="center"> {{ $val->name }} <br> <span class="span-bottom"> {{ $val->user_email }}</span> </td>
                                             <td class="center"> {{ $val->address }} </td>
                                             <td class="center"> {{ $val->city }} </td>
@@ -136,7 +158,7 @@ Summary order | Admin Hsn E-commerce
                                         <td class="text-right" colspan="2"> <span class="label-dangers">* </span> Total Coupon Amount </td>
                                         <td class="text-right" colspan="2"> {{ 'Rp '.is_number($total_coupon,2) }}</td>
                                         <td class="text-right" colspan="2"> <span class="label-dangers">* </span> All Grand Total </td>
-                                        <td class="text-right" colspan="2"> {{ 'Rp '.is_number($total_All_grand_tot,2) }} </td>
+                                        <td class="text-right" colspan="2"> <u><p> {{ 'Rp '.is_number($total_All_grand_tot,2) }} </p></u> </td>
                                     </tfoot>
                                     @endif
                                 </table>

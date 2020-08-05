@@ -90,7 +90,7 @@ use Carbon\Carbon;
                       <td class="center">{{'Rp'.' '.is_number($product->price,2)}}</td>
                       <td class="center">
                       @if(!empty($product->image))
-                        <a href="javascript:"><img src="{{ file_exists('images/backend_images/products/small/'.$product->image) ? asset('images/backend_images/products/small/'.$product->image ) : $url_amazon.'product/images/small/'.$product->image }}" class="rounded" alt="image product" width="110" onclick="popupGambar(this)"></a>
+                        <a href="javascript:"><img data-src="{{ file_exists('images/backend_images/products/small/'.$product->image) ? asset('images/backend_images/products/small/'.$product->image ) : $url_amazon.'product/images/small/'.$product->image }}" class="rounded lazy" alt="image product" width="110" onclick="popupGambar(this)"></a>
                       @endif
                       </td>
                       <td class="center" > 
@@ -114,9 +114,17 @@ use Carbon\Carbon;
     </div>
   </div>
 </div>
-
+ 
 @endsection
 
 @section('script')
+
+<script>
+    window.addEventListener("scroll", function() { onScrollDiv() });
+    window.document.getElementById('form-table').addEventListener("load", function() { onScrollDiv() });
+
+    window.addEventListener("scroll", function() { onLoadDiv() });
+    window.addEventListener("load", function() { onLoadDiv() });
+</script>
 
 @endsection

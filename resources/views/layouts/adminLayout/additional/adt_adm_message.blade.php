@@ -146,7 +146,7 @@
         /* end pusher*/
 
         /*user class click*/
-        $(".user").click(function() {
+        $(".user").click(function() { 
             $(".user").removeClass('new online');
             $(this).addClass('new online');
             $(this).find('.msg-count').remove();
@@ -159,6 +159,7 @@
                 cache: false,
                 success: function(data) {
                     //  console.log(data)
+                    // return
                     $("#messages").html(data);
                     scrollToBottomFunc();
                 }

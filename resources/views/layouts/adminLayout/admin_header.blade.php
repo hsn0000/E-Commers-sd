@@ -57,6 +57,15 @@
         <li class="divider"></li>
       </ul>
     </li>
+
+    <li class="dropdown" id="menu-tema"><a href="#" data-toggle="dropdown" data-target="#menu-tema" class="dropdown-toggle"><i class="icon icon-bookmark"></i> <span class="text"> Tema</span> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a class="sAdd" title="" href="javascript:" onclick="defaultTema()"><i class="icon icon-pushpin"></i>  Default </a></li>
+        <li class="divider"></li>
+        <li><a class="sAdd" title="" href="javascript:" onclick="maronTema()"><i class="icon icon-pushpin"></i>  Maron </a></li>
+      </ul>
+    </li>
+
     <li class="dropdown" id="menu-language"><a href="#" data-toggle="dropdown" data-target="#menu-language" class="dropdown-toggle"><i class="icon icon-flag"></i> <span class="text"> {{__('backend.language')}}</span> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li> <a href="{{url('/language/id')}}" class="sAdd" ><i class="icon-flag"></i>Indonesia  </a></li>

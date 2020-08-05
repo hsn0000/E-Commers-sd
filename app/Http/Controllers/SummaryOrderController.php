@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Model\PageModel;
 use App\Model\QueryModel;
+use App\Order;
 use DB;
 use Carbon\Carbon;
 
@@ -29,7 +30,7 @@ class SummaryOrderController extends Controller
         $this->viewdata['module'] = $this->module;
     }
 
-    
+     
     public function index(Request $request)
     {
 
@@ -73,6 +74,48 @@ class SummaryOrderController extends Controller
         $this->viewdata['page_title'] = __('page.summary-order');
 
         return view('admin.summary.index_summary_order', $this->viewdata);
+    }
+
+
+    public function viewOrderInvoice($order_id = null)
+    {
+        $this->page->blocked_page($this->mod_alias);
+
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+
+        $user_id = $orderDetails->user_id;
+
+        $userDetails = $this->query->get_data_users_front('id', $user_id)->first();
+
+        $this->viewdata['orderDetails'] = $orderDetails;
+
+        $this->viewdata['userDetails'] = $userDetails;
+
+        $this->viewdata['page_title'] = __('page.view-orders-invoice');
+
+        return view('admin.orders.order_invoice',$this->viewdata);
+    }
+
+
+    public function viewOrderDetails($order_id)
+    {
+        $this->page->blocked_page($this->mod_alias);
+
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+
+        $user_id = $orderDetails->user_id;
+
+        $userDetails = $this->query->get_data_users_front('id', $user_id)->first();
+
+        $this->viewdata['orderDetails'] = $orderDetails;
+
+        $this->viewdata['userDetails'] = $userDetails;
+
+        $this->viewdata['page_title'] = __('page.view-orders-detail');
+
+        return view('admin.orders.order_details', $this->viewdata);
     }
 
 

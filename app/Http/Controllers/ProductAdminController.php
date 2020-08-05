@@ -22,7 +22,6 @@ use \Illuminate\Support\Facades\Storage;
 
 class ProductAdminController extends Controller
 {
-    
     public $viewdata = [];
 
     protected $mod_alias = 'production';
@@ -135,7 +134,9 @@ class ProductAdminController extends Controller
             if($request->hasFile('video')) {
                 $video_tmp = $data['video'];
 
-                $video_name = $video_tmp->getClientOriginalName();
+                $video_extention = $video_tmp->getClientOriginalName();
+
+                $video_name = rand(111,99999).'.'.$video_extention;
                 /* save to local storage */
                 // $video_patch = 'videos/';
                 // $video_tmp->move($video_patch,$video_name);
@@ -231,7 +232,7 @@ class ProductAdminController extends Controller
 
             foreach($sub_categories as $sub_cat) 
             {
-                if($sub_cat->id==$productDetails->category_id)
+                if($sub_cat->id == $productDetails->category_id)
                 {
                     $selected = "selected";
                 }else{
@@ -293,6 +294,10 @@ class ProductAdminController extends Controller
             return \redirect($this->module->permalink.'/edit')->with('msg_error','Data id not found');
         }
  
+        $data_edit = DB::table('products')->where('id', $data_id)->first();
+
+        $_url_amazon = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/';
+
         $price = str_replace(["Rp",","],"",$data['price']);
         //upload image
         if($request->hasFile('image'))
@@ -302,15 +307,53 @@ class ProductAdminController extends Controller
             if($image_tmp->isValid()) 
             {
                 $extension = $image_tmp->getClientOriginalExtension();
+
                 $filename = rand(111,99999).'.'.$extension;
+
                 $large_image_path = 'images/backend_images/products/large/'.$filename;
                 $medium_image_path = 'images/backend_images/products/medium/'.$filename;
                 $small_image_path = 'images/backend_images/products/small/'.$filename;
-                // resize image
-                Image::make($image_tmp)->save($large_image_path);
-                Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+                // // resize image
+                // Image::make($image_tmp)->save($large_image_path);
+                // Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                // Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+
+                // delete file existing
+
+                if(\file_exists($small_image_path.$data_edit->image))
+                {
+                    \unlink($small_image_path.$data_edit->image);
+                }
+                else if(file_exists($medium_image_path.$data_edit->image))
+                {
+                    \unlink($medium_image_path.$data_edit->image);
+                }
+                else if(file_exists($large_image_path.$data_edit->image))
+                {
+                    \unlink($large_image_path.$data_edit->image);
+                }
+                else if(!empty($_url_amazon.'product/images/small/'.$data_edit->image))
+                {
+                    Storage::disk('s3')->delete('product/images/small/' . $data_edit->image);
+                }
+                else if(!empty($_url_amazon.'product/images/medium/'.$data_edit->image))
+                {
+                    Storage::disk('s3')->delete('product/images/medium/' . $data_edit->image);
+                }
+                else if(!empty($_url_amazon.'product/images/large/'.$data_edit->image))
+                {
+                    Storage::disk('s3')->delete('product/images/large/' . $data_edit->image);
+                }
+
                 // storage image name in product table
+                $_images_large = Image::make($image_tmp)->encode($extension);
+                Storage::disk('s3')->put('product/images/large/'.$filename, (string)$_images_large);
+
+                $_images_medium = Image::make($image_tmp)->resize(600,600)->encode($extension);
+                Storage::disk('s3')->put('product/images/medium/'.$filename, (string)$_images_medium);
+
+                $_images_small = Image::make($image_tmp)->resize(300,300)->encode($extension);
+                Storage::disk('s3')->put('product/images/small/'.$filename, (string)$_images_small);
             }
             
         }
@@ -318,16 +361,26 @@ class ProductAdminController extends Controller
         /* upload vidio */  
         if($request->hasFile('video')) {
             $video_tmp = $data['video'];
-            $video_name = $video_tmp->getClientOriginalName();
+            
+            $video_extention = $video_tmp->getClientOriginalName();
+
             $video_patch = 'videos/';
-            $video_tmp->move($video_patch,$video_name);
+
+            $video_name = rand(111,99999).'.'.$video_extention;
+            // $video_tmp->move($video_patch,$video_name);
+            Storage::disk('s3')->put('product/videos/'.$video_name, file_get_contents($video_tmp));
         }   
 
         if(isset($video_tmp)) {
                 /* Delete video if exists in folder */      
                 if(Storage::disk('public')->exists($video_patch.$data['current-video'])) {
                     unlink($video_patch.$data['current-video']);
-            }
+                }
+                else if (!empty($_url_amazon.'product/videos/'.$data_edit->video))
+                {
+                    Storage::disk('s3')->delete('product/videos/' . $data_edit->video);
+                }
+            
         }
 
        $update = Product::where(['id' => $data_id])->update([
@@ -337,7 +390,7 @@ class ProductAdminController extends Controller
             'product_color' => $data['product_color'] ?? "",
             'sleeve' => $data['sleeve'] ?? "",
             'pattern' => $data['pattern'] ?? "",
-            'care' => $data['care'] ?? $data['care'],
+            'care' => $data['care'],
             'description' => $data['description'],
             'image' => $filename ?? $data['current-image'],
             'video' => $video_name ?? $data['current-video'],
@@ -362,26 +415,42 @@ class ProductAdminController extends Controller
     {
         $this->page->blocked_page($this->mod_alias, 'drop');
         // get product image nama
-        $productImage = Product::where(['id' => $id])->first();
+        $data_edit = Product::where(['id' => $id])->first();
+
+        $_url_amazon = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/';
+
         // get product image patch
-        $large_image_patch = 'images/backend_images/products/large/';
-        $medium_image_patch = 'images/backend_images/products/medium/';
-        $small_image_patch = 'images/backend_images/products/small/';
+        $large_image_path = 'images/backend_images/products/large/';
+        $medium_image_path = 'images/backend_images/products/medium/';
+        $small_image_path = 'images/backend_images/products/small/';
+        
         // Delete large image if not exist folder
-        if(\file_exists($large_image_patch.$productImage->image))
+        if(\file_exists($small_image_path.$data_edit->image))
         {
-            \unlink($large_image_patch.$productImage->image);
+            \unlink($small_image_path.$data_edit->image);
         }
-         // Delete medium image if not exist folder
-         if(\file_exists($medium_image_patch.$productImage->image))
-         {
-             \unlink($medium_image_patch.$productImage->image);
-         }
-          // Delete small image if not exist folder
-        if(\file_exists($small_image_patch.$productImage->image))
+        if(file_exists($medium_image_path.$data_edit->image))
         {
-            \unlink($small_image_patch.$productImage->image);
+            \unlink($medium_image_path.$data_edit->image);
         }
+        if(file_exists($large_image_path.$data_edit->image))
+        {
+            \unlink($large_image_path.$data_edit->image);
+        }
+
+        if(!empty($_url_amazon.'product/images/small/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/images/small/' . $data_edit->image);
+        }
+        if(!empty($_url_amazon.'product/images/medium/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/images/medium/' . $data_edit->image);
+        }
+        if(!empty($_url_amazon.'product/images/large/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/images/large/' . $data_edit->image);
+        }
+
         // delete image from product table
         Product::where(['id' => $id])->update(['image'=>'']);
 
@@ -394,11 +463,20 @@ class ProductAdminController extends Controller
         $this->page->blocked_page($this->mod_alias, 'drop');
 
         $productVideo = DB::table('products')->select('video')->where('id',$id)->first();
+
+        $_url_amazon = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/';
+        
         $video_patch = 'videos/';
+
        /* Delete video if exists in folder */   
         if(file_exists($video_patch.$productVideo->video)) {
              unlink($video_patch.$productVideo->video);
         }
+        else if (!empty($_url_amazon.'product/videos/'.$productVideo->video))
+        {
+            Storage::disk('s3')->delete('product/videos/' . $productVideo->video);
+        }
+
         /* delete video from table product */
         DB::table('products')->where('id', $id)->update(['video' => '']);
 
@@ -418,36 +496,55 @@ class ProductAdminController extends Controller
         $data_id = array_keys($request->input('data_id'));
 
        // get product image nama
-       $productImgVideo = Product::where(['id' => $data_id])->first();
+       $data_edit = Product::where(['id' => $data_id])->first();
        
+       $_url_amazon = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/';
+
        // get product image patch
-       $large_image_patch = 'images/backend_images/products/large/';
-       $medium_image_patch = 'images/backend_images/products/medium/';
-       $small_image_patch = 'images/backend_images/products/small/';
+       $large_image_path = 'images/backend_images/products/large/';
+       $medium_image_path = 'images/backend_images/products/medium/';
+       $small_image_path = 'images/backend_images/products/small/';
+
        // Delete large image if not exist folder
-       if(!empty($productImgVideo->image)) 
+       if(!empty($data_edit->image)) 
        {
-            if(\file_exists($large_image_patch.$productImgVideo->image))
+            // Delete large image if not exist folder
+            if(\file_exists($small_image_path.$data_edit->image))
             {
-                \unlink($large_image_patch.$productImgVideo->image);
-            } 
-            // Delete medium image if not exist folder
-            if(\file_exists($medium_image_patch.$productImgVideo->image))
-            {
-                \unlink($medium_image_patch.$productImgVideo->image);
+                \unlink($small_image_path.$data_edit->image);
             }
-                // Delete small image if not exist folder
-            if(\file_exists($small_image_patch.$productImgVideo->image))
+            if(file_exists($medium_image_path.$data_edit->image))
             {
-                \unlink($small_image_patch.$productImgVideo->image);
+                \unlink($medium_image_path.$data_edit->image);
+            }
+            if(file_exists($large_image_path.$data_edit->image))
+            {
+                \unlink($large_image_path.$data_edit->image);
+            }
+
+            if(!empty($_url_amazon.'product/images/small/'.$data_edit->image))
+            {
+                Storage::disk('s3')->delete('product/images/small/' . $data_edit->image);
+            }
+            if(!empty($_url_amazon.'product/images/medium/'.$data_edit->image))
+            {
+                Storage::disk('s3')->delete('product/images/medium/' . $data_edit->image);
+            }
+            if(!empty($_url_amazon.'product/images/large/'.$data_edit->image))
+            {
+                Storage::disk('s3')->delete('product/images/large/' . $data_edit->image);
             }
        }
 
        $video_patch = "videos/";
             /* Delete video if exists in folder */ 
-        if(!empty($productImgVideo->video)) {
-            if(file_exists($video_patch.$productImgVideo->video)) {
-                unlink($video_patch.$productImgVideo->video);
+        if(!empty($data_edit->video)) {
+            if(file_exists($video_patch.$data_edit->video)) {
+                unlink($video_patch.$data_edit->video);
+            }
+            else if (!empty($_url_amazon.'product/videos/'.$data_edit->video))
+            {
+                Storage::disk('s3')->delete('product/videos/' . $data_edit->video);
             }
         }
 
@@ -456,15 +553,16 @@ class ProductAdminController extends Controller
       
       if(!$delete)
       {
-          return \redirect($this->module->permalink)->with('msg_error','Failed to delete data to Storage')->withInput();
+          return \redirect($this->module->permalink)->with('msg_error','Data Product '.$data_edit->product_name.' has ben Failed delete in storage')->withInput();
       }
 
-       return \redirect($this->module->permalink)->with('msg_success','product_has_been_deleted_successfully');
+       return \redirect($this->module->permalink)->with('msg_success','Data Product '.$data_edit->product_name.' has ben succeess delete in storage ');
 
     }
 
+
     /*
-        attribute
+        aternate image
     */ 
 
     public function addImages(Request $request, $id=null)
@@ -490,6 +588,8 @@ class ProductAdminController extends Controller
                         ->withInput();
             }
 
+            $data_edit = Product::where(['id' => $id])->first();
+
             if($request->hasFile('image'))
             {
                 $files = $request->file('image');
@@ -500,19 +600,31 @@ class ProductAdminController extends Controller
                     $pimage = new ProductsImage;
                     $extension = $file->getClientOriginalExtension();
                     $filename = rand(111,99999).'.'.$extension;
-                    $large_image_patch = 'images/backend_images/products/large/'.$filename;
-                    $medium_image_patch = 'images/backend_images/products/medium/'.$filename;
-                    $small_image_patch = 'images/backend_images/products/small/'.$filename;
-                    Image::make($file)->save($large_image_patch);
-                    Image::make($file)->resize(600,600)->save($medium_image_patch);
-                    Image::make($file)->resize(300,300)->save($small_image_patch);
+
+                    // $large_image_patch = 'images/backend_images/products/large/'.$filename;
+                    // $medium_image_patch = 'images/backend_images/products/medium/'.$filename;
+                    // $small_image_patch = 'images/backend_images/products/small/'.$filename;
+
+                    // Image::make($file)->save($large_image_patch);
+                    // Image::make($file)->resize(600,600)->save($medium_image_patch);
+                    // Image::make($file)->resize(300,300)->save($small_image_patch);
+
                     // storage image name in product table
+                    $_images_large = Image::make($file)->encode($extension);
+                    Storage::disk('s3')->put('product/alternate/images/large/'.$filename, (string)$_images_large);
+
+                    $_images_medium = Image::make($file)->resize(600,600)->encode($extension);
+                    Storage::disk('s3')->put('product/alternate/images/medium/'.$filename, (string)$_images_medium);
+
+                    $_images_small = Image::make($file)->resize(300,300)->encode($extension);
+                    Storage::disk('s3')->put('product/alternate/images/small/'.$filename, (string)$_images_small);
+
                     $pimage->image = $filename;
                     $pimage->product_id = $data['product_id'];
                     $pimage->save();
                 }
             }
-          return redirect($this->module->permalink.'/add-images/'.$id)->with('msg_success','product_image_has_ben_added');
+          return redirect($this->module->permalink.'/add-images/'.$id)->with('msg_success','Data alternate image '.$data_edit->product_name.' has ben success saved to storage ');
         }
 
         $productDetails = Product::with('attributes')->where(['id' => $id])->first();
@@ -536,32 +648,62 @@ class ProductAdminController extends Controller
     {
         $this->page->blocked_page($this->mod_alias, 'drop');
         // get product image nama
-        $productImage = ProductsImage::where(['id' => $id])->first();
+        $data_edit = ProductsImage::where(['id' => $id])->first();
+
+        $_data_edit_prod = DB::table('products')->where('id', $data_edit->product_id)->first();
+
+        $_url_amazon = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/';
+
         // get product image patch
-        $large_image_patch = 'images/backend_images/products/large/';
-        $medium_image_patch = 'images/backend_images/products/medium/';
-        $small_image_patch = 'images/backend_images/products/small/';
+        $large_image_path = 'images/backend_images/products/large/';
+        $medium_image_path = 'images/backend_images/products/medium/';
+        $small_image_path = 'images/backend_images/products/small/';
+
         // Delete large image if not exist folder
-        if(\file_exists($large_image_patch.$productImage->image))
+        if(\file_exists($small_image_path.$data_edit->image))
         {
-            \unlink($large_image_patch.$productImage->image);
+            \unlink($small_image_path.$data_edit->image);
         }
-         // Delete medium image if not exist folder
-         if(\file_exists($medium_image_patch.$productImage->image))
-         {
-             \unlink($medium_image_patch.$productImage->image);
-         }
-          // Delete small image if not exist folder
-        if(\file_exists($small_image_patch.$productImage->image))
+        if(file_exists($medium_image_path.$data_edit->image))
         {
-            \unlink($small_image_patch.$productImage->image);
+            \unlink($medium_image_path.$data_edit->image);
         }
+        if(file_exists($large_image_path.$data_edit->image))
+        {
+            \unlink($large_image_path.$data_edit->image);
+        }
+
+        if(!empty($_url_amazon.'product/alternate/images/small/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/alternate/images/small/' . $data_edit->image);
+
+        }
+        if(!empty($_url_amazon.'product/alternate/images/medium/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/alternate/images/medium/' . $data_edit->image);
+        }
+        if(!empty($_url_amazon.'product/alternate/images/large/'.$data_edit->image))
+        {
+            Storage::disk('s3')->delete('product/alternate/images/large/' . $data_edit->image);
+        }
+
         // delete image from product table
-        ProductsImage::where(['id' => $id])->delete();
+        $delete = ProductsImage::where(['id' => $id])->delete();
  
-        return \redirect()->back()->with('msg_success','product_image_has_been_deleted');
+        
+        if(!$delete)
+        {
+            return redirect()->back()->with('msg_error','Data Product alternate image '.$_data_edit_prod->product_name.' has ben Failed delete in storage')->withInput();
+        }
+  
+         return \redirect()->back()->with('msg_success','Data Product alternate image '.$_data_edit_prod->product_name.' has ben success delete in storage ');
+  
     }
 
+
+    /*
+        aternate image
+    */ 
 
     public function addAtributes(Request $request, $id=null)
     {
