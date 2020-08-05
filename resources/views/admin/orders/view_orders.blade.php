@@ -77,10 +77,7 @@ use Carbon\Carbon;
                                         <td class="center">{{$order->payment_method}}</td>
                                 
                                         <td class="center" style="text-align:center;" width="">
-                                            <a target="_blank" href="{{url($module->permalink.'/view-order/'.$order->id)}}" class="label  label-info btn-mini"> <i class="icon-eye-open" style="margin-right: 6px;" ></i>order detail</a> <br>
-                                            @if($order->order_status == "Shipped" || $order->order_status == "Delivered" || $order->order_status == "Paid") 
-                                            <a target="_blank" href="{{url($module->permalink.'/view-order-invoice/'.$order->id)}}" class="label  label-inverse btn-mini" style="margin-top: 5%;"> <i class="icon-book" style="margin-right: 6px;"></i>order invoice</a>
-                                            @endif
+                         
                                         </td>
 
                                     </tr>

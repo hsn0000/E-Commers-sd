@@ -123,12 +123,12 @@ Edit Products | Admin Hsn E-commerce
                     <label class="control-label required">{{__('backend.old_image')}}</label>
                     <div class="controls">
                       @if(!empty($productDetails->image))
-                        <a href="javascript:"> <img src="{{ file_exists('images/backend_images/products/small/'.$productDetails->image) ? asset('images/backend_images/products/small/'.$productDetails->image ) : $url_amazon.'product/images/small/'.$productDetails->image }}" alt="{{__('backend.old_image')}}" style="width:217px; height:219px;" onclick="popupGambar(this)"> </a>
+                        <a href="javascript:"> <img class="lazy" data-src="{{ file_exists('images/backend_images/products/small/'.$productDetails->image) ? asset('images/backend_images/products/small/'.$productDetails->image ) : $url_amazon.'product/images/small/'.$productDetails->image }}" alt="{{__('backend.old_image')}}" style="width:217px; height:219px;" onclick="popupGambar(this)"> </a>
                         @if($page->fetch_role('drop', $module) == true )
                         &nbsp; | | <a rel="{{$productDetails->id}}" link="{{ $module->permalink }}" rel1="/delete-product-image/" rel2="{{__('backend.old_image')}}" href="javascript:" class="btn btn-danger btn-mini" id="" onclick="deleteProdt(this)"><i class="icon-trash" ></i> {{__('backend.delete')}}</a>
                         @endif
                       @else
-                        <img src="{{asset('images/null.jpg')}}" alt="{{__('backend.old_image')}}" style="width:219px;" >
+                        <img class="lazy" data-src="{{asset('images/null.jpg')}}" alt="{{__('backend.old_image')}}" style="width:219px;" >
                       @endif
                     </div>
                   </div>
@@ -144,7 +144,7 @@ Edit Products | Admin Hsn E-commerce
                     <label class="control-label"> Old Video </label>
                     <div class="controls">
                       @if(!empty($productDetails->video))
-                        <video class="video-prod" src="{{asset('videos/'.$productDetails->video)}}" controls> </video>
+                        <video class="video-prod" src="{{ file_exists('videos/'.$productDetails->video) ? asset('videos/'.$productDetails->video ) : $url_amazon.'product/videos/'.$productDetails->video }}" controls> </video>
                       @else
                         <img src="{{asset('images/video-thumbnail.png')}}" width="217" height="185" controls alt="" >
                       @endif
@@ -195,5 +195,17 @@ Edit Products | Admin Hsn E-commerce
     </div>
   </div>
 </div>
+
+@endsection
+
+@section('script')
+
+<script>
+    window.addEventListener("scroll", function() { onScrollDiv() });
+    window.document.getElementById('form-table').addEventListener("load", function() { onScrollDiv() });
+
+    window.addEventListener("scroll", function() { onLoadDiv() });
+    window.addEventListener("load", function() { onLoadDiv() });
+</script>
 
 @endsection

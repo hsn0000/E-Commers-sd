@@ -84,7 +84,7 @@ use Carbon\Carbon;
                                             </td>
                                             <td class="center"  width="25%">
                                                 @if(!empty($banner->image))
-                                            <a href="javascript:"> <img src="{{ file_exists('images/backend_images/banners/'.$banner->image) ? asset('images/backend_images/banners/'.$banner->image ) : $url_amazon.'banners/images/'.$banner->image }}" alt="image product" onclick="popupGambar(this)" width="300"> </a>
+                                            <a href="javascript:"> <img class="lazy" data-src="{{ file_exists('images/backend_images/banners/'.$banner->image) ? asset('images/backend_images/banners/'.$banner->image ) : $url_amazon.'banners/images/'.$banner->image }}" alt="image product" onclick="popupGambar(this)" style="width:300px; height:100px;"> </a>
                                                 @endif
                                             </td>
                                             <td class="center" >{{Carbon::parse($banner->created_at)->format('l, j F Y | H:i')}}</td>
@@ -105,5 +105,12 @@ use Carbon\Carbon;
 
 @section('script')
 
+<script>
+    window.addEventListener("scroll", function() { onScrollDiv() });
+    window.document.getElementById('form-table').addEventListener("load", function() { onScrollDiv() });
+
+    window.addEventListener("scroll", function() { onLoadDiv() });
+    window.addEventListener("load", function() { onLoadDiv() });
+</script>
 
 @endsection

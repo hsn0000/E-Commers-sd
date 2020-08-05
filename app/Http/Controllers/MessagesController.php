@@ -92,7 +92,11 @@ class MessagesController extends Controller
             ->select('messages.id', 'messages.from', 'messages.to', 'messages.message', 'messages.images','messages.is_read','messages.updated_at','messages.created_at','userfrom.avatar','userfrom.name','userfrom.email')
             ->get();
 
+        $user_detail = $this->query->get_data_users_front(['u.id' => $user_id])->first();
+
         $this->viewdata['messageUsers'] = $messageUsers;
+
+        $this->viewdata['user_detail'] = $user_detail;
 
         $this->viewdata['user_id'] = $user_id;
 

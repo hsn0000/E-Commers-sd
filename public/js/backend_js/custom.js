@@ -207,6 +207,44 @@ $(function(){
     })
 
 
+    $('.action > .btn-order-invoice').click(function() {
+    var id = $('.child-check:checked').attr('id'),$this=$(this),link=$this.data('link');
+    if($('.child-check:checked').length == 0) {
+        if($('.child-check:checked').length == 0){
+            new PNotify({
+                title: ' Caution !',
+                text: 'Please select at least one data for process',
+                type: 'warning',
+                icon: 'icon icon-exclamation-sign'
+            });
+            return
+        } 
+    }
+        var ids = id.split("-")
+        window.open(link+'/'+ids[1], '_blank');
+        return
+    })
+
+
+    $('.action > .btn-order-details').click(function() {
+    var id = $('.child-check:checked').attr('id'),$this=$(this),link=$this.data('link');
+    if($('.child-check:checked').length == 0) {
+        if($('.child-check:checked').length == 0){
+            new PNotify({
+                title: ' Caution !',
+                text: 'Please select at least one data for process',
+                type: 'warning',
+                icon: 'icon icon-exclamation-sign'
+            });
+            return
+        } 
+    }
+        var ids = id.split("-")
+        window.open(link+'/'+ids[1], '_blank');
+        return
+    })
+
+
     $('.input-daterange').datepicker({
         format: "mm-yyyy",
         startDate: "-1m",
