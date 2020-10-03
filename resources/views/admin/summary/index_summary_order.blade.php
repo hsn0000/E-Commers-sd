@@ -55,8 +55,13 @@ Summary order | Admin Hsn E-commerce
                                     @foreach($order_status as $key => $val)
                                         <option value="{{ $val->order_status }}" @if (isset($_order_status)) @if($_order_status === $val->order_status) selected="selected" @endif @endif >{{ $val->order_status }}</option>
                                     @endforeach
-                                </select>           
-                                <input type="text" class="form-control" name="picked_date" id="picked_date" value="@if(isset($_picked_date)) {{ $_picked_date }} @endif" placeholder="Search Periode .." > 
+                                </select>
+                                <div class="search-periode-fluids">
+                                    <input type="text" class="form-control" name="picked_date" id="picked_date" value="@if(isset($_picked_date)) {{ $_picked_date }} @endif" placeholder="Search Periode .." > 
+                                    <div class="close-search-periode" style="display: none;">
+                                        X
+                                    </div>
+                                </div>
                                 <input class="btn-search-periode" type="submit" value="Search..">
                             </form>
                             @endif
@@ -152,13 +157,13 @@ Summary order | Admin Hsn E-commerce
                                         @endforeach 
                                     </tbody>
                                     @if($val !== '')
-                                    <tfoot>
-                                        <td class="text-right" colspan="5"> <span class="label-dangers">* </span> Total Shipping Charges </td>
-                                        <td class="text-right" colspan="2"> {{ 'Rp '.is_number($total_shipping_charge,2) }}</td>
-                                        <td class="text-right" colspan="2"> <span class="label-dangers">* </span> Total Coupon Amount </td>
-                                        <td class="text-right" colspan="2"> {{ 'Rp '.is_number($total_coupon,2) }}</td>
-                                        <td class="text-right" colspan="2"> <span class="label-dangers">* </span> All Grand Total </td>
-                                        <td class="text-right" colspan="2"> <u><p> {{ 'Rp '.is_number($total_All_grand_tot,2) }} </p></u> </td>
+                                    <tfoot> 
+                                        <td class="text-right bold-lable" colspan="5"> <span class="label-dangers"> </span> Total Shipping Charges </td>
+                                        <td class="text-right bold-lable" colspan="2"> {{ 'Rp '.is_number($total_shipping_charge,2) }}</td>
+                                        <td class="text-right bold-lable" colspan="2"> <span class="label-dangers"> </span> Total Coupon Amount </td>
+                                        <td class="text-right bold-lable" colspan="2"> {{ 'Rp '.is_number($total_coupon,2) }}</td>
+                                        <td class="text-right bold-lable" colspan="2"> <span class="label-dangers"> </span> All Grand Total </td>
+                                        <td class="text-right bold-lable" colspan="2"> <u><p> {{ 'Rp '.is_number($total_All_grand_tot,2) }} </p></u> </td>
                                     </tfoot>
                                     @endif
                                 </table>

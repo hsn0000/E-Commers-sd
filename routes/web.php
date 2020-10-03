@@ -204,8 +204,6 @@ Route::group(['middleware' => ['adminlogin']], function() {
 
             // Admin order status
             Route::post('/admin/update-order-status','OrderController@updateOrderStatus');  
-            // Admin order pdf invoice
-            Route::get('/admin/view-pdf-invoice/{id}','OrderController@viewPDFInvoice');  
             //  Admin order chart route 
             Route::get('/admin/view-orders-charts','OrderController@viewOrdersCharts'); 
       });
@@ -306,6 +304,8 @@ Route::group(['middleware' => ['adminlogin']], function() {
             Route::get('/admin/view-order-invoice/{order_id}','SummaryOrderController@viewOrderInvoice'); 
             // Admin order detail route
             Route::get('/admin/view-order-detail/{order_id}','SummaryOrderController@viewOrderDetails'); 
+            // Admin order pdf invoice
+            Route::get('/admin/view-pdf-invoice/{id}','SummaryOrderController@viewPDFInvoice');  
       });
 
       // admin chat route

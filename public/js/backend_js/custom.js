@@ -360,4 +360,14 @@ $(function(){
 
 });
 
+// summ-order
+document.querySelector('#picked_date').onfocus = function() {
+    document.querySelector('.close-search-periode').style.display = 'block';
+}
+
+document.querySelector('.close-search-periode').onclick = function() {
+    document.querySelector('.close-search-periode').style.display = 'none';
+    document.querySelector('#picked_date').value = '';
+}
+// --ed
 
