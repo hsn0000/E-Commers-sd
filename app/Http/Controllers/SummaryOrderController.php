@@ -35,7 +35,7 @@ class SummaryOrderController extends Controller
     {
 
         if($request->isMethod('post'))
-        {
+        { 
             $this->page->blocked_page($this->mod_alias);
             
             \session::forget(['data_id']);
@@ -91,6 +91,29 @@ class SummaryOrderController extends Controller
         $this->viewdata['orderDetails'] = $orderDetails;
 
         $this->viewdata['userDetails'] = $userDetails;
+
+        $this->viewdata['page_title'] = __('page.view-orders-invoice');
+
+        return view('admin.orders.order_invoice',$this->viewdata);
+    }
+
+
+    public function viewPDFInvoice($order_id) 
+    {   
+        $this->page->blocked_page($this->mod_alias);
+
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(\json_encode($orderDetails));
+
+        $user_id = $orderDetails->user_id;
+
+        $userDetails = $this->query->get_data_users_front('id', $user_id)->first();
+
+        $this->viewdata['orderDetails'] = $orderDetails;
+
+        $this->viewdata['userDetails'] = $userDetails;
+
+        $this->viewdata['hello'] = "hello";
 
         $this->viewdata['page_title'] = __('page.view-orders-invoice');
 

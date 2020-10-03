@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
     @if(empty($hello))
@@ -63,7 +63,7 @@
             <div class="col-xs-12">
                 <div class="invoice-title">
                     <h2>{{__('backend.order_invoice')}}</h2>
-                    <h3 class="pull-right">{{__('backend.orders')}} # {{$orderDetails->orders[0]->order_id}} <span> <?php echo DNS1D::getBarcodeHTML($orderDetails->orders[0]->order_id, 'C39'); ?> </span></h3>
+                    <h3 class="pull-right">{{__('backend.orders')}} # {{$orderDetails->orders[0]->order_id}} <span> {{-- DNS1D::getBarcodeHTML($orderDetails->orders[0]->order_id, 'C39'); --}} </span></h3>
                 </div>
                 <hr>
                 <div class="row">
@@ -135,7 +135,7 @@
                                     @php $subtotal = 0; @endphp
                                     @foreach($orderDetails->orders as $pro)
                                     <tr>
-                                        <td class="">{{$pro->product_code}} <div class="testt"> <?php echo DNS1D::getBarcodeHTML($pro->product_code, 'C93'); ?> </div> </td>
+                                        <td class="">{{$pro->product_code}} <div class="testt"> {{-- echo DNS1D::getBarcodeHTML('4445', 'EAN13'); --}} </div> </td>
                                         <td class="text-center">{{$pro->product_name}}</td>
                                         <td class="text-center">{{$pro->product_size}}</td>
                                         <td class="text-center">{{$pro->product_color}}</td>

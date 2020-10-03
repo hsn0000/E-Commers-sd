@@ -210,7 +210,7 @@ class ProductsController extends Controller
         $productsCount = Product::where(['id'=>$id, 'status'=>1])->count();
         if($productsCount == 0)
         {
-            \abort(404); 
+            \abort(404);  
         }
         // get product detail
         $productDetails = Product::with('attributes')->where('id',$id)->first();
