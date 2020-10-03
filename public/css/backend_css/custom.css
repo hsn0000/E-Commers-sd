@@ -281,6 +281,10 @@ input:checked + .slider:before {
     color: red;
 }
 
+.label-dangers::after {
+    content: '* ';
+}
+
 .responsif-costume {
     position: inherit;
     overflow-x: auto;
@@ -344,4 +348,25 @@ input:checked + .slider:before {
     margin-top: 5px;
     padding: 10px;
     font-size: smaller;
+}
+
+.bold-lable {
+    font-weight: 900;
+}
+
+.search-periode-fluids {
+    display: inline-block;
+    position: relative;
+}
+
+.close-search-periode {
+    padding: 0px 4px 0 4px;
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    cursor: pointer;
+}
+
+.close-search-periode:hover {
+    color: #ca1313;
 }
