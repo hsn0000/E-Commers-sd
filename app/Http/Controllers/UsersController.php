@@ -110,7 +110,7 @@ class UsersController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(Request $request) 
     {
         if($request->isMethod('post'))
         {
