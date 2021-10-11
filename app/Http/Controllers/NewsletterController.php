@@ -94,7 +94,7 @@ class NewsletterController extends Controller
         }
  
         /*
-        *
+        * p
         */ 
         return redirect($this->module->permalink)->with('msg_success', 'Newsletter '.$newsletter->email.' has been deleted');
         
