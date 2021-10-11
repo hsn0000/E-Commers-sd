@@ -93,6 +93,9 @@ class NewsletterController extends Controller
             return redirect($this->module->permalink)->with('msg_error', 'Failed to delete data to Storage')->withInput();
         }
  
+        /*
+        *
+        */ 
         return redirect($this->module->permalink)->with('msg_success', 'Newsletter '.$newsletter->email.' has been deleted');
         
     }
