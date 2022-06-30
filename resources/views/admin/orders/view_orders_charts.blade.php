@@ -35,7 +35,7 @@ View Orders Reporting | Admin Hsn E-commerce
         animationEnabled: true,
         theme: "light2", // "light1", "light2", "dark1", "dark2"
         title:{
-            text: "Order repor / semester"
+            text: "Order report / semester"
         },
         axisY: {
             title: "index orders"

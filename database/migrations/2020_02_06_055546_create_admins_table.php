@@ -20,7 +20,7 @@ class CreateAdminsTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->tinyInteger('status');
-            $table->enum('type')->default("Admin");
+            $table->enum('type',["Admin","User"])->default("Admin");
             $table->tinyInteger('categories_view_access');
             $table->tinyInteger('categories_edit_access');
             $table->tinyInteger('categories_full_access');
