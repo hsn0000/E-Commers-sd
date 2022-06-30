@@ -127,7 +127,7 @@ Route::group(['middleware' => ['frontlogin']], function() {
 Route::group(['middleware' => ['adminlogin']], function() { 
       
       Route::prefix('/')->group(function() {
-            Route::get('/admin/dashboard','DashboardController@index');;
+            Route::get('/admin/dashboard','DashboardController@index');
       });
 
       Route::prefix('profile-usr')->group(function() {

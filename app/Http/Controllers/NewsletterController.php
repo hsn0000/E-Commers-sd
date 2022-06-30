@@ -156,12 +156,5 @@ class NewsletterController extends Controller
         }
     }
 
-// a
-
-// woy
-
-// heii commit
-
-
 }
   

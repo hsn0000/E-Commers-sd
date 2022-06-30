@@ -60,7 +60,7 @@ class PageModel extends Model
     
         $role_mod = NULL;
         $roles = [];
-
+        
         if(isset($_roles))  
         {
             switch($role) 
@@ -127,7 +127,7 @@ class PageModel extends Model
     }
 
 
-    public function module_list($parent_id = 0, $modid = '', $roles) {
+    public function module_list($parent_id = 0, $modid = '', $roles = '') {
         $get_module = $this->get_module(['field' => 'parent_id', 'value' => [$parent_id]], 'modid,parent_id,mod_name,mod_alias,mod_permalink,mod_icon', TRUE);
 
         $route = \request()->route()->getAction();
@@ -178,7 +178,7 @@ class PageModel extends Model
 
         $active = 'null';
 
-        !$prefix ? $active = 'active' : $active = null;
+        !$prefix ? $active = 'active open' : $active = null;
 
         $template .= '<li class="'.$active.'" > <a href="'.url('/admin/dashboard').'"> <i class="icon icon-home"></i> <span> Dashboard </span></a> </li>';
 
@@ -199,7 +199,7 @@ class PageModel extends Model
                     {
                         $active = null;
 
-                        $module && $val->modid == $module->parent ? $active = 'active' : $active = null;
+                        $module && $val->modid == $module->parent ? $active = 'active open' : $active = null;
                         $val->mod_alias == 'Equipment' ? $inquiries = '<span class="label label-important">'.rand(10,100).'</span>' : $inquiries = null;
 
                         $template .= ' <li class="submenu '.$active.'"> <a href="#" class=""> '.($val->mod_icon ? '<i class=" '.$val->mod_icon.' "></i>':'<i class="icon icon-dot"></i>').' <span> '.$val->mod_name.' </span> '.$inquiries.'</a>';
@@ -216,7 +216,7 @@ class PageModel extends Model
 
                                 if($val->modid == $value->parent_id)
                                 {  
-                                    $module && $value->modid == $module->modid ? $active = 'active' : $active = null;
+                                    $module && $value->modid == $module->modid ? $active = 'active open' : $active = null;
                                     $value->mod_alias === 'inquiries' ? $inquiries = '<span class="label label-important" style="margin-left: 42px;">'.rand(10,100).'</span></a>' : $inquiries = null;
                             
                                     $template .= ' <li class="'.$active.'" > <a href="'.($value->mod_permalink).'">'.$value->mod_name.' '.$inquiries.'</a></li> ';
