@@ -94,7 +94,7 @@ class NewsletterController extends Controller
         }
  
         /*
-        * p
+        * pp
         */ 
         return redirect($this->module->permalink)->with('msg_success', 'Newsletter '.$newsletter->email.' has been deleted');
         
@@ -155,10 +155,6 @@ class NewsletterController extends Controller
             //  echo "<pre>"; print_r($data['subscriber_email']);
         }
     }
-
-// a
-
-// heii commit
 
 }
   
