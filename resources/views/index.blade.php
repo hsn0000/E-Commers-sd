@@ -46,7 +46,7 @@ $currencyLocale = Session::get('currencyLocale');
 </section>
 <!--/slider-->
 
-<section>
+<section style="margin-top: 4rem;margin-bottom: 4rem;">
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
